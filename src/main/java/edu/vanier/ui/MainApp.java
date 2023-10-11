@@ -20,18 +20,26 @@ public class MainApp extends Application {
 
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
+    private static Scene scene;
+
     @Override
     public void start(Stage primaryStage) {
         try {
             logger.info("Bootstrapping the application...");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainApp.fxml"));
-            Scene scene = new Scene(loader.load(), 1280, 720);
+            FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/MainApp.fxml"));
+            scene = new Scene(loader.load(), 1280, 720);
             primaryStage.setScene(scene);
             // primaryStage.sizeToScene();
             primaryStage.show();
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
+    }
+
+    public static void setRoot(String fxml) throws IOException {
+        String filePath = String.format("/fxml/%s.fxml", fxml);
+        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource(filePath));
+        scene.setRoot(loader.load());
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,7 @@
 package edu.vanier.controllers;
 
+import edu.vanier.ui.MainApp;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,7 +36,15 @@ public class MainAppController {
 
     @FXML
     void handleBtn2(ActionEvent event) {
-        System.out.println("Button 2 clicked.");
+        loadFXML("Simulator");
+    }
+
+    protected void loadFXML(String fxml) {
+        try {
+            MainApp.setRoot(fxml);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
