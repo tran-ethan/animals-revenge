@@ -14,7 +14,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="126.0" prefWidth="1270.0" style="-fx-background-color: beige;">
                <children>
-                  <Label fx:id="AnimalsRevengeTitle" style="-fx-background-color: r;" text="Animal's Revenge">
+                  <Label fx:id="AnimalsRevengeTitle" text="Animal's Revenge">
                      <font>
                         <Font name="Engravers MT" size="50.0" />
                      </font>
