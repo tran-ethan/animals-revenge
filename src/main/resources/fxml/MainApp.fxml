@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.vanier.controllers.MainAppController">
    <children>
-      <Button fx:id="button1" layoutX="273.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleBtn1" text="button 1" />
-      <Button fx:id="button2" layoutX="273.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleBtn2" text="button 2" />
+      <VBox alignment="BOTTOM_CENTER" layoutX="535.0" layoutY="14.0" prefHeight="494.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="126.0" prefWidth="1270.0" style="-fx-background-color: beige;">
+               <children>
+                  <Label fx:id="AnimalsRevengeTitle" style="-fx-background-color: r;" text="Animal's Revenge">
+                     <font>
+                        <Font name="Engravers MT" size="50.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="598.0" prefWidth="870.0" spacing="50.0" style="-fx-background-color: skyblue;">
+               <children>
+                  <Button fx:id="btnNew" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchScenes" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="New">
+                     <padding>
+                        <Insets bottom="3.0" left="100.0" right="100.0" top="3.0" />
+                     </padding></Button>
+                  <Button fx:id="btnLoad" mnemonicParsing="false" onAction="#switchScenes" prefHeight="23.0" prefWidth="231.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Load" />
+                  <Button fx:id="btnCustomProjectile" mnemonicParsing="false" onAction="#switchScenes" prefHeight="23.0" prefWidth="232.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Custom Projectile" />
+                  <Button fx:id="BtnVisiualSettings" mnemonicParsing="false" onAction="#switchScenes" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Visual Settings" />
+                  <Button fx:id="btnSoundSettings" mnemonicParsing="false" onAction="#switchScenes" prefHeight="25.0" prefWidth="241.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Sound Settings" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

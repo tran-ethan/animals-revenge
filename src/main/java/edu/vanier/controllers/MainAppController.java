@@ -18,11 +18,22 @@ public class MainAppController {
     private final static Logger logger = LoggerFactory.getLogger(MainAppController.class);
 
     @FXML
-    private Button button1;
-
+    private Button btnNew;
+    
     @FXML
-    private Button button2;
-
+    private Button btnLoad;
+    
+    @FXML
+    private Button btnCustomProjectile;
+    
+    @FXML
+    private Button BtnVisiualSettings;
+    
+    @FXML
+    private Button btnSoundSettings;
+    
+    
+    
     @FXML
     public void initialize() {
         logger.info("Initializing MainAppController...");
@@ -34,9 +45,23 @@ public class MainAppController {
         logger.info("Click me button has been pressed...");
     }
 
-    @FXML
-    void handleBtn2(ActionEvent event) {
-        loadFXML("Simulator");
+    
+    @FXML 
+    void switchScenes(ActionEvent event) {
+        
+        Button clickButton = (Button)event.getSource();
+        
+        if(clickButton == btnNew) {
+            loadFXML("Simulator");
+        } else if (clickButton == btnLoad) {
+            loadFXML("");
+        } else if (clickButton == btnCustomProjectile) {
+            loadFXML("");
+        } else if (clickButton == BtnVisiualSettings) {
+            loadFXML("");
+        } else if (clickButton == btnSoundSettings) {
+            loadFXML("");
+        }
     }
 
     protected void loadFXML(String fxml) {
