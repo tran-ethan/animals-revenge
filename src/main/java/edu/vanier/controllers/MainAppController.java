@@ -27,24 +27,16 @@ public class MainAppController {
     private Button btnCustomProjectile;
     
     @FXML
-    private Button BtnVisiualSettings;
+    private Button btnVisualSettings;
     
     @FXML
     private Button btnSoundSettings;
-    
-    
+
     
     @FXML
     public void initialize() {
         logger.info("Initializing MainAppController...");
     }
-
-    @FXML
-    void handleBtn1(ActionEvent event) {
-        System.out.println("Click me called.");
-        logger.info("Click me button has been pressed...");
-    }
-
     
     @FXML 
     void switchScenes(ActionEvent event) {
@@ -57,7 +49,7 @@ public class MainAppController {
             loadFXML("");
         } else if (clickButton == btnCustomProjectile) {
             loadFXML("");
-        } else if (clickButton == BtnVisiualSettings) {
+        } else if (clickButton == btnVisualSettings) {
             loadFXML("");
         } else if (clickButton == btnSoundSettings) {
             loadFXML("");
@@ -68,7 +60,7 @@ public class MainAppController {
         try {
             MainApp.setRoot(fxml);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.printf("Could not find %s.fxml\n", fxml);
         }
     }
 }

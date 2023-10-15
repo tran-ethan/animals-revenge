@@ -29,7 +29,7 @@
                      </padding></Button>
                   <Button fx:id="btnLoad" mnemonicParsing="false" onAction="#switchScenes" prefHeight="23.0" prefWidth="231.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Load" />
                   <Button fx:id="btnCustomProjectile" mnemonicParsing="false" onAction="#switchScenes" prefHeight="23.0" prefWidth="232.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Custom Projectile" />
-                  <Button fx:id="BtnVisiualSettings" mnemonicParsing="false" onAction="#switchScenes" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Visual Settings" />
+                  <Button fx:id="btnVisualSettings" mnemonicParsing="false" onAction="#switchScenes" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Visual Settings" />
                   <Button fx:id="btnSoundSettings" mnemonicParsing="false" onAction="#switchScenes" prefHeight="25.0" prefWidth="241.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Sound Settings" />
                </children>
             </VBox>
