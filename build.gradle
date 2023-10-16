@@ -38,6 +38,9 @@ dependencies {
     // Link Logback to the project: @see: https://logback.qos.ch/ 
     implementation "ch.qos.logback:logback-classic:$logbackVersion"
     implementation "ch.qos.logback:logback-core:$logbackVersion"
+
+    // FontAwesome
+    implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 }
 
 application {

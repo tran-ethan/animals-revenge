@@ -3,7 +3,7 @@ package edu.vanier.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 
-public class SimulatorController {
+public class SimulatorController extends Controller {
 
     @FXML
     private Slider rotateSlider;
@@ -16,4 +16,8 @@ public class SimulatorController {
         System.out.println("simulator screen");
     }
 
+    @FXML
+    public void goHome() {
+        loadFXML("MainApp");
+    }
 }

@@ -1,7 +1,5 @@
 package edu.vanier.controllers;
 
-import edu.vanier.ui.MainApp;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Controller class of the MainApp's UI.
  *
  */
-public class MainAppController {
+public class MainAppController extends Controller {
 
     private final static Logger logger = LoggerFactory.getLogger(MainAppController.class);
 
@@ -41,9 +39,9 @@ public class MainAppController {
     @FXML 
     void switchScenes(ActionEvent event) {
         
-        Button clickButton = (Button)event.getSource();
+        Button clickButton = (Button) event.getSource();
         
-        if(clickButton == btnNew) {
+        if (clickButton == btnNew) {
             loadFXML("Simulator");
         } else if (clickButton == btnLoad) {
             loadFXML("");
@@ -55,13 +53,4 @@ public class MainAppController {
             loadFXML("");
         }
     }
-
-    protected void loadFXML(String fxml) {
-        try {
-            MainApp.setRoot(fxml);
-        } catch (Exception e) {
-            System.out.printf("Could not find %s.fxml\n", fxml);
-        }
-    }
 }
-
