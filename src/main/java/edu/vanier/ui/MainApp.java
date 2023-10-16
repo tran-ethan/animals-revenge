@@ -24,6 +24,9 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        
+        primaryStage.setResizable(false);
+        
         try {
             logger.info("Bootstrapping the application...");
             FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/MainApp.fxml"));
