@@ -1,4 +1,4 @@
-package edu.vanier.ui;
+package edu.vanier.animals_revenge;
 
 import java.io.IOException;
 import javafx.application.Application;

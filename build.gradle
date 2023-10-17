@@ -44,5 +44,5 @@ dependencies {
 }
 
 application {
-   mainClass = 'edu.vanier.ui.MainApp'
+   mainClass = 'edu.vanier.animals_revenge.MainApp'
 }

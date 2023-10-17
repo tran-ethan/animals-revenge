@@ -1,6 +1,6 @@
-package edu.vanier.controllers;
+package edu.vanier.animals_revenge.controllers;
 
-import edu.vanier.ui.MainApp;
+import edu.vanier.animals_revenge.MainApp;
 
 /**
  * Controller class is the abstract superclass of all controllers for the app.

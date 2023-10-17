@@ -1,4 +1,4 @@
-package edu.vanier.controllers;
+package edu.vanier.animals_revenge.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
