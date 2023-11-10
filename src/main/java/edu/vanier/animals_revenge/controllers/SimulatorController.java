@@ -12,6 +12,7 @@ public class SimulatorController implements UIController {
 
     @Override
     public void init() {
+        MainApp.initGameObjects();
         logger.info("Initializing SimulatorController...");
     }
 
