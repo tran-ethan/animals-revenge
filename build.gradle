@@ -40,7 +40,10 @@ dependencies {
     implementation "ch.qos.logback:logback-core:$logbackVersion"
 
     // FontAwesome
-    implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+    implementation "de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2"
+
+    // FXGL
+    implementation "com.github.almasb:fxgl:17.2"
 }
 
 application {

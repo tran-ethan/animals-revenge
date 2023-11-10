@@ -1,5 +1,7 @@
 package edu.vanier.animals_revenge.controllers;
 
+import com.almasb.fxgl.ui.UIController;
+import edu.vanier.animals_revenge.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * Controller class of the MainApp's UI.
  *
  */
-public class MainAppController extends Controller {
+public class HomeController implements UIController {
 
-    private final static Logger logger = LoggerFactory.getLogger(MainAppController.class);
+    private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @FXML
     private Button btnNew;
@@ -30,9 +32,8 @@ public class MainAppController extends Controller {
     @FXML
     private Button btnSoundSettings;
 
-    
-    @FXML
-    public void initialize() {
+    @Override
+    public void init() {
         logger.info("Initializing MainAppController...");
     }
     
@@ -42,15 +43,15 @@ public class MainAppController extends Controller {
         Button clickButton = (Button) event.getSource();
         
         if (clickButton == btnNew) {
-            loadFXML("Simulator");
+            MainApp.loadFXML("Simulator.fxml", new SimulatorController());
         } else if (clickButton == btnLoad) {
-            loadFXML("");
+            System.out.println("TODO");
         } else if (clickButton == btnCustomProjectile) {
-            loadFXML("");
+            System.out.println("TODO");
         } else if (clickButton == btnVisualSettings) {
-            loadFXML("");
+            System.out.println("TODO");
         } else if (clickButton == btnSoundSettings) {
-            loadFXML("");
+            System.out.println("TODO");
         }
     }
 }

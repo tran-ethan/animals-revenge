@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1270.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.vanier.animals_revenge.controllers.MainAppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="1480.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" prefHeight="126.0" prefWidth="1270.0" style="-fx-background-color: beige;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,7 +21,7 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER" fillWidth="false" layoutX="522.0" layoutY="126.0" prefHeight="598.0" prefWidth="221.0" spacing="50.0">
+      <VBox alignment="CENTER" fillWidth="false" layoutX="627.0" layoutY="126.0" prefHeight="695.0" prefWidth="226.0" spacing="50.0">
          <children>
             <Button fx:id="btnNew" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchScenes" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="New">
                <padding>
@@ -34,14 +34,14 @@
             <Button fx:id="btnSoundSettings" mnemonicParsing="false" onAction="#switchScenes" prefHeight="25.0" prefWidth="241.0" style="-fx-background-color: beige; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Sound Settings" />
          </children>
       </VBox>
-      <ImageView fitHeight="196.0" fitWidth="173.0" layoutX="998.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" rotate="13.0">
+      <ImageView fitHeight="196.0" fitWidth="173.0" layoutX="1027.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" rotate="13.0">
          <image>
-            <Image url="@/img/sheep.png" />
+            <Image url="@/assets/textures/sheep.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="298.0" fitWidth="301.0" layoutX="78.0" layoutY="203.0" pickOnBounds="true" preserveRatio="true" rotate="-8.1">
          <image>
-            <Image url="@/img/cow.png" />
+            <Image url="@/assets/textures/cow.png" />
          </image>
       </ImageView>
    </children>
