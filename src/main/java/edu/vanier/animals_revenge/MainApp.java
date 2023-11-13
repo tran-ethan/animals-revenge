@@ -4,10 +4,13 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.input.InputModifier;
 import com.almasb.fxgl.ui.UI;
 import com.almasb.fxgl.ui.UIController;
+import edu.vanier.animals_revenge.actions.DragAction;
 import edu.vanier.animals_revenge.controllers.HomeController;
 import javafx.scene.Cursor;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +58,10 @@ public class MainApp extends GameApplication {
         getGameScene().addUI(ui);
     }
 
+    /**
+     * Initializes the game world with entity factory responsible for spawning objects into game world
+     * and screen bounds.
+     */
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new Factory());
@@ -89,6 +96,15 @@ public class MainApp extends GameApplication {
                 .buildScreenBounds(150);
 
         getGameWorld().addEntity(walls);
+    }
+
+    /**
+     * Maps the corresponding user inputs to their respective actions.
+     */
+    @Override
+    protected void initInput() {
+        getInput().addAction(new DragAction(false), MouseButton.PRIMARY);
+        getInput().addAction(new DragAction(true), MouseButton.PRIMARY, InputModifier.CTRL);
     }
 
     /**
