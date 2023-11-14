@@ -17,12 +17,14 @@ public class DragAction extends UserAction {
     private final boolean newObstacle;
 
     /**
-     * The offset between the top left X position of the selected entity and the cursor X position
+     * The offset between the top left X position of the selected entity and the cursor X position at the moment the
+     * action is triggered
      */
     private double offsetX = 0;
 
     /**
-     * The offset between the top left Y position of the selected entity and the cursor Y position
+     * The offset between the top left Y position of the selected entity and the cursor Y position at the moment the
+     * action is triggered
      */
     private double offsetY = 0;
 

@@ -18,8 +18,24 @@
                   <Button mnemonicParsing="false" onAction="#goHome" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="HOME" size="17" />
-                     </graphic></Button>
-                  <MenuBar style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#launch" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ROCKET" size="17" />
+                     </graphic>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#playPause" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="playPauseIcon" glyphName="PAUSE" size="17" />
+                     </graphic>
+                  </Button>
+                  <Button layoutX="52.0" layoutY="30.0" mnemonicParsing="false" onAction="#reset" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ROTATE_LEFT" size="17" />
+                     </graphic>
+                  </Button>
+                  <MenuBar prefWidth="999.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
                      <menus>
                         <Menu mnemonicParsing="false" text="File">
                            <items>

@@ -20,8 +20,8 @@ public class Factory implements EntityFactory {
 
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.8f));
-        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 5, vY * 5));
+        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
+        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
@@ -42,11 +42,34 @@ public class Factory implements EntityFactory {
 
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
-                // .view(new Rectangle(40, 40, Color.RED))
                 .type(Type.OBSTACLE)
                 .view(imgFile)
-                .bbox(new HitBox("main", BoundingShape.box(64, 64)))
+                .bbox(new HitBox(BoundingShape.box(64, 64)))
                 .with(physics)
+                .build();
+    }
+
+    @Spawns("wall")
+    public Entity spawnWall(SpawnData data) {
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.STATIC);
+        double width = data.get("width");
+        double height = data.get("height");
+        return FXGL.entityBuilder(data)
+                .at(data.getX(), data.getY())
+                .type(Type.WALL)
+                // .view(new Rectangle(width, height, Color.RED))
+                .bbox(new HitBox(BoundingShape.box(width, height)))
+                .with(physics)
+                .build();
+    }
+
+    @Spawns("launcher")
+    public Entity spawnLauncher(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .at(data.getX(), data.getY())
+                .type(Type.LAUNCHER)
+                .view("cannon.png")
                 .build();
     }
 }

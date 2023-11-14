@@ -8,6 +8,7 @@ import com.almasb.fxgl.input.InputModifier;
 import com.almasb.fxgl.ui.UI;
 import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.actions.DragAction;
+import edu.vanier.animals_revenge.actions.LaunchAction;
 import edu.vanier.animals_revenge.controllers.HomeController;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseButton;
@@ -27,9 +28,9 @@ import static com.almasb.fxgl.dsl.FXGL.*;
  */
 public class MainApp extends GameApplication {
 
-    final static double WIDTH = 1480;
+    public final static double WIDTH = 1480;
 
-    final static double HEIGHT = 820;
+    public final static double HEIGHT = 820;
 
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
@@ -77,10 +78,13 @@ public class MainApp extends GameApplication {
      * and multiple obstacles in a single execution of the simulator.
      */
     public static void initGameObjects() {
-        spawn("projectile", new SpawnData(WIDTH / 2, HEIGHT / 2).put("vX", 0.0).put("vY", 0.0));
-        spawn("obstacle", new SpawnData(50, HEIGHT - 100).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(100, HEIGHT - 100).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(150, HEIGHT - 100).put("img", "brick.png"));
+        spawn("launcher", 0, HEIGHT - 80);
+        spawn("obstacle", new SpawnData(WIDTH - 100, HEIGHT - 65).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 200, HEIGHT - 65).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 300, HEIGHT - 65).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 150, HEIGHT - 130).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 250, HEIGHT - 130).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 200, HEIGHT - 195).put("img", "brick.png"));
     }
 
     /**
@@ -95,6 +99,8 @@ public class MainApp extends GameApplication {
                 .collidable()
                 .buildScreenBounds(150);
 
+        spawn("wall", new SpawnData(0, 0).put("width", WIDTH).put("height", 65.0));
+
         getGameWorld().addEntity(walls);
     }
 
@@ -103,6 +109,7 @@ public class MainApp extends GameApplication {
      */
     @Override
     protected void initInput() {
+        getInput().addAction(new LaunchAction(), MouseButton.SECONDARY);
         getInput().addAction(new DragAction(false), MouseButton.PRIMARY);
         getInput().addAction(new DragAction(true), MouseButton.PRIMARY, InputModifier.CTRL);
     }
