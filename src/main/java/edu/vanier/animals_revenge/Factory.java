@@ -13,26 +13,70 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
 public class Factory implements EntityFactory {
-    @Spawns("projectile")
+    
+    /* @Spawns("projectile")
     public Entity spawnProjectile(SpawnData data) {
-        double vX = data.get("vX");
-        double vY = data.get("vY");
+    double vX = data.get("vX");
+    double vY = data.get("vY");
+    
+    PhysicsComponent physics = new PhysicsComponent();
+    physics.setBodyType(BodyType.DYNAMIC);
+    physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
+    physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
+    
+    return FXGL.entityBuilder(data)
+    .at(data.getX(), data.getY())
+    .type(Type.PROJECTILE)
+    .view("soccer.png")
+    .bbox(new HitBox(BoundingShape.circle(32)))
+    .with(physics)
+    .with(new DraggableComponent())
+    .build();
+    }*/
+    
+    @Spawns("projectile")
+public Entity spawnProjectile(SpawnData data, String shapeType, String imageFileName, String colorRepresentation) {
+    PhysicsComponent physics = new PhysicsComponent();
+    physics.setBodyType(BodyType.DYNAMIC);
+    physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
+    
+    
+    //placeholder variables for linear velocity
+    physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(50 * 3, 50 * 3));
 
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.DYNAMIC);
-        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
-        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
+    Entity projectile;
 
-        return FXGL.entityBuilder(data)
-                .at(data.getX(), data.getY())
-                .type(Type.PROJECTILE)
-                .view("soccer.png")
-                .bbox(new HitBox(BoundingShape.circle(32)))
-                .with(physics)
-                .with(new DraggableComponent())
-                .build();
+    if ("circle".equals(shapeType)) {
+        projectile = createCircleProjectile(data, imageFileName, colorRepresentation);
+    } else if ("rectangle".equals(shapeType)) {
+        projectile = createRectangleProjectile(data, imageFileName, colorRepresentation);
+    } else {
+        throw new IllegalArgumentException("Invalid shape type: " + shapeType);
     }
 
+    return projectile;
+}
+
+private Entity createCircleProjectile(SpawnData data, String imageFileName, String colorRepresentation) {
+    return FXGL.entityBuilder(data)
+            .type(Type.PROJECTILE)
+            .viewWithBBox(FXGL.texture(imageFileName, 32, 32))
+            .bbox(new HitBox(BoundingShape.circle(16)))
+            .with(new PhysicsComponent())
+            .with(new DraggableComponent())
+            .build();
+}
+
+private Entity createRectangleProjectile(SpawnData data, String imageFileName, String colorRepresentation) {
+    return FXGL.entityBuilder(data)
+            .type(Type.PROJECTILE)
+            .viewWithBBox(FXGL.texture(imageFileName, 32, 32))
+            .bbox(new HitBox(BoundingShape.box(32, 32)))
+            .with(new PhysicsComponent())
+            .with(new DraggableComponent())
+            .build();
+}
+    
     @Spawns("obstacle")
     public Entity spawnObstacle(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
