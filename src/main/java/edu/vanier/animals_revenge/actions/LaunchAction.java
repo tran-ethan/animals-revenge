@@ -36,7 +36,9 @@ public class LaunchAction extends UserAction {
         if (isLaunching) {
             double vX = getInput().getMouseXWorld();
             double vY = MainApp.HEIGHT - getInput().getMouseYWorld();
-            spawn("projectile", new SpawnData(0, MainApp.HEIGHT).put("vX", vX).put("vY", vY));
+            
+            spawn("projectile", new SpawnData(0, MainApp.HEIGHT).put("vX", vX).put("vY", vY).put("imageFileName", "soccer.png"));
+            
             isLaunching = false;
         }
     }

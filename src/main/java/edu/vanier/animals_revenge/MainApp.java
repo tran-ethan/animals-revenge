@@ -89,12 +89,6 @@ public class MainApp extends GameApplication {
         spawn("obstacle", new SpawnData(WIDTH - 150, HEIGHT - 130).put("img", "brick.png"));
         spawn("obstacle", new SpawnData(WIDTH - 250, HEIGHT - 130).put("img", "brick.png"));
         spawn("obstacle", new SpawnData(WIDTH - 200, HEIGHT - 195).put("img", "brick.png"));
-        
-        //What i implemented:
-        spawn("projectile", new SpawnData(0, 0).put("shapeType", "circle").put("imageFileName", "soccer.png").put("colorRepresentation", "BLUE"));
-
-
-
 
     }
 
