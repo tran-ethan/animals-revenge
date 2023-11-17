@@ -6,6 +6,8 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -93,18 +95,37 @@
       </VBox>
       <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="200.0">
          <children>
-            <Polygon fx:id="triangleCopy" fill="DODGERBLUE" onMouseClicked="#triangleClick" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="-50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-60.0" />
-               </points>
-            </Polygon>
-            <Rectangle fx:id="squareCopy" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" onMouseClicked="#rectClick" stroke="BLACK" strokeType="INSIDE" width="90.0" />
-            <Circle fx:id="circleCopy" fill="DODGERBLUE" onMouseClicked="#circleClick" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Polygon fx:id="triangleCopy" fill="DODGERBLUE" onMouseClicked="#triangleClick" stroke="BLACK" strokeType="INSIDE">
+                     <points>
+                        <Double fx:value="-50.0" />
+                        <Double fx:value="40.0" />
+                        <Double fx:value="50.0" />
+                        <Double fx:value="40.0" />
+                        <Double fx:value="0.0" />
+                        <Double fx:value="-60.0" />
+                     </points>
+                  </Polygon>
+                  <ImageView fx:id="imgOnPoly" fitHeight="115.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/assets/textures/sheep.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Rectangle fx:id="squareCopy" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" onMouseClicked="#rectClick" stroke="BLACK" strokeType="INSIDE" width="90.0" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Circle fx:id="circleCopy" fill="DODGERBLUE" onMouseClicked="#circleClick" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </StackPane>
          </children>
       </StackPane>
    </children>

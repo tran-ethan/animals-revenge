@@ -6,6 +6,7 @@ package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.MainApp;
+import java.io.File;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,13 +14,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.TriangleMesh;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +91,9 @@ public class CustomProjectileController implements UIController {
     private HBox triangleHbox;
 
     @FXML
+    private ImageView imgOnPoly;
+
+    @FXML
     void ApplyChanges(ActionEvent event) {
 
     }
@@ -102,7 +114,28 @@ public class CustomProjectileController implements UIController {
 
     @FXML
     void chooseImg(ActionEvent event) {
-        //TODO
+        // Create a FileChooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        // Show the file chooser dialog
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+            // Load the selected image
+            Image selectedImage = new Image(selectedFile.toURI().toString());
+
+            // Set the ImagePattern based on the selected image for the visible shape
+            if (squareCopy.isVisible()) {
+                squareCopy.setFill(new ImagePattern(selectedImage));
+            } else if (circleCopy.isVisible()) {
+                circleCopy.setFill(new ImagePattern(selectedImage));
+            } else if (triangleCopy.isVisible()) {
+                triangleCopy.setFill(new ImagePattern(selectedImage));
+            }
+        }
     }
 
     @FXML
@@ -260,6 +293,7 @@ public class CustomProjectileController implements UIController {
     @Override
     public void init() {
 
+        imgOnPoly.setVisible(false);
         LBLwarning.setVisible(false);
 
         double centerX = MainApp.WIDTH / 2;
