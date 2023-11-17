@@ -4,6 +4,7 @@
  */
 package edu.vanier.animals_revenge.models;
 
+import java.io.Serializable;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
@@ -12,12 +13,15 @@ import javafx.scene.shape.Shape;
  *
  * @author macke
  */
-public class CustomProjectile {
+public class CustomProjectile implements Serializable{
 
-    private Shape shape;
+    
     private double size;
-    private Color color;
-    private Image img;
+    //the Color, Image, and shape, are not serializable by default thus the transient keyword must be used
+    //must manually serialize them with custom methods
+    private transient Shape shape;
+    private transient Color color;
+    private transient Image img;
 
     public CustomProjectile(Shape shape, double size, Color color, Image img) {
         this.shape = shape;
@@ -25,7 +29,7 @@ public class CustomProjectile {
         this.color = color;
         this.img = img;
     }
-
+    
     public Shape getShape() {
         return shape;
     }

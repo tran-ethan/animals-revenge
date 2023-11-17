@@ -8,6 +8,12 @@ import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +41,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author macke
  */
-public class CustomProjectileController implements UIController {
+public class CustomProjectileController implements UIController, Serializable {
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
@@ -114,6 +120,45 @@ public class CustomProjectileController implements UIController {
 
         CustomProjectile projectile = new CustomProjectile(shape, size, color, img);
         
+        FileChooser fileSelection = new FileChooser();
+        
+        fileSelection.setInitialFileName("myCustomProjectile");
+        
+        fileSelection.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Object file", "*obj"), new FileChooser.ExtensionFilter("All Files", "*"));
+
+        File file = fileSelection.showSaveDialog(null);
+        
+        serialize(file.getAbsolutePath(), projectile);
+        
+    }
+    
+    public static void serialize(String filePath, CustomProjectile p) {
+        
+        try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            o.writeObject(p);
+        } catch (IOException e) {
+            System.out.println("Error during serilization process");
+        }
+        
+    }
+    
+    public static CustomProjectile deserialize(String filePath) {
+        try (ObjectInputStream o = new ObjectInputStream(new FileInputStream(filePath))) {
+            Object obj = o.readObject();
+            
+            if (obj instanceof CustomProjectile) {
+                return (CustomProjectile)obj;
+            }
+            
+        } catch (IOException | ClassNotFoundException e ) {
+            
+            System.out.println("Error during deserilization process");
+            e.printStackTrace();
+        }
+        
+        System.out.println("akwd");
+        
+        return null;
     }
 
     @FXML
@@ -139,11 +184,12 @@ public class CustomProjectileController implements UIController {
         );
 
         // Show the file chooser dialog
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        File SelectedFile = fileChooser.showOpenDialog(new Stage());
+        
 
-        if (selectedFile != null) {
+        if (SelectedFile != null) {
             // Load the selected image
-            Image selectedImage = new Image(selectedFile.toURI().toString());
+            Image selectedImage = new Image(SelectedFile.getAbsolutePath());
 
             // Set the ImagePattern based on the selected image for the visible shape
             if (squareCopy.isVisible()) {
@@ -153,6 +199,8 @@ public class CustomProjectileController implements UIController {
             } else if (triangleCopy.isVisible()) {
                 triangleCopy.setFill(new ImagePattern(selectedImage));
             }
+        } else {
+            System.out.println("Did not select a file");
         }
     }
 
@@ -267,7 +315,7 @@ public class CustomProjectileController implements UIController {
 
     @FXML
     void circleHoverExit(MouseEvent event) {
-        circle.setStroke(Color.TRANSPARENT);
+        circle.setStroke(Color.BLACK);
     }
 
     @FXML
@@ -277,7 +325,7 @@ public class CustomProjectileController implements UIController {
 
     @FXML
     void squareHoverExit(MouseEvent event) {
-        square.setStroke(Color.TRANSPARENT);
+        square.setStroke(Color.BLACK);
     }
 
     @FXML
@@ -287,39 +335,9 @@ public class CustomProjectileController implements UIController {
 
     @FXML
     void triangleHoverExit(MouseEvent event) {
-        triangle.setStroke(Color.TRANSPARENT);
+        triangle.setStroke(Color.BLACK);
     }
 
-    //Not sure if we should we these methods or not:
-    @FXML
-    void circleHboxHoverEnter(MouseEvent event) {
-        //circleHbox.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ; -fx-border-radius: 10px;");
-    }
-
-    @FXML
-    void circleHboxHoverExit(MouseEvent event) {
-        //circleHbox.setStyle("-fx-border-color: Transparent ; -fx-border-width: 0px ;");
-    }
-
-    @FXML
-    void rectHboxHoverEnter(MouseEvent event) {
-        //rectHbox.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ; -fx-border-radius: 10px;");
-    }
-
-    @FXML
-    void rectHboxHoverExit(MouseEvent event) {
-        //rectHbox.setStyle("-fx-border-color: Transparent ; -fx-border-width: 0px ;");
-    }
-
-    @FXML
-    void triangleHboxHoverEnter(MouseEvent event) {
-        //triangleHbox.setStyle("-fx-border-color: gray ; -fx-border-width: 1px ; -fx-border-radius: 10px;");
-    }
-
-    @FXML
-    void triangleHboxHoverExit(MouseEvent event) {
-        //triangleHbox.setStyle("-fx-border-color: Transparent ; -fx-border-width: 0px ;");
-    }
 
     @Override
     public void init() {
