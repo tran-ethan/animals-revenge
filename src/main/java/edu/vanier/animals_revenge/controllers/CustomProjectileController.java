@@ -6,6 +6,7 @@ package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.MainApp;
+import edu.vanier.animals_revenge.models.CustomProjectile;
 import java.io.File;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,11 +23,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.TriangleMesh;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -61,7 +60,7 @@ public class CustomProjectileController implements UIController {
     private Label LBLsize;
 
     @FXML
-    private Button btnApply;
+    private Button btnSave;
 
     @FXML
     private Button btnImg;
@@ -94,8 +93,27 @@ public class CustomProjectileController implements UIController {
     private ImageView imgOnPoly;
 
     @FXML
-    void ApplyChanges(ActionEvent event) {
+    void SaveChanges(ActionEvent event) {
 
+        Shape shape = null;
+        double size;
+        Color color;
+        Image img;
+
+        if (squareCopy.isVisible()) {
+            shape = triangleCopy;
+        } else if (circleCopy.isVisible()) {
+            shape = circleCopy;
+        } else if (triangleCopy.isVisible()) {
+            shape = triangleCopy;
+        }
+
+        size = Double.valueOf(sizeTXT.getText());
+        color = ColourPicker.getValue();
+        img = imgOnPoly.getImage();
+
+        CustomProjectile projectile = new CustomProjectile(shape, size, color, img);
+        
     }
 
     @FXML
@@ -173,7 +191,7 @@ public class CustomProjectileController implements UIController {
 
                 LBLwarning.setVisible(false);
                 sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-                //numbers stay small: (1 to 10) and (-1 to -10)
+                //numbers stay small: (1 to 15) and (-1 to -15)
                 enteredValue = enteredValue * 5;
 
                 triangleCopy.getPoints().setAll(-85.0 - enteredValue / 2, 68.0, 85.0 + enteredValue / 2, 68.0, 0.0, -102.0 - enteredValue);
@@ -183,8 +201,21 @@ public class CustomProjectileController implements UIController {
                 LBLwarning.setVisible(true);
             }
 
-        } else {
-            sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
+        } else if (circleCopy.isVisible()) {
+
+            if (enteredValue >= -15 && enteredValue <= 15) {
+                LBLwarning.setVisible(false);
+                sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
+                sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
+
+                double scaleFactor = 1 + enteredValue / 20.00;
+
+                circleCopy.setRadius(circle.getRadius() * 1.7 * scaleFactor);
+            } else {
+                sizeTXT.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+                LBLwarning.setVisible(true);
+            }
+
         }
 
     }
@@ -194,7 +225,7 @@ public class CustomProjectileController implements UIController {
 
         circleCopy.setFill(Color.WHITE);
         sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-        sizeTXT.setText("" + circleCopy.getRadius());
+        sizeTXT.setText("0");
         ColourPicker.setValue((Color) circleCopy.getFill());
         squareCopy.setVisible(false);
         triangleCopy.setVisible(false);
@@ -299,7 +330,7 @@ public class CustomProjectileController implements UIController {
         double centerX = MainApp.WIDTH / 2;
         double centerY = MainApp.HEIGHT / 2;
 
-        double scaleFactor = 1.70;
+        double scale = 1.70;
 
         squareCopy.setFill(Color.WHITE);
         circleCopy.setFill(Color.WHITE);
@@ -316,15 +347,15 @@ public class CustomProjectileController implements UIController {
         triangleCopy.setLayoutX(centerX);
         triangleCopy.setLayoutY(centerY);
 
-        squareCopy.setWidth(square.getWidth() * scaleFactor);
-        squareCopy.setHeight(square.getHeight() * scaleFactor);
+        squareCopy.setWidth(square.getWidth() * scale);
+        squareCopy.setHeight(square.getHeight() * scale);
 
-        circleCopy.setRadius(circleCopy.getRadius() * scaleFactor);
+        circleCopy.setRadius(circleCopy.getRadius() * scale);
 
         ObservableList<Double> points = triangleCopy.getPoints();
 
         for (int i = 0; i < points.size(); i++) {
-            points.set(i, points.get(i) * scaleFactor);
+            points.set(i, points.get(i) * scale);
         }
         squareCopy.setVisible(false);
         triangleCopy.setVisible(false);

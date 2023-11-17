@@ -23,7 +23,7 @@
          <children>
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <HBox fx:id="circleHbox" alignment="CENTER" onMouseEntered="#circleHboxHoverEnter" onMouseExited="#circleHboxHoverExit" prefHeight="100.0" prefWidth="200.0">
+                  <HBox fx:id="circleHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Circle fx:id="circle" fill="WHITE" onMouseClicked="#circleClick" onMouseEntered="#circleHoverEnter" onMouseExited="#circleHoverExit" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
@@ -31,7 +31,7 @@
                         <Insets left="70.0" right="70.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox fx:id="rectHbox" alignment="CENTER" fillHeight="false" layoutX="80.0" layoutY="10.0" onMouseEntered="#rectHboxHoverEnter" onMouseExited="#rectHboxHoverExit" prefHeight="90.0" prefWidth="155.0">
+                  <HBox fx:id="rectHbox" alignment="CENTER" fillHeight="false" layoutX="80.0" layoutY="10.0" prefHeight="90.0" prefWidth="155.0">
                      <children>
                         <Rectangle fx:id="square" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="90.0" onMouseClicked="#rectClick" onMouseEntered="#squareHoverEnter" onMouseExited="#squareHoverExit" stroke="BLACK" strokeType="INSIDE" width="90.0">
                            <HBox.margin>
@@ -43,7 +43,7 @@
                         <Insets left="70.0" right="70.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox fx:id="triangleHbox" alignment="CENTER" layoutX="80.0" layoutY="10.0" onMouseEntered="#triangleHboxHoverEnter" onMouseExited="#triangleHboxHoverExit" prefHeight="100.0" prefWidth="200.0">
+                  <HBox fx:id="triangleHbox" alignment="CENTER" layoutX="80.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Polygon fx:id="triangle" fill="WHITE" onMouseClicked="#triangleClick" onMouseEntered="#triangleHoverEnter" onMouseExited="#triangleHoverExit" stroke="BLACK" strokeType="INSIDE">
                           <points>
@@ -88,7 +88,7 @@
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                <children>
                   <Button fx:id="btnImg" mnemonicParsing="false" onAction="#chooseImg" text="Choose Image" />
-                  <Button fx:id="btnApply" mnemonicParsing="false" onAction="#ApplyChanges" text="Apply" />
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveChanges" text="Save" />
                </children>
             </VBox>
          </children>
