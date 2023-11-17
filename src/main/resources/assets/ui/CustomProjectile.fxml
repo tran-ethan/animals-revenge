@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.Double?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
@@ -18,20 +19,48 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutX="443.0" layoutY="19.0" prefHeight="800.0" prefWidth="250.0" spacing="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <Circle fx:id="circle1" fill="WHITE" onMouseClicked="#circleClick" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Rectangle fx:id="square" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="90.0" onMouseClicked="#rectClick" stroke="BLACK" strokeType="INSIDE" width="90.0" />
-                  <Polygon fx:id="triangle" fill="WHITE" onMouseClicked="#triangleClick" stroke="BLACK" strokeType="INSIDE">
-                    <points>
-                      <Double fx:value="-50.0" />
-                      <Double fx:value="40.0" />
-                      <Double fx:value="50.0" />
-                      <Double fx:value="40.0" />
-                      <Double fx:value="0.0" />
-                      <Double fx:value="-60.0" />
-                    </points>
-                  </Polygon>
+                  <HBox fx:id="circleHbox" alignment="CENTER" onMouseEntered="#circleHboxHoverEnter" onMouseExited="#circleHboxHoverExit" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Circle fx:id="circle" fill="WHITE" onMouseClicked="#circleClick" onMouseEntered="#circleHoverEnter" onMouseExited="#circleHoverExit" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="rectHbox" alignment="CENTER" fillHeight="false" layoutX="80.0" layoutY="10.0" onMouseEntered="#rectHboxHoverEnter" onMouseExited="#rectHboxHoverExit" prefHeight="90.0" prefWidth="155.0">
+                     <children>
+                        <Rectangle fx:id="square" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="90.0" onMouseClicked="#rectClick" onMouseEntered="#squareHoverEnter" onMouseExited="#squareHoverExit" stroke="BLACK" strokeType="INSIDE" width="90.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Rectangle>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="triangleHbox" alignment="CENTER" layoutX="80.0" layoutY="10.0" onMouseEntered="#triangleHboxHoverEnter" onMouseExited="#triangleHboxHoverExit" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Polygon fx:id="triangle" fill="WHITE" onMouseClicked="#triangleClick" onMouseEntered="#triangleHoverEnter" onMouseExited="#triangleHoverExit" stroke="BLACK" strokeType="INSIDE">
+                          <points>
+                            <Double fx:value="-50.0" />
+                            <Double fx:value="40.0" />
+                            <Double fx:value="50.0" />
+                            <Double fx:value="40.0" />
+                            <Double fx:value="0.0" />
+                            <Double fx:value="-60.0" />
+                          </points>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Polygon>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
             </VBox>
             <VBox prefHeight="62.0" prefWidth="250.0">
@@ -41,7 +70,12 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="sizeTXT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="80.0" />
+                  <HBox prefHeight="70.0" prefWidth="160.0">
+                     <children>
+                        <TextField fx:id="sizeTXT" maxWidth="-Infinity" minWidth="-Infinity" onAction="#setSize" prefHeight="25.0" prefWidth="43.0" />
+                        <Label fx:id="LBLwarning" text="*ENTER A NUMBER BETWEEN +/-15" textFill="RED" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <HBox prefHeight="28.0" prefWidth="250.0">
