@@ -83,12 +83,12 @@ public class MainApp extends GameApplication {
         
         spawn("launcher", 0, HEIGHT - 80);
         
-        spawn("obstacle", new SpawnData(WIDTH - 100, HEIGHT - 65).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 200, HEIGHT - 65).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 300, HEIGHT - 65).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 150, HEIGHT - 130).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 250, HEIGHT - 130).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 200, HEIGHT - 195).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 500, HEIGHT - 65).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 65).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 700, HEIGHT - 65).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 550, HEIGHT - 130).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 650, HEIGHT - 130).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 195).put("img", "brick.png"));
 
     }
 
@@ -105,6 +105,7 @@ public class MainApp extends GameApplication {
                 .buildScreenBounds(150);
 
         spawn("wall", new SpawnData(0, 0).put("width", WIDTH).put("height", 65.0));
+        spawn("wall", new SpawnData(WIDTH - 397, 0).put("width", 397.0).put("height", HEIGHT));
 
         getGameWorld().addEntity(walls);
     }

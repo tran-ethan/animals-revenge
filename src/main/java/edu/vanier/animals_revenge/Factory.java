@@ -63,12 +63,12 @@ public class Factory implements EntityFactory {
     String imgFile = data.get("img");
     
     return FXGL.entityBuilder(data)
-    .at(data.getX(), data.getY())
-    .type(Type.OBSTACLE)
-    .view(imgFile)
-    .bbox(new HitBox(BoundingShape.box(64, 64)))
-    .with(physics)
-    .build();
+            .at(data.getX(), data.getY())
+            .type(Type.OBSTACLE)
+            .view(imgFile)
+            .bbox(new HitBox(BoundingShape.box(64, 64)))
+            .with(physics)
+            .build();
     }
     @Spawns("wall")
     public Entity spawnWall(SpawnData data) {
