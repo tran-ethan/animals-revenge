@@ -13,6 +13,8 @@ import edu.vanier.animals_revenge.controllers.HomeController;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,9 @@ public class MainApp extends GameApplication {
     public final static double WIDTH = 1480;
 
     public final static double HEIGHT = 820;
+
+    private static Rectangle vector;
+    private static Polygon vectorHead;
 
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
@@ -59,6 +64,14 @@ public class MainApp extends GameApplication {
         HomeController controller = new HomeController();
         ui = getAssetLoader().loadUI("Home.fxml", controller);
         getGameScene().addUI(ui);
+        // Create a rectangle representing the vector body
+        vector = new Rectangle(2, 2, Color.RED);
+        vector.setY(HEIGHT);
+        // Create the vector head as an equilateral triangle
+        double s = 12, h = s * Math.sqrt(3) / 2;
+        vectorHead = new Polygon(0, -h / 2, s / 2, h / 2, -s / 2, h / 2);
+        vectorHead.setFill(Color.RED);
+        getGameScene().addUINodes(vector, vectorHead);
     }
 
     /**
@@ -131,6 +144,28 @@ public class MainApp extends GameApplication {
         getGameScene().removeUI(ui);
         ui = getAssetLoader().loadUI(fxml, controller);
         getGameScene().addUI(ui);
+    }
+
+    /**
+     * Animates the vector representing the initial velocity by using the pythagorean theorem to find the
+     * hypotenuse and trigonometry to find the
+     *
+     * @param x the x position of the mouse
+     * @param y the y position of the mouse
+     */
+    public static void animateVector(double x, double y) {
+        // Y position of mouse is calculated from top of screen, so opp side corresponds to difference
+        double opp = HEIGHT - y;
+        // From pythagorean theorem: hyp^2 = opp^2 + adj^2
+        double hyp = Math.sqrt(Math.pow(opp, 2) + Math.pow(x, 2));
+        // From basic trigonometry: tan(angle) = opp / adj
+        double angle = Math.toDegrees(Math.atan(opp / x));
+
+        vector.setScaleY(hyp);
+        vector.setRotate(90 - angle);
+        vectorHead.setLayoutX(x);
+        vectorHead.setLayoutY(y + 2);
+        vectorHead.setRotate(90 - angle);
     }
 
     /**

@@ -1,5 +1,6 @@
 package edu.vanier.animals_revenge.actions;
 
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import edu.vanier.animals_revenge.MainApp;
@@ -7,6 +8,8 @@ import edu.vanier.animals_revenge.MainApp;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class LaunchAction extends UserAction {
+
+    Entity vector;
 
     boolean isLaunching = false;
 
@@ -27,7 +30,7 @@ public class LaunchAction extends UserAction {
     @Override
     protected void onAction() {
         if (isLaunching) {
-            // TODO Draw arrow
+            MainApp.animateVector(getInput().getMouseXWorld(), getInput().getMouseYWorld());
         }
     }
 
