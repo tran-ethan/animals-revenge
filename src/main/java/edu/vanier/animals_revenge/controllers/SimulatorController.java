@@ -77,7 +77,7 @@ public class SimulatorController implements UIController {
 
     @FXML
     public void launch() {
-        System.out.println("launching");
+        MainApp.launch();
     }
 
     @FXML

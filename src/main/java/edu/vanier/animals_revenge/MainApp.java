@@ -158,7 +158,7 @@ public class MainApp extends GameApplication {
         double opp = HEIGHT - y;
         // From pythagorean theorem: hyp^2 = opp^2 + adj^2
         double hyp = Math.sqrt(Math.pow(opp, 2) + Math.pow(x, 2));
-        // From basic trigonometry: tan(angle) = opp / adj
+        // From trigonometry: tan(angle) = opp / adj
         double angle = Math.toDegrees(Math.atan(opp / x));
 
         vector.setScaleY(hyp);
@@ -166,6 +166,20 @@ public class MainApp extends GameApplication {
         vectorHead.setLayoutX(x);
         vectorHead.setLayoutY(y + 2);
         vectorHead.setRotate(90 - angle);
+    }
+
+    /**
+     * Launches the projectile by calculating initial x and y velocity using velocity vector
+     */
+    public static void launch() {
+        double hyp = vector.getScaleY();
+        double angle = 90 - vector.getRotate();
+        // From trigonometry: cos(angle) = adj / hyp
+        double vX = Math.cos(Math.toRadians(angle)) * hyp;
+        // From trigonometry: sin(angle) = opp / hyp
+        double vY = Math.sin(Math.toRadians(angle)) * hyp;
+
+        spawn("projectile", new SpawnData(0, MainApp.HEIGHT).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
     }
 
     /**

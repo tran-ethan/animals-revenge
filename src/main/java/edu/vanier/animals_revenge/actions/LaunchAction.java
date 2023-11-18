@@ -1,6 +1,5 @@
 package edu.vanier.animals_revenge.actions;
 
-import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import edu.vanier.animals_revenge.MainApp;
@@ -8,8 +7,6 @@ import edu.vanier.animals_revenge.MainApp;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class LaunchAction extends UserAction {
-
-    Entity vector;
 
     boolean isLaunching = false;
 
@@ -36,13 +33,6 @@ public class LaunchAction extends UserAction {
 
     @Override
     protected void onActionEnd() {
-        if (isLaunching) {
-            double vX = getInput().getMouseXWorld();
-            double vY = MainApp.HEIGHT - getInput().getMouseYWorld();
-            
-            spawn("projectile", new SpawnData(0, MainApp.HEIGHT).put("vX", vX).put("vY", vY).put("imageFileName", "soccer.png"));
-            
-            isLaunching = false;
-        }
+        isLaunching = false;
     }
 }

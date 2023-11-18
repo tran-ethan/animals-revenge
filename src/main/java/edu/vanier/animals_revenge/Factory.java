@@ -43,7 +43,7 @@ public class Factory implements EntityFactory {
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
-        String img = data.get("imageFileName");
+        String img = data.get("img");
         
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
@@ -57,19 +57,20 @@ public class Factory implements EntityFactory {
     
     @Spawns("obstacle")
     public Entity spawnObstacle(SpawnData data) {
-    PhysicsComponent physics = new PhysicsComponent();
-    physics.setBodyType(BodyType.DYNAMIC);
-    physics.setFixtureDef(new FixtureDef().density(0.3f));
-    String imgFile = data.get("img");
-    
-    return FXGL.entityBuilder(data)
-            .at(data.getX(), data.getY())
-            .type(Type.OBSTACLE)
-            .view(imgFile)
-            .bbox(new HitBox(BoundingShape.box(64, 64)))
-            .with(physics)
-            .build();
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+        physics.setFixtureDef(new FixtureDef().density(0.3f));
+        String imgFile = data.get("img");
+
+        return FXGL.entityBuilder(data)
+                .at(data.getX(), data.getY())
+                .type(Type.OBSTACLE)
+                .view(imgFile)
+                .bbox(new HitBox(BoundingShape.box(64, 64)))
+                .with(physics)
+                .build();
     }
+
     @Spawns("wall")
     public Entity spawnWall(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
