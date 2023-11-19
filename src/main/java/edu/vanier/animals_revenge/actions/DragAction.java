@@ -4,7 +4,9 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.Type;
+import edu.vanier.animals_revenge.controllers.SimulatorController;
 import javafx.geometry.Rectangle2D;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -56,6 +58,13 @@ public class DragAction extends UserAction {
         double y = getInput().getMouseYWorld();
 
         if (newObstacle) {
+            String id = SimulatorController.getSelected().getId();
+            System.out.println(id);
+            int size = SimulatorController.getSize();
+            System.out.println(size);
+            int rotate = SimulatorController.getRotate();
+            System.out.println(rotate);
+            // TODO Spawn correct obstacle with correct size and rotation angle
             selected = spawn("obstacle", new SpawnData(x, y).put("img", "brick.png"));
             // Mouse offset to the middle of the spawned obstacle
             offsetX = selected.getWidth() / 2;

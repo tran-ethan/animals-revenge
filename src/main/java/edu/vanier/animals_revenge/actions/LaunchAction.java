@@ -1,6 +1,5 @@
 package edu.vanier.animals_revenge.actions;
 
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import edu.vanier.animals_revenge.MainApp;
 

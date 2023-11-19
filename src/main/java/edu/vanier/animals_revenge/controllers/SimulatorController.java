@@ -52,7 +52,11 @@ public class SimulatorController implements UIController {
     @FXML
     private Slider sizeSlider;
 
-    private StackPane selected;
+    private static StackPane selected;
+
+    private static int size = 1;
+
+    private static int rotate = 1;
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
@@ -78,6 +82,22 @@ public class SimulatorController implements UIController {
                 .map(node -> (Rectangle) node)
                 .findFirst()
                 .ifPresent(rectangle -> rectangle.setFill(brick));
+
+        // Add event listener for sliders
+        sizeSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            // Value should be only set after slider knob snaps to major unit tick
+            if (newValue.intValue() == newValue.doubleValue()) {
+                size = newValue.intValue();
+            }
+        }));
+
+        rotateSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            // Value should be only set after slider knob snaps to major unit tick
+            if (newValue.intValue() == newValue.doubleValue()) {
+                rotate = newValue.intValue();
+            }
+        }));
+
         logger.info("Initializing SimulatorController...");
     }
 
@@ -113,5 +133,17 @@ public class SimulatorController implements UIController {
             selected.setStyle("-fx-background-color: white");
             selected = source;
         }
+    }
+
+    public static StackPane getSelected() {
+        return selected;
+    }
+
+    public static int getSize() {
+        return size;
+    }
+
+    public static int getRotate() {
+        return rotate;
     }
 }

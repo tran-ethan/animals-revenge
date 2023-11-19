@@ -35,6 +35,7 @@ public class MainApp extends GameApplication {
     public final static double HEIGHT = 820;
 
     private static Rectangle vector;
+
     private static Polygon vectorHead;
 
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
@@ -61,13 +62,16 @@ public class MainApp extends GameApplication {
      */
     @Override
     protected void initUI() {
+        // Add home screen UI
         HomeController controller = new HomeController();
         ui = getAssetLoader().loadUI("Home.fxml", controller);
         getGameScene().addUI(ui);
-        // Create a rectangle representing the vector body
+
+        // Create a rectangle representing the velocity vector body
         vector = new Rectangle(2, 2, Color.RED);
         vector.setY(HEIGHT);
-        // Create the vector head as an equilateral triangle with side 12
+
+        // Create the vector head as an equilateral triangle with side 12px
         double s = 12, h = s * Math.sqrt(3) / 2;
         vectorHead = new Polygon(0, -h / 2, s / 2, h / 2, -s / 2, h / 2);
         vectorHead.setFill(Color.RED);
@@ -125,6 +129,10 @@ public class MainApp extends GameApplication {
 
     /**
      * Maps the corresponding user inputs to their respective actions.
+     * <p>
+     * Right-click and hold from launcher to create initial velocity vector.
+     * Left-click and hold to drag obstacles around.
+     * Hold CTRL + Left-click and hold to create new obstacle.
      */
     @Override
     protected void initInput() {
@@ -141,7 +149,9 @@ public class MainApp extends GameApplication {
      * @param controller the instance of the controller linked to the appropriate FXML file
      */
     public static void loadFXML(String fxml, UIController controller) {
+        // Remove existing UI layer to prevent stacking
         getGameScene().removeUI(ui);
+        // Load fxml and controller
         ui = getAssetLoader().loadUI(fxml, controller);
         getGameScene().addUI(ui);
     }
@@ -161,6 +171,7 @@ public class MainApp extends GameApplication {
         // From trigonometry: tan(angle) = opp / adj
         double angle = Math.toDegrees(Math.atan(opp / x));
 
+        // Set scale Y instead of height to scale from center point (0, HEIGHT) top and bottom
         vector.setScaleY(hyp);
         vector.setRotate(90 - angle);
         vectorHead.setLayoutX(x);
@@ -179,7 +190,8 @@ public class MainApp extends GameApplication {
         // From trigonometry: sin(angle) = opp / hyp
         double vY = Math.sin(Math.toRadians(angle)) * hyp;
 
-        spawn("projectile", new SpawnData(0, MainApp.HEIGHT).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
+        // TODO fix projectile spawn y location ( do not hard code 32, get obstacle height)
+        spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
     }
 
     /**
