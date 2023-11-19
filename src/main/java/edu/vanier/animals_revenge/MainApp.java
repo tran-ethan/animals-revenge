@@ -100,12 +100,12 @@ public class MainApp extends GameApplication {
         
         spawn("launcher", 0, HEIGHT - 80);
         
-        spawn("obstacle", new SpawnData(WIDTH - 500, HEIGHT - 65).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 65).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 700, HEIGHT - 65).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 550, HEIGHT - 130).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 650, HEIGHT - 130).put("img", "brick.png"));
-        spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 195).put("img", "brick.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 500, HEIGHT - 65).put("img", "brick32x32.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 65).put("img", "brick32x32.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 700, HEIGHT - 65).put("img", "brick32x32.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 550, HEIGHT - 130).put("img", "brick32x32.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 650, HEIGHT - 130).put("img", "brick32x32.png"));
+        spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 195).put("img", "brick32x32.png"));
 
     }
 

@@ -63,7 +63,7 @@ public class SimulatorController implements UIController {
     @Override
     public void init() {
         MainApp.initGameObjects();
-        ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick.png"));
+        ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick32x32.png"));
         selected = square1;
 
         square1.getChildren().

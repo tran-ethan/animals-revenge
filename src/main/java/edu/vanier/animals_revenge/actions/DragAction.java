@@ -65,7 +65,7 @@ public class DragAction extends UserAction {
             int rotate = SimulatorController.getRotate();
             System.out.println(rotate);
             // TODO Spawn correct obstacle with correct size and rotation angle
-            selected = spawn("obstacle", new SpawnData(x, y).put("img", "brick.png"));
+            selected = spawn("obstacle", new SpawnData(x, y).put("img", "brick32x32.png"));
             // Mouse offset to the middle of the spawned obstacle
             offsetX = selected.getWidth() / 2;
             offsetY = selected.getHeight() / 2;
