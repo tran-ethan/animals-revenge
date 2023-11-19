@@ -67,7 +67,7 @@ public class MainApp extends GameApplication {
         // Create a rectangle representing the vector body
         vector = new Rectangle(2, 2, Color.RED);
         vector.setY(HEIGHT);
-        // Create the vector head as an equilateral triangle
+        // Create the vector head as an equilateral triangle with side 12
         double s = 12, h = s * Math.sqrt(3) / 2;
         vectorHead = new Polygon(0, -h / 2, s / 2, h / 2, -s / 2, h / 2);
         vectorHead.setFill(Color.RED);
@@ -118,7 +118,7 @@ public class MainApp extends GameApplication {
                 .buildScreenBounds(150);
 
         spawn("wall", new SpawnData(0, 0).put("width", WIDTH).put("height", 65.0));
-        spawn("wall", new SpawnData(WIDTH - 397, 0).put("width", 397.0).put("height", HEIGHT));
+        spawn("wall", new SpawnData(WIDTH - 350.0, 0).put("width", 350.0).put("height", HEIGHT));
 
         getGameWorld().addEntity(walls);
     }
@@ -148,7 +148,7 @@ public class MainApp extends GameApplication {
 
     /**
      * Animates the vector representing the initial velocity by using the pythagorean theorem to find the
-     * hypotenuse and trigonometry to find the
+     * hypotenuse and trigonometry to find the angle of rotation
      *
      * @param x the x position of the mouse
      * @param y the y position of the mouse

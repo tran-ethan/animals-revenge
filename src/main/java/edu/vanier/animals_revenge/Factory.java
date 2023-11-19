@@ -49,7 +49,7 @@ public class Factory implements EntityFactory {
                 .at(data.getX(), data.getY())
                 .type(Type.PROJECTILE)
                 .view(img)
-                .bbox(new HitBox(BoundingShape.circle(32)))
+                .bbox(new HitBox(BoundingShape.circle(16)))
                 .with(physics)
                 .with(new DraggableComponent())
                 .build();
@@ -66,7 +66,7 @@ public class Factory implements EntityFactory {
                 .at(data.getX(), data.getY())
                 .type(Type.OBSTACLE)
                 .view(imgFile)
-                .bbox(new HitBox(BoundingShape.box(64, 64)))
+                .bbox(new HitBox(BoundingShape.box(32, 32)))
                 .with(physics)
                 .build();
     }

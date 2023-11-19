@@ -4,8 +4,10 @@ import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
 import javafx.fxml.FXML;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -15,44 +17,67 @@ import org.slf4j.LoggerFactory;
 public class SimulatorController implements UIController {
 
     @FXML
-    private Circle circle1;
+    private StackPane circle1;
 
     @FXML
-    private Circle circle2;
+    private StackPane circle2;
 
     @FXML
-    private Circle circle3;
+    private StackPane circle3;
 
     @FXML
-    private Rectangle square1;
+    private StackPane square1;
 
     @FXML
-    private Rectangle square2;
+    private StackPane square2;
 
     @FXML
-    private Rectangle square3;
+    private StackPane square3;
 
     @FXML
-    private Rectangle rectangle1;
+    private StackPane rectangle1;
 
     @FXML
-    private Rectangle rectangle2;
+    private StackPane rectangle2;
 
     @FXML
-    private Rectangle rectangle3;
+    private StackPane rectangle3;
 
     @FXML
     private FontAwesomeIconView playPauseIcon;
+
+    @FXML
+    private Slider rotateSlider;
+
+    @FXML
+    private Slider sizeSlider;
+
+    private StackPane selected;
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
     @Override
     public void init() {
         MainApp.initGameObjects();
-        square1.setFill(new ImagePattern(new Image("/assets/textures/brick.png")));
-        circle1.setFill(new ImagePattern(new Image("/assets/textures/brick.png")));
+        ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick.png"));
+        selected = square1;
+
+        square1.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(brick));
+        circle1.getChildren().
+                stream()
+                .map(node -> (Circle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(brick));
         // TODO fix image pattern squeeze
-        rectangle1.setFill(new ImagePattern(new Image("/assets/textures/brick.png")));
+        rectangle1.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(brick));
         logger.info("Initializing SimulatorController...");
     }
 
@@ -81,7 +106,12 @@ public class SimulatorController implements UIController {
     }
 
     @FXML
-    void spawnObstacle(MouseEvent event) {
-        System.out.println("spawning obstacle");
+    void select(MouseEvent event) {
+        StackPane source = (StackPane) event.getSource();
+        if (selected != source) {
+            source.setStyle("-fx-background-color: lightgray");
+            selected.setStyle("-fx-background-color: white");
+            selected = source;
+        }
     }
 }

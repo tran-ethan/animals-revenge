@@ -57,6 +57,9 @@ public class DragAction extends UserAction {
 
         if (newObstacle) {
             selected = spawn("obstacle", new SpawnData(x, y).put("img", "brick.png"));
+            // Mouse offset to the middle of the spawned obstacle
+            offsetX = selected.getWidth() / 2;
+            offsetY = selected.getHeight() / 2;
         } else {
             getGameWorld().getEntitiesInRange(new Rectangle2D(x - 1.0, y - 1.0, 2.0, 2.0))
                     .stream()
@@ -64,6 +67,7 @@ public class DragAction extends UserAction {
                     .findFirst()
                     .ifPresent(entity -> {
                         selected = entity;
+                        // Mouse offset to the position mouse at which it initiated the drag
                         offsetX = x - selected.getX();
                         offsetY = y - selected.getY();
                     });
