@@ -4,10 +4,16 @@ package edu.vanier.animals_revenge.controllers;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
+import edu.vanier.animals_revenge.models.CustomProjectile;
+import edu.vanier.animals_revenge.windows.CustomProjectileSelectionUI;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -170,13 +176,21 @@ public class SimulatorController implements UIController {
         }
     }
 
+    @FXML
+    void selectProjectile(ActionEvent event) throws Exception {
+
+        CustomProjectileSelectionUI ui = new CustomProjectileSelectionUI();
+        ui.show();
+        
+    }
+
     public static StackPane getSelected() {
         return selected;
     }
 
     public static int getSize() {
         return size;
-    }
+}
 
     public static int getRotate() {
         return rotate;
