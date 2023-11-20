@@ -1,3 +1,4 @@
+
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
@@ -64,6 +65,8 @@ public class SimulatorController implements UIController {
     public void init() {
         MainApp.initGameObjects();
         ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick32x32.png"));
+        ImagePattern dirt = new ImagePattern(new Image("/assets/textures/dirt32x32.png"));
+        ImagePattern wood = new ImagePattern(new Image("/assets/textures/wood32x32.png"));
         selected = square1;
 
         square1.getChildren().
@@ -82,6 +85,38 @@ public class SimulatorController implements UIController {
                 .map(node -> (Rectangle) node)
                 .findFirst()
                 .ifPresent(rectangle -> rectangle.setFill(brick));
+        square2.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(dirt));
+        circle2.getChildren().
+                stream()
+                .map(node -> (Circle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(dirt));
+        // TODO fix image pattern squeeze
+        rectangle2.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(dirt));
+        square3.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(wood));
+        circle3.getChildren().
+                stream()
+                .map(node -> (Circle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(wood));
+        // TODO fix image pattern squeeze
+        rectangle3.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(rectangle -> rectangle.setFill(wood));
 
         // Add event listener for sliders
         sizeSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
