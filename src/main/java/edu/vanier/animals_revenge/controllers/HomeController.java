@@ -27,10 +27,7 @@ public class HomeController implements UIController {
     private Button btnCustomProjectile;
     
     @FXML
-    private Button btnVisualSettings;
-    
-    @FXML
-    private Button btnSoundSettings;
+    private Button btnSettings;
 
     @Override
     public void init() {
@@ -48,10 +45,8 @@ public class HomeController implements UIController {
             System.out.println("TODO");
         } else if (clickButton == btnCustomProjectile) {
             MainApp.loadFXML("CustomProjectile.fxml", new CustomProjectileController());
-        } else if (clickButton == btnVisualSettings) {
-            System.out.println("TODO");
-        } else if (clickButton == btnSoundSettings) {
-            System.out.println("TODO");
+        } else if (clickButton == btnSettings) {
+            MainApp.loadFXML("Settings.fxml", new SettingsController());
         }
     }
 }
