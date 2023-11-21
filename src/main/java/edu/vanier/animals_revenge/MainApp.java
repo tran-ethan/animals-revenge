@@ -199,15 +199,23 @@ public class MainApp extends GameApplication {
         if(s != null) {
             System.out.println(s.getColour() + " " + s.getHeight() + " " + s.getImgPath());
             
-            
-            System.out.println("amwdlakwmdlkawmlkdmawlkdm");
-            System.out.println(s.getShapeHeight());
-            
-            spawn("customProjectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+            if (s.getImgPath() != null) {
+                spawn("customProjectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
+                    .put("colour", s.getColour())
                     .put("img", s.getImgPath())
                     .put("width", s.getShapeWidth())
                     .put("height", s.getShapeHeight()));
+            } else {
+                spawn("customProjectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                    .put("vY", vY)
+                    .put("img", "null")
+                    .put("colour", s.getColour())
+                    .put("width", s.getShapeWidth())
+                    .put("height", s.getShapeHeight()));
+            }
+            
+            
             
         } else if (c != null) {
             System.out.println("This is a circle projectile");

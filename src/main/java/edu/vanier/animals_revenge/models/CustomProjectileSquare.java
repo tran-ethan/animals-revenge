@@ -34,6 +34,12 @@ public class CustomProjectileSquare extends CustomProjectile{
         this.imgPath = imgPath;
     }
     
+    public CustomProjectileSquare(double width, double height, String colour) {
+        this.ShapeWidth = width;
+        this.ShapeHeight = height;
+        this.colour = colour;
+    }
+    
     
 
     public double getShapeWidth() {

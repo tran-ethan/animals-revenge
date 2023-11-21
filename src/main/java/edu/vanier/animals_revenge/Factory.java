@@ -12,27 +12,29 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.texture.Texture;
+import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Factory implements EntityFactory {
-    
+
     @Spawns("projectile")
     public Entity spawnProjectile(SpawnData data) {
         double vX = data.get("vX");
         double vY = data.get("vY");
 
-        
-        
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
         String imgPath = data.get("img");
-        
+
         Image image = new Image("file:" + imgPath);
-        
+
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.PROJECTILE)
@@ -42,42 +44,63 @@ public class Factory implements EntityFactory {
                 .with(new DraggableComponent())
                 .build();
     }
-    
+
     @Spawns("customProjectile")
     public Entity spawnCustomProjectile(SpawnData data) {
-         double vX = data.get("vX");
+        double vX = data.get("vX");
         double vY = data.get("vY");
 
-        
-        
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
-        String imgPath = data.get("img");
-        
-        Image image = new Image("file:" + imgPath);
-        
-        System.out.println(image.getHeight());
-        
-        ImageView imgView = new ImageView(image);
-        
-        imgView.setFitHeight(data.get("height"));
-        imgView.setFitWidth(data.get("width"));
-        
-        System.out.println("after setting size: " + imgView.getFitHeight());
-        
-        return FXGL.entityBuilder(data)
-                .at(data.getX(), data.getY())
-                .type(Type.PROJECTILE)
-                .view(imgView)
-                .bbox(new HitBox(BoundingShape.circle(14)))
-                .with(physics)
-                .with(new DraggableComponent())
-                .build();
+        if (data.get("img") != "null") {
+            
+            CustomProjectileSquare squareProjectile = new CustomProjectileSquare(
+                    data.get("width"),
+                    data.get("height"),
+                    data.get("colour"),
+                    data.get("img"));
+            
+            String imgPath = data.get("img");
+            Image image = new Image("file:" + imgPath);
+
+            System.out.println(image.getHeight());
+
+            ImageView imgView = new ImageView(image);
+
+            imgView.setFitHeight(data.get("height"));
+            imgView.setFitWidth(data.get("width"));
+
+            return FXGL.entityBuilder(data)
+                    .at(data.getX(), data.getY())
+                    .type(Type.PROJECTILE)
+                    .view(imgView)
+                    .bbox(new HitBox(BoundingShape.circle(14)))
+                    .with(physics)
+                    .with(new DraggableComponent())
+                    .build();
+        } else {
+            
+            Rectangle rect = new Rectangle(data.get("width"), data.get("height"));
+            
+            
+            
+            rect.setFill(Color.web(data.get("colour")));
+            
+            return FXGL.entityBuilder(data)
+                    .at(data.getX(), data.getY())
+                    .type(Type.PROJECTILE)
+                    .view(rect)
+                    .bbox(new HitBox(BoundingShape.circle(14)))
+                    .with(physics)
+                    .with(new DraggableComponent())
+                    .build();
+        }
+
     }
-    
+
     @Spawns("obstacle")
     public Entity spawnObstacle(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();

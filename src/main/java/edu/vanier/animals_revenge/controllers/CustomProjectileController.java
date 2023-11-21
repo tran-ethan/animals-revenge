@@ -51,6 +51,8 @@ public class CustomProjectileController implements UIController, Serializable {
     static Color borderColor = Color.RED;
     
     File SelectedImgFile;
+    
+    CustomProjectileSquare squareProjectile;
 
     @FXML
     private Circle circleCopy;
@@ -127,10 +129,13 @@ public class CustomProjectileController implements UIController, Serializable {
             double width = squareCopy.getWidth();
             double height = squareCopy.getHeight();
             String StringColor = color.toString().replace("0x", "");
-            String imgPath = SelectedImgFile.getAbsolutePath();
             
-            System.out.println(imgPath);
-            CustomProjectileSquare squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+            if(SelectedImgFile != null) {
+                String imgPath = SelectedImgFile.getAbsolutePath();
+                squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+            } else {
+                squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+            }
 
             serialize(file.getAbsolutePath(), squareProjectile);
 
