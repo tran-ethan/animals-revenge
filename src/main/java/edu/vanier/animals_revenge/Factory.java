@@ -11,33 +11,21 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+import edu.vanier.animals_revenge.controllers.CustomProjectileController;
+import edu.vanier.animals_revenge.models.CustomProjectile;
+import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import java.io.File;
+import javafx.stage.FileChooser;
 
 public class Factory implements EntityFactory {
-
-    /*@Spawns("projectile")
-    public Entity spawnProjectile(SpawnData data) {
-    double vX = data.get("vX");
-    double vY = data.get("vY");
     
-    PhysicsComponent physics = new PhysicsComponent();
-    physics.setBodyType(BodyType.DYNAMIC);
-    physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
-    physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
-    
-    return FXGL.entityBuilder(data)
-    .at(data.getX(), data.getY())
-    .type(Type.PROJECTILE)
-    .view("soccer.png")
-    .bbox(new HitBox(BoundingShape.circle(32)))
-    .with(physics)
-    .with(new DraggableComponent())
-    .build();
-    }*/
     @Spawns("projectile")
     public Entity spawnProjectile(SpawnData data) {
         double vX = data.get("vX");
         double vY = data.get("vY");
 
+        
+        
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));

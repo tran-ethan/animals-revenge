@@ -4,16 +4,10 @@
  */
 package edu.vanier.animals_revenge.models;
 
-import java.io.Serializable;
-
-
 /**
  *
  * @author macke
  */
-public class CustomProjectile implements Serializable {
-
-    private static final long serialVersionUID = 1597950689045739892L;
-
-    private double size;
+public class CustomProjectileCircle extends CustomProjectile{
+    
 }

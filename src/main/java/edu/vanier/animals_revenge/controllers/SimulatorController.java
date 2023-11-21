@@ -4,7 +4,6 @@ package edu.vanier.animals_revenge.controllers;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
-import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.windows.CustomProjectileSelectionUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

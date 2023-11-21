@@ -7,6 +7,8 @@ package edu.vanier.animals_revenge.controllers;
 import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
+import edu.vanier.animals_revenge.models.CustomProjectileCircle;
+import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -99,26 +102,14 @@ public class CustomProjectileController implements UIController, Serializable {
     private ImageView imgOnPoly;
 
     @FXML
-    void SaveChanges(ActionEvent event) {
-
+    void SaveChanges(ActionEvent event) throws MalformedURLException {
+        
+        
+        
         Shape shape = null;
         double size;
         Color color;
         Image img;
-
-        if (squareCopy.isVisible()) {
-            shape = triangleCopy;
-        } else if (circleCopy.isVisible()) {
-            shape = circleCopy;
-        } else if (triangleCopy.isVisible()) {
-            shape = triangleCopy;
-        }
-
-        size = Double.valueOf(sizeTXT.getText());
-        color = ColourPicker.getValue();
-        img = imgOnPoly.getImage();
-
-        CustomProjectile projectile = new CustomProjectile(shape, size, color, img);
         
         FileChooser fileSelection = new FileChooser();
         
@@ -128,11 +119,43 @@ public class CustomProjectileController implements UIController, Serializable {
 
         File file = fileSelection.showSaveDialog(null);
         
-        serialize(file.getAbsolutePath(), projectile);
+        if (squareCopy.isVisible()) {
+            shape = squareCopy;
+        } else if (circleCopy.isVisible()) {
+            shape = circleCopy;
+        } else if (triangleCopy.isVisible()) {
+            shape = triangleCopy;
+        }
+
+        size = Double.valueOf(sizeTXT.getText());
+        color = ColourPicker.getValue();
+        img = imgOnPoly.getImage();
+        
+        
+        
+        if (shape == squareCopy) {
+            
+            double width = squareCopy.getWidth();
+            double height = squareCopy.getHeight();
+            String StringColor = color.toString();
+            String imgPath = new File(img.getUrl()).toURI().toURL().toString();
+            
+            CustomProjectileSquare squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+            
+            serialize(file.getAbsolutePath(), squareProjectile);
+            
+        } else if (shape == circleCopy) {
+            
+            CustomProjectile CircleProjectile = new CustomProjectileCircle();
+            
+            
+        } else if (shape == triangleCopy) {
+            CustomProjectile TriangleProjectile = new CustomProjectile();
+        }
         
     }
     
-    public static void serialize(String filePath, CustomProjectile p) {
+    public static void serialize(String filePath, CustomProjectileSquare p) {
         
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
             o.writeObject(p);
@@ -142,12 +165,15 @@ public class CustomProjectileController implements UIController, Serializable {
         
     }
     
-    public static CustomProjectile deserialize(String filePath) {
+    public static CustomProjectileSquare deserialize(String filePath) {
         try (ObjectInputStream o = new ObjectInputStream(new FileInputStream(filePath))) {
+            
             Object obj = o.readObject();
             
+            
+            
             if (obj instanceof CustomProjectile) {
-                return (CustomProjectile)obj;
+                return (CustomProjectileSquare)obj;
             }
             
         } catch (IOException | ClassNotFoundException e ) {
