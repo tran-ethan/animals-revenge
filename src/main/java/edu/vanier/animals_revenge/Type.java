@@ -5,5 +5,5 @@ package edu.vanier.animals_revenge;
  * This enum will be used to select entities by their type.
  */
 public enum Type {
-    PROJECTILE, OBSTACLE, PLATFORM, WALL, LAUNCHER
+    PROJECTILE, CUSTOM_PROJECTILE, OBSTACLE, PLATFORM, WALL, LAUNCHER
 }

@@ -1,27 +1,45 @@
-
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
-import edu.vanier.animals_revenge.windows.CustomProjectileSelectionUI;
+import edu.vanier.animals_revenge.models.CustomProjectile;
+import edu.vanier.animals_revenge.models.CustomProjectileCircle;
+import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulatorController implements UIController {
 
+    CustomProjectile projectile;
+
+    private boolean BTNCustomHasBeenPressed;
+    
+    private Stage stage;
+    
+    private CustomProjectileCircle circle;
+    
+    private CustomProjectileSquare square;
+    
+    private CustomProjectileTriangle triangle;
+
+    @FXML
+    private Button BTNCustom;
+    
     @FXML
     private StackPane circle1;
 
@@ -162,7 +180,7 @@ public class SimulatorController implements UIController {
 
     @FXML
     public void launch() {
-        MainApp.launch();
+        MainApp.launch(square, circle, triangle);
     }
 
     @FXML
@@ -178,20 +196,84 @@ public class SimulatorController implements UIController {
     @FXML
     void selectProjectile(ActionEvent event) throws Exception {
 
-        CustomProjectileSelectionUI ui = new CustomProjectileSelectionUI();
-        ui.show();
-        
+        FileChooser fileChooser = new FileChooser();
+
+        File file = fileChooser.showOpenDialog(null);
+
+        CustomProjectile Projectile = (CustomProjectile) CustomProjectileController.deserialize(file.getAbsolutePath());
+
+        System.out.println(Projectile.getClass().getSimpleName());
+
+        if (Projectile instanceof CustomProjectileCircle) {
+
+            circle = (CustomProjectileCircle)Projectile;
+            
+            System.out.println(circle.getImgPath());
+            System.out.println("This is a circle");
+
+        } else if (Projectile instanceof CustomProjectileSquare) {
+
+            square = (CustomProjectileSquare)Projectile;
+            
+            
+            System.out.println(square.getImgPath());
+            
+            System.out.println("This is a square, its color is " + square.getColour() + "Its width is " +
+                    
+                    square.getWidth()
+                    + " Its height is: " + square.getHeight()
+                    
+            );
+
+        } else {
+            
+            triangle = (CustomProjectileTriangle)Projectile;
+            
+            System.out.println(triangle.getImgPath());
+            System.out.println("This is a triangle");
+            
+            
+        }
+
     }
 
+    
     public static StackPane getSelected() {
         return selected;
     }
 
     public static int getSize() {
         return size;
-}
+    }
 
     public static int getRotate() {
         return rotate;
     }
+
+    public CustomProjectileCircle getCircle() {
+        return circle;
+    }
+
+    public void setCircle(CustomProjectileCircle circle) {
+        this.circle = circle;
+    }
+
+    public CustomProjectileSquare getSquare() {
+        return square;
+    }
+
+    public void setSquare(CustomProjectileSquare square) {
+        this.square = square;
+    }
+
+    public CustomProjectileTriangle getTriangle() {
+        return triangle;
+    }
+
+    public void setTriangle(CustomProjectileTriangle triangle) {
+        this.triangle = triangle;
+    }
+    
+    
+    
 }

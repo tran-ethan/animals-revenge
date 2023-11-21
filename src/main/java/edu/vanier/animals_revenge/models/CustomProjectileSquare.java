@@ -4,46 +4,61 @@
  */
 package edu.vanier.animals_revenge.models;
 
-import java.io.Serializable;
+import javafx.scene.image.Image;
 
 /**
  *
  * @author macke
  */
-public class CustomProjectileSquare extends CustomProjectile implements Serializable{
+public class CustomProjectileSquare extends CustomProjectile{
     
     private static final long serialVersionUID = 1597950689045739892L;
     
-    private double width;
+    private double ShapeWidth;
     
-    private double height;
+    private double ShapeHeight;
     
     private String colour;
     
     private String imgPath;
+
+    public CustomProjectileSquare() {
+    }
+    
     
     
     public CustomProjectileSquare(double width, double height, String colour, String imgPath) {
-        this.width = width;
-        this.height = height;
+        this.ShapeWidth = width;
+        this.ShapeHeight = height;
         this.colour = colour;
         this.imgPath = imgPath;
     }
+    
+    
 
-    public double getWidth() {
-        return width;
+    public double getShapeWidth() {
+        return ShapeWidth;
     }
 
+    public void setShapeWidth(double ShapeWidth) {
+        this.ShapeWidth = ShapeWidth;
+    }
+
+    public double getShapeHeight() {
+        return ShapeHeight;
+    }
+
+    public void setShapeHeight(double ShapeHeight) {
+        this.ShapeHeight = ShapeHeight;
+    }
+
+    
     public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
+        this.ShapeWidth = width;
     }
 
     public void setHeight(double height) {
-        this.height = height;
+        this.ShapeHeight = height;
     }
 
     public String getColour() {
@@ -54,10 +69,12 @@ public class CustomProjectileSquare extends CustomProjectile implements Serializ
         this.colour = colour;
     }
 
+    
     public String getImgPath() {
         return imgPath;
     }
 
+   
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }

@@ -9,6 +9,7 @@ import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,7 +29,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -49,6 +49,8 @@ public class CustomProjectileController implements UIController, Serializable {
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
     static Color borderColor = Color.RED;
+    
+    File SelectedImgFile;
 
     @FXML
     private Circle circleCopy;
@@ -90,100 +92,94 @@ public class CustomProjectileController implements UIController, Serializable {
     private Label LBLwarning;
 
     @FXML
-    private HBox circleHbox;
-
-    @FXML
-    private HBox rectHbox;
-
-    @FXML
-    private HBox triangleHbox;
-
-    @FXML
-    private ImageView imgOnPoly;
-
-    @FXML
     void SaveChanges(ActionEvent event) throws MalformedURLException {
-        
-        
-        
+
         Shape shape = null;
         double size;
         Color color;
         Image img;
-        
+
         FileChooser fileSelection = new FileChooser();
-        
+
         fileSelection.setInitialFileName("myCustomProjectile");
-        
+
         fileSelection.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Object file", "*obj"), new FileChooser.ExtensionFilter("All Files", "*"));
 
         File file = fileSelection.showSaveDialog(null);
-        
+
         if (squareCopy.isVisible()) {
             shape = squareCopy;
         } else if (circleCopy.isVisible()) {
             shape = circleCopy;
         } else if (triangleCopy.isVisible()) {
+
             shape = triangleCopy;
         }
 
         size = Double.valueOf(sizeTXT.getText());
         color = ColourPicker.getValue();
-        img = imgOnPoly.getImage();
         
         
         
+
         if (shape == squareCopy) {
             
             double width = squareCopy.getWidth();
             double height = squareCopy.getHeight();
-            String StringColor = color.toString();
-            String imgPath = new File(img.getUrl()).toURI().toURL().toString();
+            String StringColor = color.toString().replace("0x", "");
+            String imgPath = SelectedImgFile.getAbsolutePath();
             
+            System.out.println(imgPath);
             CustomProjectileSquare squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
-            
+
             serialize(file.getAbsolutePath(), squareProjectile);
-            
+
         } else if (shape == circleCopy) {
-            
+
             CustomProjectile CircleProjectile = new CustomProjectileCircle();
-            
+
+            serialize(file.getAbsolutePath(), CircleProjectile);
             
         } else if (shape == triangleCopy) {
-            CustomProjectile TriangleProjectile = new CustomProjectile();
+            CustomProjectile TriangleProjectile = new CustomProjectileTriangle();
+            serialize(file.getAbsolutePath(), TriangleProjectile);
+            
         }
-        
+
     }
-    
-    public static void serialize(String filePath, CustomProjectileSquare p) {
-        
+
+    public static void serialize(String filePath, CustomProjectile p) {
+
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
             o.writeObject(p);
         } catch (IOException e) {
             System.out.println("Error during serilization process");
         }
-        
+
     }
-    
-    public static CustomProjectileSquare deserialize(String filePath) {
+
+    public static CustomProjectile deserialize(String filePath) {
+
         try (ObjectInputStream o = new ObjectInputStream(new FileInputStream(filePath))) {
-            
+
             Object obj = o.readObject();
+
+            System.out.println(obj.getClass().getSimpleName());
             
-            
-            
-            if (obj instanceof CustomProjectile) {
-                return (CustomProjectileSquare)obj;
+            if (obj instanceof CustomProjectileSquare) {
+                return (CustomProjectileSquare) obj;
+            } else if (obj instanceof CustomProjectileCircle) {
+                return (CustomProjectileCircle) obj;
+            } else {
+                return (CustomProjectileTriangle) obj;
             }
-            
-        } catch (IOException | ClassNotFoundException e ) {
-            
+
+        } catch (IOException | ClassNotFoundException e) {
+
             System.out.println("Error during deserilization process");
             e.printStackTrace();
         }
-        
-        System.out.println("akwd");
-        
+
         return null;
     }
 
@@ -210,12 +206,11 @@ public class CustomProjectileController implements UIController, Serializable {
         );
 
         // Show the file chooser dialog
-        File SelectedFile = fileChooser.showOpenDialog(new Stage());
-        
+        SelectedImgFile = fileChooser.showOpenDialog(new Stage());
 
-        if (SelectedFile != null) {
+        if (SelectedImgFile != null) {
             // Load the selected image
-            Image selectedImage = new Image(SelectedFile.getAbsolutePath());
+            Image selectedImage = new Image(SelectedImgFile.getAbsolutePath());
 
             // Set the ImagePattern based on the selected image for the visible shape
             if (squareCopy.isVisible()) {
@@ -364,11 +359,10 @@ public class CustomProjectileController implements UIController, Serializable {
         triangle.setStroke(Color.BLACK);
     }
 
-
     @Override
     public void init() {
-
-        imgOnPoly.setVisible(false);
+        
+        
         LBLwarning.setVisible(false);
 
         double centerX = MainApp.WIDTH / 2;

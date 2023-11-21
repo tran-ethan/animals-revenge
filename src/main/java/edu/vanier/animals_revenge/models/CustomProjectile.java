@@ -4,6 +4,7 @@
  */
 package edu.vanier.animals_revenge.models;
 
+import com.almasb.fxgl.entity.Entity;
 import java.io.Serializable;
 
 
@@ -11,9 +12,8 @@ import java.io.Serializable;
  *
  * @author macke
  */
-public class CustomProjectile implements Serializable {
+public class CustomProjectile extends Entity implements Serializable {
 
-    private static final long serialVersionUID = 1597950689045739892L;
-
-    private double size;
+    private static final long serialVersionUID = 1597950689045739892L;  
+    
 }

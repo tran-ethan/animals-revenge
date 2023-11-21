@@ -19,6 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+import edu.vanier.animals_revenge.models.CustomProjectileCircle;
+import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
 
 /**
  * Main entry point of the FXGL application.
@@ -181,17 +184,45 @@ public class MainApp extends GameApplication {
 
     /**
      * Launches the projectile by calculating initial x and y velocity using velocity vector
+     * @param s
+     * @param c
+     * @param t
      */
-    public static void launch() {
+    public static void launch(CustomProjectileSquare s, CustomProjectileCircle c, CustomProjectileTriangle t) {
         double hyp = vector.getScaleY();
         double angle = 90 - vector.getRotate();
         // From trigonometry: cos(angle) = adj / hyp
         double vX = Math.cos(Math.toRadians(angle)) * hyp;
         // From trigonometry: sin(angle) = opp / hyp
         double vY = Math.sin(Math.toRadians(angle)) * hyp;
-
+        
+        if(s != null) {
+            System.out.println(s.getColour() + " " + s.getHeight() + " " + s.getImgPath());
+            
+            
+            System.out.println("amwdlakwmdlkawmlkdmawlkdm");
+            System.out.println(s.getShapeHeight());
+            
+            spawn("customProjectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                    .put("vY", vY)
+                    .put("img", s.getImgPath())
+                    .put("width", s.getShapeWidth())
+                    .put("height", s.getShapeHeight()));
+            
+        } else if (c != null) {
+            System.out.println("This is a circle projectile");
+        } else if (t != null) {
+            System.out.println("This is a triangle projectile");
+        } else {
+            System.out.println("an error has occured");
+            spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                    .put("vY", vY)
+                    .put("img", "soccer.png"));
+        }
+        
+        
         // TODO fix projectile spawn y location ( do not hard code 32, get obstacle height)
-        spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
+        //spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
     }
 
     /**
