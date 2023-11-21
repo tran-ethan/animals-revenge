@@ -2,22 +2,20 @@ package edu.vanier.animals_revenge;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.DraggableComponent;
-import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
-import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-import com.almasb.fxgl.texture.Texture;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Factory implements EntityFactory {
 
@@ -56,13 +54,13 @@ public class Factory implements EntityFactory {
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
         if (data.get("img") != "null") {
-            
+
             CustomProjectileSquare squareProjectile = new CustomProjectileSquare(
                     data.get("width"),
                     data.get("height"),
                     data.get("colour"),
                     data.get("img"));
-            
+
             String imgPath = data.get("img");
             Image image = new Image("file:" + imgPath);
 
@@ -72,28 +70,29 @@ public class Factory implements EntityFactory {
 
             imgView.setFitHeight(data.get("height"));
             imgView.setFitWidth(data.get("width"));
-
+            
+            double imageWidth = imgView.getFitWidth();
+            double imageHeight = imgView.getFitHeight();
+            
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
                     .type(Type.PROJECTILE)
                     .view(imgView)
-                    .bbox(new HitBox(BoundingShape.circle(14)))
+                    .bbox(new HitBox(BoundingShape.box(imageWidth, imageHeight)))
                     .with(physics)
                     .with(new DraggableComponent())
                     .build();
         } else {
-            
+
             Rectangle rect = new Rectangle(data.get("width"), data.get("height"));
-            
-            
-            
+
             rect.setFill(Color.web(data.get("colour")));
-            
+
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
                     .type(Type.PROJECTILE)
                     .view(rect)
-                    .bbox(new HitBox(BoundingShape.circle(14)))
+                    .bbox(new HitBox(BoundingShape.box(rect.getWidth(), rect.getHeight())))
                     .with(physics)
                     .with(new DraggableComponent())
                     .build();

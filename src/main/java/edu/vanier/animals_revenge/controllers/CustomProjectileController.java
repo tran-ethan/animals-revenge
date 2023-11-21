@@ -26,7 +26,6 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -120,9 +119,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
         size = Double.valueOf(sizeTXT.getText());
         color = ColourPicker.getValue();
-        
-        
-        
 
         if (shape == squareCopy) {
             
