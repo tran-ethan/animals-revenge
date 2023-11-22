@@ -7,6 +7,7 @@ import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
+import edu.vanier.animals_revenge.windows.graphs;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -237,7 +238,6 @@ public class SimulatorController implements UIController {
         }
 
     }
-
     
     public static StackPane getSelected() {
         return selected;
