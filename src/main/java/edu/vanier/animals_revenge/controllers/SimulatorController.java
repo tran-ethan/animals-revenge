@@ -209,6 +209,7 @@ public class SimulatorController implements UIController {
             circle = (CustomProjectileCircle)Projectile;
             
             System.out.println(circle.getImgPath());
+            
             System.out.println("This is a circle");
 
         } else if (Projectile instanceof CustomProjectileSquare) {

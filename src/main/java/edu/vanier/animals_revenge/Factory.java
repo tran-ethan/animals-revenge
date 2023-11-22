@@ -14,8 +14,11 @@ import javafx.scene.shape.Rectangle;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 public class Factory implements EntityFactory {
 
@@ -43,8 +46,8 @@ public class Factory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("customProjectile")
-    public Entity spawnCustomProjectile(SpawnData data) {
+    @Spawns("customProjectileSquare")
+    public Entity spawnCustomProjectileSquare(SpawnData data) {
         double vX = data.get("vX");
         double vY = data.get("vY");
 
@@ -70,13 +73,13 @@ public class Factory implements EntityFactory {
 
             imgView.setFitHeight(data.get("height"));
             imgView.setFitWidth(data.get("width"));
-            
+
             double imageWidth = imgView.getFitWidth();
             double imageHeight = imgView.getFitHeight();
-            
+
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
-                    .type(Type.PROJECTILE)
+                    .type(Type.CUSTOM_PROJECTILE)
                     .view(imgView)
                     .bbox(new HitBox(BoundingShape.box(imageWidth, imageHeight)))
                     .with(physics)
@@ -98,6 +101,64 @@ public class Factory implements EntityFactory {
                     .build();
         }
 
+    }
+
+    @Spawns("customProjectileCircle")
+    public Entity spawnCustomProjectileCircle(SpawnData data) {
+        double vX = data.get("vX");
+        double vY = data.get("vY");
+
+        double radius = data.get("radius");
+
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
+        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
+
+        if (data.get("img") != "null") {
+
+            String imgPath = data.get("img");
+            Image image = new Image("file:" + imgPath);
+
+            Circle circle = new Circle(radius);
+            circle.setFill(new ImagePattern(image));
+
+            System.out.println(image.getHeight());;
+
+            circle.setFill(new ImagePattern(image));
+
+            //center radius in the middle
+            circle.setTranslateX(radius);
+            circle.setTranslateY(radius);
+
+            return FXGL.entityBuilder(data)
+                    .at(data.getX(), data.getY())
+                    .type(Type.CUSTOM_PROJECTILE)
+                    .view(circle)
+                    .bbox(new HitBox(BoundingShape.circle(radius)))
+                    .with(physics)
+                    .with(new DraggableComponent())
+                    .build();
+        } else {
+
+            Circle circle = new Circle(radius);
+            
+            circle.setFill(Color.web(data.get("colour")));
+            
+            //center radius in the middle
+            circle.setTranslateX(radius);
+            circle.setTranslateY(radius);
+            
+            return FXGL.entityBuilder(data)
+            .at(data.getX(), data.getY())
+            .type(Type.PROJECTILE)
+            .view(circle)
+            .bbox(new HitBox(BoundingShape.circle(radius)))
+            .with(physics)
+            .with(new DraggableComponent())
+            .build();
+            
+        }
     }
 
     @Spawns("obstacle")

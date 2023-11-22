@@ -52,6 +52,7 @@ public class CustomProjectileController implements UIController, Serializable {
     File SelectedImgFile;
     
     CustomProjectileSquare squareProjectile;
+    CustomProjectileCircle circleProjectile;
 
     @FXML
     private Circle circleCopy;
@@ -137,9 +138,19 @@ public class CustomProjectileController implements UIController, Serializable {
 
         } else if (shape == circleCopy) {
 
-            CustomProjectile CircleProjectile = new CustomProjectileCircle();
+            double radius = circleCopy.getRadius();
+            String StringColor = color.toString().replace("0x", "");
+            
+            if(SelectedImgFile != null) {
+                String imgPath = SelectedImgFile.getAbsolutePath();
+                circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
+            } else {
+                circleProjectile = new CustomProjectileCircle(radius, StringColor);
+            }
+            
+            System.out.println(circleProjectile.getColor());
 
-            serialize(file.getAbsolutePath(), CircleProjectile);
+            serialize(file.getAbsolutePath(), circleProjectile);
             
         } else if (shape == triangleCopy) {
             CustomProjectile TriangleProjectile = new CustomProjectileTriangle();

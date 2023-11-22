@@ -200,14 +200,14 @@ public class MainApp extends GameApplication {
             System.out.println(s.getColour() + " " + s.getHeight() + " " + s.getImgPath());
             
             if (s.getImgPath() != null) {
-                spawn("customProjectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("colour", s.getColour())
                     .put("img", s.getImgPath())
                     .put("width", s.getShapeWidth())
                     .put("height", s.getShapeHeight()));
             } else {
-                spawn("customProjectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "null")
                     .put("colour", s.getColour())
@@ -215,9 +215,24 @@ public class MainApp extends GameApplication {
                     .put("height", s.getShapeHeight()));
             }
             
-            
-            
         } else if (c != null) {
+            
+            if(c.getImgPath() != null) {
+                spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                    .put("vY", vY) 
+                    .put("colour", c.getColor())
+                    .put("img", c.getImgPath())
+                    .put("radius", c.getRadius()));
+            } else {
+                spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                    .put("vY", vY)
+                    .put("img", "null")
+                    .put("radius", c.getRadius())
+                    .put("colour", c.getColor()));
+            }
+            
+            
+            
             System.out.println("This is a circle projectile");
         } else if (t != null) {
             System.out.println("This is a triangle projectile");
