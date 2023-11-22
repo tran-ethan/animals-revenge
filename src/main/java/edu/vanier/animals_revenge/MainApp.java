@@ -22,6 +22,8 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
+import java.util.logging.Level;
+import javafx.util.Duration;
 
 /**
  * Main entry point of the FXGL application.
@@ -44,8 +46,6 @@ public class MainApp extends GameApplication {
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     private static UI ui;
-
-    
 
     /**
      * Initializes application settings.
@@ -82,8 +82,8 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Initializes the game world with entity factory responsible for spawning objects into game world
-     * and screen bounds.
+     * Initializes the game world with entity factory responsible for spawning
+     * objects into game world and screen bounds.
      */
     @Override
     protected void initGame() {
@@ -95,14 +95,14 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Initializes game objects and spawns them into the game world.
-     * There is only a single projectile which represents the animal that the player can shoot,
-     * and multiple obstacles in a single execution of the simulator.
+     * Initializes game objects and spawns them into the game world. There is
+     * only a single projectile which represents the animal that the player can
+     * shoot, and multiple obstacles in a single execution of the simulator.
      */
     public static void initGameObjects() {
-        
+
         spawn("launcher", 0, HEIGHT - 80);
-        
+
         spawn("obstacle", new SpawnData(WIDTH - 500, HEIGHT - 65).put("img", "brick32x32.png"));
         spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 65).put("img", "brick32x32.png"));
         spawn("obstacle", new SpawnData(WIDTH - 700, HEIGHT - 65).put("img", "brick32x32.png"));
@@ -113,9 +113,10 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Initializes and adds screen boundary walls to the game world. Screen boundary walls
-     * are used to restrict the movement of entities within the game world. These walls
-     * are placed around the visible screen area (window) to prevent entities from moving outside of it.
+     * Initializes and adds screen boundary walls to the game world. Screen
+     * boundary walls are used to restrict the movement of entities within the
+     * game world. These walls are placed around the visible screen area
+     * (window) to prevent entities from moving outside of it.
      *
      * @see com.almasb.fxgl.dsl.EntityBuilder#buildScreenBounds(double)
      */
@@ -134,8 +135,8 @@ public class MainApp extends GameApplication {
      * Maps the corresponding user inputs to their respective actions.
      * <p>
      * Right-click and hold from launcher to create initial velocity vector.
-     * Left-click and hold to drag obstacles around.
-     * Hold CTRL + Left-click and hold to create new obstacle.
+     * Left-click and hold to drag obstacles around. Hold CTRL + Left-click and
+     * hold to create new obstacle.
      */
     @Override
     protected void initInput() {
@@ -145,11 +146,14 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Loads and displays an FXML-based user interface defined by the given FXML file.
-     * Removes previous scene from the UI layer to prevent adding a UI node on top of the previously existing one.
+     * Loads and displays an FXML-based user interface defined by the given FXML
+     * file. Removes previous scene from the UI layer to prevent adding a UI
+     * node on top of the previously existing one.
      *
-     * @param fxml the string representation of the FXML file including its file extension from assets/ui/ folder
-     * @param controller the instance of the controller linked to the appropriate FXML file
+     * @param fxml the string representation of the FXML file including its file
+     * extension from assets/ui/ folder
+     * @param controller the instance of the controller linked to the
+     * appropriate FXML file
      */
     public static void loadFXML(String fxml, UIController controller) {
         // Remove existing UI layer to prevent stacking
@@ -160,8 +164,9 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Animates the vector representing the initial velocity by using the pythagorean theorem to find the
-     * hypotenuse and trigonometry to find the angle of rotation
+     * Animates the vector representing the initial velocity by using the
+     * pythagorean theorem to find the hypotenuse and trigonometry to find the
+     * angle of rotation
      *
      * @param x the x position of the mouse
      * @param y the y position of the mouse
@@ -183,7 +188,9 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Launches the projectile by calculating initial x and y velocity using velocity vector
+     * Launches the projectile by calculating initial x and y velocity using
+     * velocity vector
+     *
      * @param s
      * @param c
      * @param t
@@ -195,65 +202,100 @@ public class MainApp extends GameApplication {
         double vX = Math.cos(Math.toRadians(angle)) * hyp;
         // From trigonometry: sin(angle) = opp / hyp
         double vY = Math.sin(Math.toRadians(angle)) * hyp;
-        
-        if(s != null) {
+
+        if (s != null) {
             System.out.println(s.getColour() + " " + s.getHeight() + " " + s.getImgPath());
-            
+
             if (s.getImgPath() != null) {
-                spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-                    .put("vY", vY)
-                    .put("colour", s.getColour())
-                    .put("img", s.getImgPath())
-                    .put("width", s.getShapeWidth())
-                    .put("height", s.getShapeHeight()));
+                Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                        .put("vY", vY)
+                        .put("colour", s.getColour())
+                        .put("img", s.getImgPath())
+                        .put("width", s.getShapeWidth())
+                        .put("height", s.getShapeHeight()));
+                
+                getGameTimer().runAtInterval(() -> {
+                
+                System.out.println(e.getPosition());
+                
+            }, Duration.seconds(1));
+                
             } else {
-                spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-                    .put("vY", vY)
-                    .put("img", "null")
-                    .put("colour", s.getColour())
-                    .put("width", s.getShapeWidth())
-                    .put("height", s.getShapeHeight()));
+               Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                        .put("vY", vY)
+                        .put("img", "null")
+                        .put("colour", s.getColour())
+                        .put("width", s.getShapeWidth())
+                        .put("height", s.getShapeHeight()));
+               
+               getGameTimer().runAtInterval(() -> {
+                
+                System.out.println(e.getPosition());
+                
+            }, Duration.seconds(1));
+               
             }
-            
+
         } else if (c != null) {
-            
-            if(c.getImgPath() != null) {
-                spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-                    .put("vY", vY) 
-                    .put("colour", c.getColor())
-                    .put("img", c.getImgPath())
-                    .put("radius", c.getRadius()));
+
+            if (c.getImgPath() != null) {
+                Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                        .put("vY", vY)
+                        .put("colour", c.getColor())
+                        .put("img", c.getImgPath())
+                        .put("radius", c.getRadius()));
+                
+                getGameTimer().runAtInterval(() -> {
+                
+                System.out.println(e.getPosition());
+                
+            }, Duration.seconds(1));
+
             } else {
-                spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-                    .put("vY", vY)
-                    .put("img", "null")
-                    .put("radius", c.getRadius())
-                    .put("colour", c.getColor()));
+                Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                        .put("vY", vY)
+                        .put("img", "null")
+                        .put("radius", c.getRadius())
+                        .put("colour", c.getColor()));
+                
+                getGameTimer().runAtInterval(() -> {
+                
+                System.out.println(e.getPosition());
+                
+            }, Duration.seconds(1));
+
             }
-            
-            
-            
-            System.out.println("This is a circle projectile");
+
         } else if (t != null) {
+
             System.out.println("This is a triangle projectile");
         } else {
-            System.out.println("an error has occured");
-            spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+            System.out.println("Default Projectile");
+            Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
+
+            
+            //gets position of entity every second
+            getGameTimer().runAtInterval(() -> {
+                
+                System.out.println(e.getPosition());
+                
+            }, Duration.seconds(1));
+
         }
-        
-        
+
         // TODO fix projectile spawn y location ( do not hard code 32, get obstacle height)
         //spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
     }
 
     /**
-     * Main method for starting the application.
-     * Launches the application by calling GameApplication.launch()
+     * Main method for starting the application. Launches the application by
+     * calling GameApplication.launch()
      *
      * @see GameApplication#launch(String[])
-     * @param args the command-line arguments passed to the application at startup
+     * @param args the command-line arguments passed to the application at
+     * startup
      */
     public static void main(String[] args) {
         launch(args);

@@ -11,6 +11,10 @@ package edu.vanier.animals_revenge.models;
 public class CustomProjectileTriangle extends CustomProjectile{
  
     private String imgPath;
+    
+    private String colour;
+    
+    private double size;
 
     public String getImgPath() {
         return imgPath;

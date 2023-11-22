@@ -14,7 +14,6 @@ import javafx.scene.shape.Rectangle;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
-import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
@@ -123,7 +122,7 @@ public class Factory implements EntityFactory {
             Circle circle = new Circle(radius);
             circle.setFill(new ImagePattern(image));
 
-            System.out.println(image.getHeight());;
+            System.out.println(image.getHeight());
 
             circle.setFill(new ImagePattern(image));
 
@@ -142,22 +141,57 @@ public class Factory implements EntityFactory {
         } else {
 
             Circle circle = new Circle(radius);
-            
+
             circle.setFill(Color.web(data.get("colour")));
-            
+
             //center radius in the middle
             circle.setTranslateX(radius);
             circle.setTranslateY(radius);
-            
+
             return FXGL.entityBuilder(data)
-            .at(data.getX(), data.getY())
-            .type(Type.PROJECTILE)
-            .view(circle)
-            .bbox(new HitBox(BoundingShape.circle(radius)))
-            .with(physics)
-            .with(new DraggableComponent())
-            .build();
+                    .at(data.getX(), data.getY())
+                    .type(Type.PROJECTILE)
+                    .view(circle)
+                    .bbox(new HitBox(BoundingShape.circle(radius)))
+                    .with(physics)
+                    .with(new DraggableComponent())
+                    .build();
+
+        }
+    }
+
+    @Spawns("customProjectileTriangle")
+    public Entity spawnCustomProjectileTriangle(SpawnData data) {
+        double vX = data.get("vX");
+        double vY = data.get("vY");
+
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
+        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
+
+        if (data.get("img") != "null") {
             
+
+            return FXGL.entityBuilder(data)
+                    .at(data.getX(), data.getY())
+                    .type(Type.CUSTOM_PROJECTILE)
+                    //.view()
+                    //.bbox(new HitBox())
+                    .with(physics)
+                    .with(new DraggableComponent())
+                    .build();
+        } else {
+
+            return FXGL.entityBuilder(data)
+                    .at(data.getX(), data.getY())
+                    .type(Type.PROJECTILE)
+                    //.view()
+                    //.bbox(new HitBox())
+                    .with(physics)
+                    .with(new DraggableComponent())
+                    .build();
+
         }
     }
 
