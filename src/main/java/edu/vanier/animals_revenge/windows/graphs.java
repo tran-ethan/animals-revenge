@@ -38,6 +38,8 @@ public class graphs extends Stage {
         lineChart.setTitle("Displacement VS. Time");
 
         series = new XYChart.Series<>();
+        
+        series.setName("Projectile Path");
 
         lineChart.getData().add(series);
 

@@ -9,6 +9,7 @@ import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.windows.Loading;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
@@ -45,7 +47,11 @@ public class CustomProjectileController implements UIController, Serializable {
 
     static Color borderColor = Color.RED;
 
+    private boolean savedChangesHasAlreadyPressed = false;
+
     File SelectedImgFile;
+
+    File SaveFile;
 
     CustomProjectileSquare squareProjectile;
     CustomProjectileCircle circleProjectile;
@@ -74,21 +80,83 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     private TextField sliderTextValue;
 
+    //this is the save button
+    @FXML
+    void Save(ActionEvent event) throws MalformedURLException {
+
+        if (!savedChangesHasAlreadyPressed) {
+            SaveChanges(event);
+        } else {
+
+            Shape shape = null;
+            double size;
+            Color color;
+            Image img;
+
+            if (squareCopy.isVisible()) {
+                shape = squareCopy;
+            } else if (circleCopy.isVisible()) {
+                shape = circleCopy;
+            }
+
+            size = sizeSlider.getValue();
+            color = ColourPicker.getValue();
+
+            if (shape == squareCopy) {
+
+            double width = squareCopy.getWidth();
+            double height = squareCopy.getHeight();
+            String StringColor = color.toString().replace("0x", "");
+
+            if (SelectedImgFile != null) {
+                String imgPath = SelectedImgFile.getAbsolutePath();
+                squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+            } else {
+                squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+            }
+
+            serialize(SaveFile.getAbsolutePath(), squareProjectile);
+
+        } else if (shape == circleCopy) {
+
+            double radius = circleCopy.getRadius();
+            String StringColor = color.toString().replace("0x", "");
+
+            if (SelectedImgFile != null) {
+                String imgPath = SelectedImgFile.getAbsolutePath();
+                circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
+            } else {
+                circleProjectile = new CustomProjectileCircle(radius, StringColor);
+            }
+
+            System.out.println(circleProjectile.getColor());
+
+            serialize(SaveFile.getAbsolutePath(), circleProjectile);
+
+        }
+
+        }
+
+    }
+
+    //this is the file -> save as button
     @FXML
     void SaveChanges(ActionEvent event) throws MalformedURLException {
+
+        savedChangesHasAlreadyPressed = true;
 
         Shape shape = null;
         double size;
         Color color;
         Image img;
 
-        FileChooser fileSelection = new FileChooser();
+        FileChooser saveLocation = new FileChooser();
 
-        fileSelection.setInitialFileName("myCustomProjectile");
+        saveLocation.setInitialFileName("myCustomProjectile");
 
-        fileSelection.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Object file", "*obj"), new FileChooser.ExtensionFilter("All Files", "*"));
+        saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Object file", "*obj"), new FileChooser.ExtensionFilter("All Files", "*"));
 
-        File file = fileSelection.showSaveDialog(null);
+        SaveFile = saveLocation.showSaveDialog(null);
 
         if (squareCopy.isVisible()) {
             shape = squareCopy;
@@ -112,7 +180,7 @@ public class CustomProjectileController implements UIController, Serializable {
                 squareProjectile = new CustomProjectileSquare(width, height, StringColor);
             }
 
-            serialize(file.getAbsolutePath(), squareProjectile);
+            serialize(SaveFile.getAbsolutePath(), squareProjectile);
 
         } else if (shape == circleCopy) {
 
@@ -128,13 +196,19 @@ public class CustomProjectileController implements UIController, Serializable {
 
             System.out.println(circleProjectile.getColor());
 
-            serialize(file.getAbsolutePath(), circleProjectile);
+            serialize(SaveFile.getAbsolutePath(), circleProjectile);
 
         }
 
     }
 
     public static void serialize(String filePath, CustomProjectile p) {
+        
+        try {
+            Loading load = new Loading();
+        } catch (InterruptedException ex) {
+            logger.info("Loader failed");
+        }
 
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
             o.writeObject(p);
@@ -285,6 +359,7 @@ public class CustomProjectileController implements UIController, Serializable {
     @Override
     public void init() {
 
+        //make scaling up the square look a bit nicer
         squareCopy.setTranslateX(squareCopy.getX() + squareCopy.getWidth() / 2);
         squareCopy.setTranslateY(squareCopy.getY() + squareCopy.getHeight() / 2);
 
