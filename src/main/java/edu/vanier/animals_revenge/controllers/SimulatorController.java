@@ -173,6 +173,12 @@ public class SimulatorController implements UIController {
         MainApp.launch(square, circle);
     }
 
+    
+    @FXML
+    void OpenAboutPage(ActionEvent event) {
+        HelpButtonController help = new HelpButtonController();
+    }
+    
     @FXML
     void select(MouseEvent event) {
         StackPane source = (StackPane) event.getSource();

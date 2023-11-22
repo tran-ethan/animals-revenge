@@ -5,11 +5,13 @@
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
+import static com.sun.javafx.scene.control.skin.Utils.getResource;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.windows.Loading;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,7 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.util.logging.Level;
+import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
@@ -356,6 +358,13 @@ public class CustomProjectileController implements UIController, Serializable {
         MainApp.loadFXML("Home.fxml", new HomeController());
     }
 
+     @FXML
+    void OpenAboutPage(ActionEvent event) {
+
+        HelpButtonController help = new HelpButtonController();
+         
+    }
+    
     @Override
     public void init() {
 
