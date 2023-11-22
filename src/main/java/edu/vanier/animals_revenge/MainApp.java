@@ -197,7 +197,7 @@ public class MainApp extends GameApplication {
      *
      * @param s
      * @param c
-     * @param t
+     * 
      */
     public static void launch(CustomProjectileSquare s, CustomProjectileCircle c) {
 
@@ -244,6 +244,7 @@ public class MainApp extends GameApplication {
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
                     time = getGameTimer().getNow();
 
+                    //influences frequency of the graph
                 }, Duration.seconds(0.001));
 
             }

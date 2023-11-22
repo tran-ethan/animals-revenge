@@ -142,6 +142,7 @@ public class Factory implements EntityFactory {
 
             Circle circle = new Circle(radius);
 
+            //converts the string color into a paint object
             circle.setFill(Color.web(data.get("colour")));
 
             //center radius in the middle

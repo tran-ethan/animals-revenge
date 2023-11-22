@@ -18,17 +18,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulatorController implements UIController {
-
-    CustomProjectile projectile;
-
-    private boolean BTNCustomHasBeenPressed;
-    
-    private Stage stage;
     
     private CustomProjectileCircle circle;
     

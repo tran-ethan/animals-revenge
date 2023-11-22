@@ -19,9 +19,8 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -64,25 +63,16 @@ public class CustomProjectileController implements UIController, Serializable {
     private ColorPicker ColourPicker;
 
     @FXML
-    private Label LBLsize;
-
-    @FXML
-    private Button btnSave;
-
-    @FXML
-    private Button btnImg;
-
-    @FXML
     private Circle circle;
-
-    @FXML
-    private TextField sizeTXT;
 
     @FXML
     private Rectangle square;
 
     @FXML
-    private Label LBLwarning;
+    private Slider sizeSlider;
+
+    @FXML
+    private TextField sliderTextValue;
 
     @FXML
     void SaveChanges(ActionEvent event) throws MalformedURLException {
@@ -106,7 +96,7 @@ public class CustomProjectileController implements UIController, Serializable {
             shape = circleCopy;
         }
 
-        size = Double.valueOf(sizeTXT.getText());
+        size = sizeSlider.getValue();
         color = ColourPicker.getValue();
 
         if (shape == squareCopy) {
@@ -220,47 +210,17 @@ public class CustomProjectileController implements UIController, Serializable {
     }
 
     @FXML
-    void setSize(ActionEvent event) {
+    void setSize(MouseEvent event) {
 
-        double enteredValue = 0;
+        sliderTextValue.setText("" + sizeSlider.getValue());
 
-        try {
-            enteredValue = Double.valueOf(sizeTXT.getText());
-        } catch (NumberFormatException e) {
-            sizeTXT.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-            return;
-        }
+        double newSize = sizeSlider.getValue();
 
         if (squareCopy.isVisible()) {
-
-            sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-
-            if (enteredValue >= -15 && enteredValue <= 15) {
-                double scaleFactor = 1 + enteredValue / 100.00;
-
-                LBLwarning.setVisible(false);
-                squareCopy.setWidth((square.getWidth() + 50) * scaleFactor);
-                squareCopy.setHeight((square.getHeight() + 50) * scaleFactor);
-            } else {
-                sizeTXT.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-                LBLwarning.setVisible(true);
-            }
-
+            squareCopy.setWidth(newSize);
+            squareCopy.setHeight(newSize);
         } else if (circleCopy.isVisible()) {
-
-            if (enteredValue >= -15 && enteredValue <= 15) {
-                LBLwarning.setVisible(false);
-                sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-                sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-
-                double scaleFactor = 1 + enteredValue / 20.00;
-
-                circleCopy.setRadius(circle.getRadius() * 1.7 * scaleFactor);
-            } else {
-                sizeTXT.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-                LBLwarning.setVisible(true);
-            }
-
+            circleCopy.setRadius(newSize);
         }
 
     }
@@ -268,9 +228,13 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     void circleClick(MouseEvent event) {
 
+        sizeSlider.setMax(90);
+        sizeSlider.setMin(1);
+
+        sizeSlider.setValue(circle.getRadius());
+        circleCopy.setRadius(circle.getRadius());
+
         circleCopy.setFill(Color.WHITE);
-        sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-        sizeTXT.setText("0");
         ColourPicker.setValue((Color) circleCopy.getFill());
         squareCopy.setVisible(false);
         circleCopy.setVisible(true);
@@ -279,11 +243,13 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     void rectClick(MouseEvent event) {
 
-        sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-        sizeTXT.setText("0");
-        //height and width are always the same in a square so it doesnt matter which one is used
-        squareCopy.setWidth(square.getWidth() + 50);
-        squareCopy.setHeight(square.getHeight() + 50);
+        sizeSlider.setMax(150);
+        sizeSlider.setMin(1);
+
+        sizeSlider.setValue(square.getHeight());
+        System.out.println(square.getHeight());
+        squareCopy.setWidth(square.getWidth());
+        squareCopy.setHeight(square.getHeight());
 
         squareCopy.setFill(Color.WHITE);
         ColourPicker.setValue((Color) squareCopy.getFill());
@@ -311,15 +277,35 @@ public class CustomProjectileController implements UIController, Serializable {
         square.setStroke(Color.BLACK);
     }
 
+    @FXML
+    void returnHome(ActionEvent event) {
+        MainApp.loadFXML("Home.fxml", new HomeController());
+    }
+
     @Override
     public void init() {
 
-        LBLwarning.setVisible(false);
+        squareCopy.setTranslateX(squareCopy.getX() + squareCopy.getWidth() / 2);
+        squareCopy.setTranslateY(squareCopy.getY() + squareCopy.getHeight() / 2);
 
+        sliderTextValue.setDisable(true);
+
+        sizeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            sliderTextValue.setText(String.format("%.2f", newValue));
+
+            if (squareCopy.isVisible()) {
+
+                squareCopy.setWidth(sizeSlider.getValue());
+                squareCopy.setHeight(sizeSlider.getValue());
+
+            } else if (circleCopy.isVisible()) {
+                circleCopy.setRadius(sizeSlider.getValue());
+            }
+
+        });
         double centerX = MainApp.WIDTH / 2;
         double centerY = MainApp.HEIGHT / 2;
-
-        double scale = 1.70;
 
         squareCopy.setFill(Color.WHITE);
         circleCopy.setFill(Color.WHITE);
@@ -331,11 +317,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
         circleCopy.setLayoutX(centerX);
         circleCopy.setLayoutY(centerY);
-
-        squareCopy.setWidth(square.getWidth() * scale);
-        squareCopy.setHeight(square.getHeight() * scale);
-
-        circleCopy.setRadius(circleCopy.getRadius() * scale);
 
         squareCopy.setVisible(false);
         circleCopy.setVisible(false);
