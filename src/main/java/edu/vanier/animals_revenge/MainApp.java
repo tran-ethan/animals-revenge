@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import static com.almasb.fxgl.dsl.FXGL.*;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
 import edu.vanier.animals_revenge.windows.graphs;
 import javafx.util.Duration;
 
@@ -200,7 +199,7 @@ public class MainApp extends GameApplication {
      * @param c
      * @param t
      */
-    public static void launch(CustomProjectileSquare s, CustomProjectileCircle c, CustomProjectileTriangle t) {
+    public static void launch(CustomProjectileSquare s, CustomProjectileCircle c) {
 
         graphs graphWindow = new graphs();
         double hyp = vector.getScaleY();
@@ -287,9 +286,6 @@ public class MainApp extends GameApplication {
 
             }
 
-        } else if (t != null) {
-
-            System.out.println("This is a triangle projectile");
         } else {
             System.out.println("Default Projectile");
             Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)

@@ -6,8 +6,6 @@ import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
-import edu.vanier.animals_revenge.windows.graphs;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,8 +33,6 @@ public class SimulatorController implements UIController {
     private CustomProjectileCircle circle;
     
     private CustomProjectileSquare square;
-    
-    private CustomProjectileTriangle triangle;
 
     @FXML
     private Button BTNCustom;
@@ -181,7 +177,7 @@ public class SimulatorController implements UIController {
 
     @FXML
     public void launch() {
-        MainApp.launch(square, circle, triangle);
+        MainApp.launch(square, circle);
     }
 
     @FXML
@@ -229,10 +225,7 @@ public class SimulatorController implements UIController {
 
         } else {
             
-            triangle = (CustomProjectileTriangle)Projectile;
-            
-            System.out.println(triangle.getImgPath());
-            System.out.println("This is a triangle");
+            System.out.println("Somethine went wrong...");
             
             
         }
@@ -265,16 +258,5 @@ public class SimulatorController implements UIController {
 
     public void setSquare(CustomProjectileSquare square) {
         this.square = square;
-    }
-
-    public CustomProjectileTriangle getTriangle() {
-        return triangle;
-    }
-
-    public void setTriangle(CustomProjectileTriangle triangle) {
-        this.triangle = triangle;
-    }
-    
-    
-    
+    } 
 }

@@ -9,7 +9,6 @@ import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,7 +17,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,7 +29,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
@@ -48,9 +45,9 @@ public class CustomProjectileController implements UIController, Serializable {
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
     static Color borderColor = Color.RED;
-    
+
     File SelectedImgFile;
-    
+
     CustomProjectileSquare squareProjectile;
     CustomProjectileCircle circleProjectile;
 
@@ -59,9 +56,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
     @FXML
     private Rectangle squareCopy;
-
-    @FXML
-    private Polygon triangleCopy;
 
     @FXML
     private AnchorPane anchorPane;
@@ -88,9 +82,6 @@ public class CustomProjectileController implements UIController, Serializable {
     private Rectangle square;
 
     @FXML
-    private Polygon triangle;
-
-    @FXML
     private Label LBLwarning;
 
     @FXML
@@ -113,21 +104,18 @@ public class CustomProjectileController implements UIController, Serializable {
             shape = squareCopy;
         } else if (circleCopy.isVisible()) {
             shape = circleCopy;
-        } else if (triangleCopy.isVisible()) {
-
-            shape = triangleCopy;
         }
 
         size = Double.valueOf(sizeTXT.getText());
         color = ColourPicker.getValue();
 
         if (shape == squareCopy) {
-            
+
             double width = squareCopy.getWidth();
             double height = squareCopy.getHeight();
             String StringColor = color.toString().replace("0x", "");
-            
-            if(SelectedImgFile != null) {
+
+            if (SelectedImgFile != null) {
                 String imgPath = SelectedImgFile.getAbsolutePath();
                 squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
             } else {
@@ -140,22 +128,18 @@ public class CustomProjectileController implements UIController, Serializable {
 
             double radius = circleCopy.getRadius();
             String StringColor = color.toString().replace("0x", "");
-            
-            if(SelectedImgFile != null) {
+
+            if (SelectedImgFile != null) {
                 String imgPath = SelectedImgFile.getAbsolutePath();
                 circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
             } else {
                 circleProjectile = new CustomProjectileCircle(radius, StringColor);
             }
-            
+
             System.out.println(circleProjectile.getColor());
 
             serialize(file.getAbsolutePath(), circleProjectile);
-            
-        } else if (shape == triangleCopy) {
-            CustomProjectile TriangleProjectile = new CustomProjectileTriangle();
-            serialize(file.getAbsolutePath(), TriangleProjectile);
-            
+
         }
 
     }
@@ -177,13 +161,13 @@ public class CustomProjectileController implements UIController, Serializable {
             Object obj = o.readObject();
 
             System.out.println(obj.getClass().getSimpleName());
-            
+
             if (obj instanceof CustomProjectileSquare) {
                 return (CustomProjectileSquare) obj;
             } else if (obj instanceof CustomProjectileCircle) {
                 return (CustomProjectileCircle) obj;
             } else {
-                return (CustomProjectileTriangle) obj;
+                System.out.println("Something went wrong");
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -200,13 +184,11 @@ public class CustomProjectileController implements UIController, Serializable {
 
         if (squareCopy.isVisible()) {
             squareCopy.setFill(ColourPicker.getValue());
-        } else if (triangleCopy.isVisible()) {
-            triangleCopy.setFill(ColourPicker.getValue());
         } else {
 
             circleCopy.setFill(ColourPicker.getValue());
-        }
 
+        }
     }
 
     @FXML
@@ -229,8 +211,8 @@ public class CustomProjectileController implements UIController, Serializable {
                 squareCopy.setFill(new ImagePattern(selectedImage));
             } else if (circleCopy.isVisible()) {
                 circleCopy.setFill(new ImagePattern(selectedImage));
-            } else if (triangleCopy.isVisible()) {
-                triangleCopy.setFill(new ImagePattern(selectedImage));
+            } else {
+                System.out.println("Something went wrong");
             }
         } else {
             System.out.println("Did not select a file");
@@ -264,24 +246,6 @@ public class CustomProjectileController implements UIController, Serializable {
                 LBLwarning.setVisible(true);
             }
 
-        } else if (triangleCopy.isVisible()) {
-
-            //points of original triangle
-            //-85.0, 68.0, 85.0, 68.0, 0.0, -102.0
-            if (enteredValue >= -15 && enteredValue <= 15) {
-
-                LBLwarning.setVisible(false);
-                sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-                //numbers stay small: (1 to 15) and (-1 to -15)
-                enteredValue = enteredValue * 5;
-
-                triangleCopy.getPoints().setAll(-85.0 - enteredValue / 2, 68.0, 85.0 + enteredValue / 2, 68.0, 0.0, -102.0 - enteredValue);
-
-            } else {
-                sizeTXT.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
-                LBLwarning.setVisible(true);
-            }
-
         } else if (circleCopy.isVisible()) {
 
             if (enteredValue >= -15 && enteredValue <= 15) {
@@ -309,7 +273,6 @@ public class CustomProjectileController implements UIController, Serializable {
         sizeTXT.setText("0");
         ColourPicker.setValue((Color) circleCopy.getFill());
         squareCopy.setVisible(false);
-        triangleCopy.setVisible(false);
         circleCopy.setVisible(true);
     }
 
@@ -325,19 +288,6 @@ public class CustomProjectileController implements UIController, Serializable {
         squareCopy.setFill(Color.WHITE);
         ColourPicker.setValue((Color) squareCopy.getFill());
         squareCopy.setVisible(true);
-        triangleCopy.setVisible(false);
-        circleCopy.setVisible(false);
-    }
-
-    @FXML
-    void triangleClick(MouseEvent event) {
-        triangleCopy.setFill(Color.WHITE);
-        ColourPicker.setValue((Color) triangleCopy.getFill());
-        triangleCopy.getPoints().setAll(-85.0, 68.0, 85.0, 68.0, 0.0, -102.0);
-        sizeTXT.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
-        sizeTXT.setText("0");
-        squareCopy.setVisible(false);
-        triangleCopy.setVisible(true);
         circleCopy.setVisible(false);
     }
 
@@ -361,20 +311,9 @@ public class CustomProjectileController implements UIController, Serializable {
         square.setStroke(Color.BLACK);
     }
 
-    @FXML
-    void triangleHoverEnter(MouseEvent event) {
-        triangle.setStroke(borderColor);
-    }
-
-    @FXML
-    void triangleHoverExit(MouseEvent event) {
-        triangle.setStroke(Color.BLACK);
-    }
-
     @Override
     public void init() {
-        
-        
+
         LBLwarning.setVisible(false);
 
         double centerX = MainApp.WIDTH / 2;
@@ -384,9 +323,8 @@ public class CustomProjectileController implements UIController, Serializable {
 
         squareCopy.setFill(Color.WHITE);
         circleCopy.setFill(Color.WHITE);
-        triangleCopy.setFill(Color.WHITE);
 
-        anchorPane.getChildren().addAll(squareCopy, triangleCopy, circleCopy);
+        anchorPane.getChildren().addAll(squareCopy, circleCopy);
 
         squareCopy.setLayoutX(centerX - squareCopy.getWidth());
         squareCopy.setLayoutY(centerY - squareCopy.getHeight());
@@ -394,21 +332,12 @@ public class CustomProjectileController implements UIController, Serializable {
         circleCopy.setLayoutX(centerX);
         circleCopy.setLayoutY(centerY);
 
-        triangleCopy.setLayoutX(centerX);
-        triangleCopy.setLayoutY(centerY);
-
         squareCopy.setWidth(square.getWidth() * scale);
         squareCopy.setHeight(square.getHeight() * scale);
 
         circleCopy.setRadius(circleCopy.getRadius() * scale);
 
-        ObservableList<Double> points = triangleCopy.getPoints();
-
-        for (int i = 0; i < points.size(); i++) {
-            points.set(i, points.get(i) * scale);
-        }
         squareCopy.setVisible(false);
-        triangleCopy.setVisible(false);
         circleCopy.setVisible(false);
 
     }
