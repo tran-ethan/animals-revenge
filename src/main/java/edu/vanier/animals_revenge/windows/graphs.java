@@ -20,19 +20,19 @@ import javafx.util.Duration;
  * @author macke
  */
 public class graphs extends Stage {
+
     private XYChart.Series<Number, Number> series;
 
     private double time = 0.0;
 
     private Timeline timeline;
-    
+
     public graphs() {
-        
+
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Time (s)");
         yAxis.setLabel("Height (px)");
-        
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Displacement VS. Time");
@@ -46,26 +46,29 @@ public class graphs extends Stage {
         timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> updateGraph()));
         timeline.setCycleCount(Timeline.INDEFINITE);
 
-        
-
         timeline.play();
 
         setTitle("Projectile Motion Graph");
-        
+
         getIcons().add(new Image("assets/textures/graph.png"));
-        
+
         setScene(scene);
+
+        setX(925);
 
         show();
     }
 
     private void updateGraph() {
         //adds a new data point to the graph by adding it to series
-        series.getData().add(new XYChart.Data<>(time, MainApp.PosY));
+
+        if (MainApp.PosY >= 0) {
+            series.getData().add(new XYChart.Data<>(time, MainApp.PosY));
+        }
 
         //checks if last 3 y positions were the saem
         if (series.getData().size() > 3) {
-            
+
             double lastY1 = series.getData().get(series.getData().size() - 1).getYValue().doubleValue();
             double lastY2 = series.getData().get(series.getData().size() - 2).getYValue().doubleValue();
             double lastY3 = series.getData().get(series.getData().size() - 3).getYValue().doubleValue();

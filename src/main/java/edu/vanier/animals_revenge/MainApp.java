@@ -23,7 +23,6 @@ import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.models.CustomProjectileTriangle;
 import edu.vanier.animals_revenge.windows.graphs;
-import java.util.logging.Level;
 import javafx.util.Duration;
 
 /**
@@ -303,8 +302,6 @@ public class MainApp extends GameApplication {
                 PosX = e.getPosition().getX();
                 PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
                 time = getGameTimer().getNow();
-
-                System.out.println(PosY);
 
             }, Duration.seconds(0.001));
 
