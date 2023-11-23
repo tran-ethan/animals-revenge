@@ -6,10 +6,8 @@ package edu.vanier.animals_revenge.graphs;
 
 import edu.vanier.animals_revenge.MainApp;
 import java.util.ArrayList;
-import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -41,8 +39,8 @@ public class VelocityGraph extends Pane {
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time (s)");
-        yAxis.setLabel("Velocity (px/s)");
+        xAxis.setLabel("Time");
+        yAxis.setLabel("Velocity");
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Velocity VS. Time");
@@ -88,7 +86,9 @@ public class VelocityGraph extends Pane {
             
             Math.abs(resultantSpeed);
             
-            if (resultantSpeed <= 0.005) {
+            
+            //stopping condition 
+            if (resultantSpeed <= 0.5) {
                 timeline.stop();
             }
         }

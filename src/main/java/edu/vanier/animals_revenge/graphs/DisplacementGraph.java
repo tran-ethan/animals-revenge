@@ -29,8 +29,8 @@ public class DisplacementGraph extends Pane {
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time (s)");
-        yAxis.setLabel("Height (px)");
+        xAxis.setLabel("Time");
+        yAxis.setLabel("Height");
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Displacement VS. Time");
@@ -52,12 +52,7 @@ public class DisplacementGraph extends Pane {
      * Updates the graph with a new data point.
      */
     private void updateDisplacementGraph() {
-
-        //adds data to the graph
-        //using normal time
-        /*if (MainApp.PosY >= 0) {
-        series.getData().add(new XYChart.Data<>(time, MainApp.PosY));
-        }*/
+        
         //using real time
         if (MainApp.PosY >= 0) {
             series.getData().add(new XYChart.Data<>(MainApp.time, MainApp.PosY));
@@ -69,6 +64,8 @@ public class DisplacementGraph extends Pane {
             double lastY2 = series.getData().get(series.getData().size() - 2).getYValue().doubleValue();
             double lastY3 = series.getData().get(series.getData().size() - 3).getYValue().doubleValue();
 
+            
+            //stopping conditino
             if (lastY1 == lastY2 && lastY2 == lastY3) {
                 timeline.stop();
             }

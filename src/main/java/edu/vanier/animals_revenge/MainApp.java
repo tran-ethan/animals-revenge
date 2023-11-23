@@ -220,12 +220,18 @@ public class MainApp extends GameApplication {
                         .put("width", s.getShapeWidth())
                         .put("height", s.getShapeHeight()));
 
+                //start of timer
+                startTime = System.currentTimeMillis();
+
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
 
-                    PosX = e.getPosition().getX();
+                    //end of timer
+                    time = System.currentTimeMillis() - startTime;
+
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+                    //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
             } else {
@@ -236,14 +242,18 @@ public class MainApp extends GameApplication {
                         .put("width", s.getShapeWidth())
                         .put("height", s.getShapeHeight()));
 
+                //start of timer
+                startTime = System.currentTimeMillis();
+
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
 
-                    PosX = e.getPosition().getX();
+                    //end of timer
+                    time = System.currentTimeMillis() - startTime;
+
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
-                    //time = System.currentTimeMillis() - startTime;
-                    //influences frequency of the graph
+                    //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
             }
@@ -257,15 +267,18 @@ public class MainApp extends GameApplication {
                         .put("img", c.getImgPath())
                         .put("radius", c.getRadius()));
 
-                
+                //start of timer
+                startTime = System.currentTimeMillis();
+
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
 
-                    PosX = e.getPosition().getX();
+                    //end of timer
+                    time = System.currentTimeMillis() - startTime;
+
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
-                    System.out.println(PosY);
-
+                    //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
             } else {
@@ -275,12 +288,18 @@ public class MainApp extends GameApplication {
                         .put("radius", c.getRadius())
                         .put("colour", c.getColor()));
 
+                ///start of timer
+                startTime = System.currentTimeMillis();
+
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
 
-                    PosX = e.getPosition().getX();
+                    //end of timer
+                    time = System.currentTimeMillis() - startTime;
+
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+                    //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
             }
