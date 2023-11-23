@@ -1,87 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.windows;
 
-import edu.vanier.animals_revenge.MainApp;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
+import com.almasb.fxgl.time.TimerAction;
+import edu.vanier.animals_revenge.graphs.DisplacementGraph;
+import edu.vanier.animals_revenge.graphs.VelocityGraph;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- *
- * @author macke
+ * Class representing the Projectile Motion Graph window.
  */
 public class graphs extends Stage {
 
-    private XYChart.Series<Number, Number> series;
-
-    private double time = 0.0;
-
-    private Timeline timeline;
-
+    /**
+     * Constructor for the Graphs class.
+     */
     public graphs() {
 
-        NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time (s)");
-        yAxis.setLabel("Height (px)");
-
-        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Displacement VS. Time");
-
-        series = new XYChart.Series<>();
         
-        series.setName("Projectile Path");
 
-        lineChart.getData().add(series);
+        TabPane tabPane = new TabPane();
+        DisplacementGraph DisplacementGraph = new DisplacementGraph();
+        VelocityGraph VelocityGraph = new VelocityGraph();
+        Tab tab1 = new Tab("Displacement");
+        Tab tab2 = new Tab("Velocity");
+        tab1.setContent(DisplacementGraph);
+        tab2.setContent(VelocityGraph);
 
-        Scene scene = new Scene(lineChart);
+        tabPane.getTabs().addAll(tab1, tab2);
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> updateGraph()));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-
-        timeline.play();
+        Scene scene = new Scene(tabPane, 600, 400);
 
         setTitle("Projectile Motion Graph");
-
         getIcons().add(new Image("assets/textures/graph.png"));
-
         setScene(scene);
-
         setX(925);
-
         show();
     }
-
-    private void updateGraph() {
-        //adds a new data point to the graph by adding it to series
-
-        if (MainApp.PosY >= 0) {
-            series.getData().add(new XYChart.Data<>(time, MainApp.PosY));
-        }
-
-        //checks if last 3 y positions were the saem
-        if (series.getData().size() > 3) {
-
-            double lastY1 = series.getData().get(series.getData().size() - 1).getYValue().doubleValue();
-            double lastY2 = series.getData().get(series.getData().size() - 2).getYValue().doubleValue();
-            double lastY3 = series.getData().get(series.getData().size() - 3).getYValue().doubleValue();
-
-            if (lastY1 == lastY2 && lastY2 == lastY3) {
-                timeline.stop();
-            }
-        }
-
-        //x increment
-        time += 0.00001;
-    }
-
 }

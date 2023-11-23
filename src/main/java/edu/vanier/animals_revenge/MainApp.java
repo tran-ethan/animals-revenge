@@ -34,10 +34,10 @@ import javafx.util.Duration;
  */
 public class MainApp extends GameApplication {
 
-    public static double PosX;
-    public static double PosY;
-
-    public static double time;
+    public static double PosX = 0;
+    public static double PosY = 0;
+    public static double time = 0;
+    public static long startTime;
 
     public final static double WIDTH = 1480;
 
@@ -197,7 +197,7 @@ public class MainApp extends GameApplication {
      *
      * @param s
      * @param c
-     * 
+     *
      */
     public static void launch(CustomProjectileSquare s, CustomProjectileCircle c) {
 
@@ -225,7 +225,6 @@ public class MainApp extends GameApplication {
 
                     PosX = e.getPosition().getX();
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-                    time = getGameTimer().getNow();
 
                 }, Duration.seconds(0.001));
 
@@ -242,8 +241,8 @@ public class MainApp extends GameApplication {
 
                     PosX = e.getPosition().getX();
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-                    time = getGameTimer().getNow();
 
+                    //time = System.currentTimeMillis() - startTime;
                     //influences frequency of the graph
                 }, Duration.seconds(0.001));
 
@@ -258,12 +257,12 @@ public class MainApp extends GameApplication {
                         .put("img", c.getImgPath())
                         .put("radius", c.getRadius()));
 
+                
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
 
                     PosX = e.getPosition().getX();
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-                    time = getGameTimer().getNow();
 
                     System.out.println(PosY);
 
@@ -281,7 +280,6 @@ public class MainApp extends GameApplication {
 
                     PosX = e.getPosition().getX();
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-                    time = getGameTimer().getNow();
 
                 }, Duration.seconds(0.001));
 
@@ -293,13 +291,18 @@ public class MainApp extends GameApplication {
                     .put("vY", vY)
                     .put("img", "soccer.png"));
 
+            //start of timer
+            startTime = System.currentTimeMillis();
+
             //gets position of entity every unit of time
             getGameTimer().runAtInterval(() -> {
 
-                PosX = e.getPosition().getX();
-                PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-                time = getGameTimer().getNow();
+                //end of timer
+                time = System.currentTimeMillis() - startTime;
 
+                PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
+
+                //lower the duration if experiencing lag
             }, Duration.seconds(0.001));
 
         }

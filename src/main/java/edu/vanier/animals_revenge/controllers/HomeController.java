@@ -36,7 +36,6 @@ public class HomeController implements UIController {
     
     @FXML 
     void switchScenes(ActionEvent event) {
-        
         Button clickButton = (Button) event.getSource();
         
         if (clickButton == btnNew) {

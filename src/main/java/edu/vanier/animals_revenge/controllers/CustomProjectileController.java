@@ -5,13 +5,11 @@
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.windows.Loading;
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,7 +18,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
@@ -106,36 +103,36 @@ public class CustomProjectileController implements UIController, Serializable {
 
             if (shape == squareCopy) {
 
-            double width = squareCopy.getWidth();
-            double height = squareCopy.getHeight();
-            String StringColor = color.toString().replace("0x", "");
+                double width = squareCopy.getWidth();
+                double height = squareCopy.getHeight();
+                String StringColor = color.toString().replace("0x", "");
 
-            if (SelectedImgFile != null) {
-                String imgPath = SelectedImgFile.getAbsolutePath();
-                squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
-            } else {
-                squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+                if (SelectedImgFile != null) {
+                    String imgPath = SelectedImgFile.getAbsolutePath();
+                    squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+                } else {
+                    squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+                }
+
+                serialize(SaveFile.getAbsolutePath(), squareProjectile);
+
+            } else if (shape == circleCopy) {
+
+                double radius = circleCopy.getRadius();
+                String StringColor = color.toString().replace("0x", "");
+
+                if (SelectedImgFile != null) {
+                    String imgPath = SelectedImgFile.getAbsolutePath();
+                    circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
+                } else {
+                    circleProjectile = new CustomProjectileCircle(radius, StringColor);
+                }
+
+                System.out.println(circleProjectile.getColor());
+
+                serialize(SaveFile.getAbsolutePath(), circleProjectile);
+
             }
-
-            serialize(SaveFile.getAbsolutePath(), squareProjectile);
-
-        } else if (shape == circleCopy) {
-
-            double radius = circleCopy.getRadius();
-            String StringColor = color.toString().replace("0x", "");
-
-            if (SelectedImgFile != null) {
-                String imgPath = SelectedImgFile.getAbsolutePath();
-                circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
-            } else {
-                circleProjectile = new CustomProjectileCircle(radius, StringColor);
-            }
-
-            System.out.println(circleProjectile.getColor());
-
-            serialize(SaveFile.getAbsolutePath(), circleProjectile);
-
-        }
 
         }
 
@@ -160,52 +157,57 @@ public class CustomProjectileController implements UIController, Serializable {
 
         SaveFile = saveLocation.showSaveDialog(null);
 
-        if (squareCopy.isVisible()) {
-            shape = squareCopy;
-        } else if (circleCopy.isVisible()) {
-            shape = circleCopy;
-        }
+        if (SaveFile != null) {
 
-        size = sizeSlider.getValue();
-        color = ColourPicker.getValue();
-
-        if (shape == squareCopy) {
-
-            double width = squareCopy.getWidth();
-            double height = squareCopy.getHeight();
-            String StringColor = color.toString().replace("0x", "");
-
-            if (SelectedImgFile != null) {
-                String imgPath = SelectedImgFile.getAbsolutePath();
-                squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
-            } else {
-                squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+            if (squareCopy.isVisible()) {
+                shape = squareCopy;
+            } else if (circleCopy.isVisible()) {
+                shape = circleCopy;
             }
 
-            serialize(SaveFile.getAbsolutePath(), squareProjectile);
+            size = sizeSlider.getValue();
+            color = ColourPicker.getValue();
 
-        } else if (shape == circleCopy) {
+            if (shape == squareCopy) {
 
-            double radius = circleCopy.getRadius();
-            String StringColor = color.toString().replace("0x", "");
+                double width = squareCopy.getWidth();
+                double height = squareCopy.getHeight();
+                String StringColor = color.toString().replace("0x", "");
 
-            if (SelectedImgFile != null) {
-                String imgPath = SelectedImgFile.getAbsolutePath();
-                circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
-            } else {
-                circleProjectile = new CustomProjectileCircle(radius, StringColor);
+                if (SelectedImgFile != null) {
+                    String imgPath = SelectedImgFile.getAbsolutePath();
+                    squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+                } else {
+                    squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+                }
+
+                serialize(SaveFile.getAbsolutePath(), squareProjectile);
+
+            } else if (shape == circleCopy) {
+
+                double radius = circleCopy.getRadius();
+                String StringColor = color.toString().replace("0x", "");
+
+                if (SelectedImgFile != null) {
+                    String imgPath = SelectedImgFile.getAbsolutePath();
+                    circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
+                } else {
+                    circleProjectile = new CustomProjectileCircle(radius, StringColor);
+                }
+
+                System.out.println(circleProjectile.getColor());
+
+                serialize(SaveFile.getAbsolutePath(), circleProjectile);
+
             }
-
-            System.out.println(circleProjectile.getColor());
-
-            serialize(SaveFile.getAbsolutePath(), circleProjectile);
-
+        } else {
+            logger.info("No File Selected");
         }
 
     }
 
     public static void serialize(String filePath, CustomProjectile p) {
-        
+
         try {
             Loading load = new Loading();
         } catch (InterruptedException ex) {
@@ -305,7 +307,7 @@ public class CustomProjectileController implements UIController, Serializable {
     void circleClick(MouseEvent event) {
 
         sizeSlider.setMax(90);
-        sizeSlider.setMin(1);
+        sizeSlider.setMin(5);
 
         sizeSlider.setValue(circle.getRadius());
         circleCopy.setRadius(circle.getRadius());
@@ -320,7 +322,7 @@ public class CustomProjectileController implements UIController, Serializable {
     void rectClick(MouseEvent event) {
 
         sizeSlider.setMax(150);
-        sizeSlider.setMin(1);
+        sizeSlider.setMin(5);
 
         sizeSlider.setValue(square.getHeight());
         System.out.println(square.getHeight());
@@ -358,13 +360,13 @@ public class CustomProjectileController implements UIController, Serializable {
         MainApp.loadFXML("Home.fxml", new HomeController());
     }
 
-     @FXML
+    @FXML
     void OpenAboutPage(ActionEvent event) {
 
         HelpButtonController help = new HelpButtonController();
-         
+
     }
-    
+
     @Override
     public void init() {
 
