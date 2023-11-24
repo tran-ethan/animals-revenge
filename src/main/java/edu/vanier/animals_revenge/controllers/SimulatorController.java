@@ -3,6 +3,7 @@ package edu.vanier.animals_revenge.controllers;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
+import edu.vanier.animals_revenge.models.BuildingBlocks;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
@@ -22,14 +23,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulatorController implements UIController {
-    
+
     private CustomProjectileCircle circle;
-    
+
     private CustomProjectileSquare square;
 
     @FXML
     private Button BTNCustom;
-    
+
     @FXML
     private StackPane circle1;
 
@@ -173,12 +174,11 @@ public class SimulatorController implements UIController {
         MainApp.launch(square, circle);
     }
 
-    
     @FXML
     void OpenAboutPage(ActionEvent event) {
         HelpButtonController help = new HelpButtonController();
     }
-    
+
     @FXML
     void select(MouseEvent event) {
         StackPane source = (StackPane) event.getSource();
@@ -187,6 +187,10 @@ public class SimulatorController implements UIController {
             selected.setStyle("-fx-background-color: white");
             selected = source;
         }
+        BuildingBlocks build = new BuildingBlocks();
+        System.out.println(build.getShape());
+        System.out.println(build.toString());
+        
     }
 
     @FXML
@@ -202,35 +206,31 @@ public class SimulatorController implements UIController {
 
         if (Projectile instanceof CustomProjectileCircle) {
 
-            circle = (CustomProjectileCircle)Projectile;
-            
+            circle = (CustomProjectileCircle) Projectile;
+
             System.out.println(circle.getImgPath());
-            
+
             System.out.println("This is a circle");
 
         } else if (Projectile instanceof CustomProjectileSquare) {
 
-            square = (CustomProjectileSquare)Projectile;
-            
-            
+            square = (CustomProjectileSquare) Projectile;
+
             System.out.println(square.getImgPath());
-            
-            System.out.println("This is a square, its color is " + square.getColour() + "Its width is " +
-                    
-                    square.getWidth()
+
+            System.out.println("This is a square, its color is " + square.getColour() + "Its width is "
+                    + square.getWidth()
                     + " Its height is: " + square.getHeight()
-                    
             );
 
         } else {
-            
+
             System.out.println("Somethine went wrong...");
-            
-            
+
         }
 
     }
-    
+
     public static StackPane getSelected() {
         return selected;
     }
@@ -257,5 +257,7 @@ public class SimulatorController implements UIController {
 
     public void setSquare(CustomProjectileSquare square) {
         this.square = square;
-    } 
+    }
+    
+    
 }

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+import edu.vanier.animals_revenge.models.BuildingBlocks;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.windows.graphs;
@@ -340,5 +341,6 @@ public class MainApp extends GameApplication {
      */
     public static void main(String[] args) {
         launch(args);
+        
     }
 }
