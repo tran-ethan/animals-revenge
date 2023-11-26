@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import edu.vanier.animals_revenge.controllers.SimulatorController;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
@@ -200,12 +201,14 @@ public class Factory implements EntityFactory {
     public Entity spawnObstacle(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.setFixtureDef(new FixtureDef().density(0.3f));
+        
+        physics.setFixtureDef(new FixtureDef().density(0.3f).friction(SimulatorController.getFriction()/10));
         String imgFile = data.get("img");
 
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.OBSTACLE)
+                .rotate(SimulatorController.getRotate())
                 .viewWithBBox(imgFile)
                 // .bbox(new HitBox(BoundingShape.box(32, 32)))
                 .with(physics)

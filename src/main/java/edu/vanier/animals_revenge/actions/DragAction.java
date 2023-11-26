@@ -15,7 +15,7 @@ import edu.vanier.animals_revenge.models.BuildingBlocks;
 public class DragAction extends UserAction {
 
     /**
-     * A boolean representing whether it selects an obstacle or creates a new one
+     * A Boolean representing whether it selects an obstacle or creates a new one
      */
     private final boolean newObstacle;
 
@@ -65,7 +65,7 @@ public class DragAction extends UserAction {
             System.out.println(size);
             int rotate = SimulatorController.getRotate();
             System.out.println(rotate);
-            // TODO Spawn correct obstacle with correct size and rotation angle
+            // TODO Spawn correct obstacle with correct rotation angle
             BuildingBlocks build = new BuildingBlocks();
             selected = spawn("obstacle", new SpawnData(x, y).put("img", build.toString()));
             // Mouse offset to the middle of the spawned obstacle

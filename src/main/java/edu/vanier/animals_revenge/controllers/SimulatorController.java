@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -66,12 +67,27 @@ public class SimulatorController implements UIController {
 
     @FXML
     private Slider sizeSlider;
+    
+    @FXML
+    private Slider frictionSlider;
+    
+    @FXML
+    private TextField sizeTextField;
+    
+    @FXML
+    private TextField rotateTextField;
+    
+    @FXML
+    private TextField frictionTextField;
+    
 
     private static StackPane selected;
 
     private static int size = 1;
 
     private static int rotate = 1;
+    
+    private static int friction = 1;
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
@@ -146,7 +162,18 @@ public class SimulatorController implements UIController {
                 rotate = newValue.intValue();
             }
         }));
-
+        
+        frictionSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            // Value should be only set after slider knob snaps to major unit tick
+            if (newValue.intValue() == newValue.doubleValue()) {
+                friction = newValue.intValue();
+            }
+        }));
+        
+        sizeTextField.textProperty().bind(sizeSlider.valueProperty().asString("%.0f"));
+        rotateTextField.textProperty().bind(rotateSlider.valueProperty().asString("%.0f"));
+        frictionTextField.textProperty().bind(frictionSlider.valueProperty().asString("%.0f"));
+        
         logger.info("Initializing SimulatorController...");
     }
 
@@ -186,10 +213,9 @@ public class SimulatorController implements UIController {
             source.setStyle("-fx-background-color: lightgray");
             selected.setStyle("-fx-background-color: white");
             selected = source;
+            
         }
-        BuildingBlocks build = new BuildingBlocks();
-        System.out.println(build.getShape());
-        System.out.println(build.toString());
+        
         
     }
 
@@ -242,6 +268,10 @@ public class SimulatorController implements UIController {
     public static int getRotate() {
         return rotate;
     }
+    
+    public static int getFriction() {
+        return friction;
+    }
 
     public CustomProjectileCircle getCircle() {
         return circle;
@@ -258,6 +288,10 @@ public class SimulatorController implements UIController {
     public void setSquare(CustomProjectileSquare square) {
         this.square = square;
     }
+    
+    
+    
+    
     
     
 }

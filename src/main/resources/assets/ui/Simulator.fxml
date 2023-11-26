@@ -139,14 +139,21 @@
                   <HBox alignment="CENTER" prefHeight="0.0" prefWidth="309.0" spacing="15.0">
                      <children>
                         <Slider fx:id="sizeSlider" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" min="1.0" minorTickCount="0" snapToTicks="true" value="1.0" HBox.hgrow="ALWAYS" />
-                        <TextField prefHeight="25.0" prefWidth="29.0" text="1" />
+                        <TextField fx:id="sizeTextField" prefHeight="25.0" prefWidth="29.0" text="1" />
                      </children>
                   </HBox>
                   <Label layoutX="30.0" layoutY="31.0" text="Rotation (deg)" />
                   <HBox alignment="CENTER" layoutX="30.0" layoutY="68.0" prefHeight="0.0" prefWidth="309.0" spacing="15.0">
                      <children>
-                        <Slider fx:id="rotateSlider" blockIncrement="1.0" majorTickUnit="1.0" max="360.0" min="1.0" minorTickCount="0" snapToTicks="true" value="1.0" HBox.hgrow="ALWAYS" />
-                        <TextField prefHeight="25.0" prefWidth="29.0" text="0" />
+                        <Slider fx:id="rotateSlider" blockIncrement="1.0" majorTickUnit="1.0" max="360.0" minorTickCount="0" prefHeight="14.0" prefWidth="238.0" snapToTicks="true" value="1.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="rotateTextField" prefHeight="25.0" prefWidth="29.0" text="0" />
+                     </children>
+                  </HBox>
+                  <Label text="Friction" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Slider fx:id="frictionSlider" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" prefHeight="14.0" prefWidth="238.0" snapToTicks="true" value="1.0" />
+                        <TextField fx:id="frictionTextField" prefHeight="25.0" prefWidth="29.0" text="1" />
                      </children>
                   </HBox>
                </children>
