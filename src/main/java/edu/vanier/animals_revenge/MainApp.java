@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+import com.almasb.fxgl.dsl.components.DraggableComponent;
 import edu.vanier.animals_revenge.models.BuildingBlocks;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
@@ -35,6 +36,8 @@ import javafx.util.Duration;
  */
 public class MainApp extends GameApplication {
 
+    
+    public static double cmConversion = 0.0264583333;
     public static double PosX = 0;
     public static double PosY = 0;
     public static double time = 0;
@@ -232,6 +235,8 @@ public class MainApp extends GameApplication {
 
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+                    PosY = PosY * cmConversion;
+                    
                     //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
@@ -245,8 +250,6 @@ public class MainApp extends GameApplication {
 
                 //start of timer
                 startTime = System.currentTimeMillis();
-
-                
                 
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
@@ -256,6 +259,8 @@ public class MainApp extends GameApplication {
 
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+                    PosY = PosY * cmConversion;
+                    
                     //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
@@ -281,6 +286,8 @@ public class MainApp extends GameApplication {
 
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+                    PosY = PosY * cmConversion;
+                    
                     //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
@@ -293,7 +300,6 @@ public class MainApp extends GameApplication {
 
                 ///start of timer
                 startTime = System.currentTimeMillis();
-
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
 
@@ -302,6 +308,8 @@ public class MainApp extends GameApplication {
 
                     PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+                    PosY = PosY * cmConversion;
+                    
                     //lower the duration if experiencing lag
                 }, Duration.seconds(0.001));
 
@@ -324,6 +332,7 @@ public class MainApp extends GameApplication {
 
                 PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+                PosY = PosY * cmConversion;
                 //lower the duration if experiencing lag
             }, Duration.seconds(0.001));
 

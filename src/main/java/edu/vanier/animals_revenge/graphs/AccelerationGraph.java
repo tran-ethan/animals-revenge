@@ -16,81 +16,79 @@ import javafx.util.Duration;
 
 /**
  *
- * @author macke
+ * @author 2268182
  */
-public class VelocityGraph extends Pane {
+public class AccelerationGraph extends Pane {
 
-    double lastY1 = 0;
-    double lastY2 = 0;
+    double lastV1 = 0;
+    double lastV2 = 0;
 
     double displacement;
 
-    ArrayList<Double> Ypositions = new ArrayList<>();
-
     ArrayList<Double> VelocityValues = new ArrayList<>();
-    
+
     private XYChart.Series<Number, Number> series;
 
-    public double velocity;
+    private double speed;
 
     private Timeline timeline;
 
-    public VelocityGraph() {
+    public AccelerationGraph() {
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Time");
-        yAxis.setLabel("Velocity");
+        yAxis.setLabel("Acceleration");
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Velocity VS. Time");
+        lineChart.setTitle("Acceleration VS. Time");
 
         series = new XYChart.Series<>();
-        series.setName("Velocity");
+        series.setName("Acceleration");
 
         lineChart.getData().add(series);
-        
+
         getChildren().add(lineChart);
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> updateVelocitytGraph()));
+        timeline = new Timeline(new KeyFrame(Duration.millis(100),
+                event -> updateAccelerationGraph()
+        ));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
     }
 
-    private void updateVelocitytGraph() {
+    private void updateAccelerationGraph() {
 
-        // Add the current Y position to the list
-        Ypositions.add(MainApp.PosY);
+        // Add the current  position to the list
+        
+        
+        
+        //VelocityValues.add();
 
-        if (Ypositions.size() > 2) {
-            lastY1 = Ypositions.get(Ypositions.size() - 1);
-            lastY2 = Ypositions.get(Ypositions.size() - 2);
+        if (VelocityValues.size() > 2) {
+            lastV1 = VelocityValues.get(VelocityValues.size() - 1);
+            lastV2 = VelocityValues.get(VelocityValues.size() - 2);
 
-            displacement = lastY1 - lastY2;
-            
-            //bigger numbers are more readable
-            //displacement = displacement / 0.01;
+            displacement = lastV1 - lastV2;
 
-            
-            
-            velocity = displacement / MainApp.time;
+            //bigger numbers are nicer
+            displacement = displacement / 0.01;
 
-            VelocityValues.add(velocity);
-            
-            series.getData().add(new XYChart.Data<>(MainApp.time, velocity));
+            speed = displacement / MainApp.time;
+
+            series.getData().add(new XYChart.Data<>(MainApp.time, speed));
         }
 
         if (series.getData().size() > 3) {
             double lastSpeed1 = series.getData().get(series.getData().size() - 1).getYValue().doubleValue();
             double lastSpeed2 = series.getData().get(series.getData().size() - 2).getYValue().doubleValue();
             double lastSpeed3 = series.getData().get(series.getData().size() - 3).getYValue().doubleValue();
-            
+
             double resultantSpeed = Math.abs(lastSpeed1) + Math.abs(lastSpeed2) + Math.abs(lastSpeed3);
-            
+
             Math.abs(resultantSpeed);
-            
-            
+
             //stopping condition 
             if (resultantSpeed <= 0.5) {
                 timeline.stop();

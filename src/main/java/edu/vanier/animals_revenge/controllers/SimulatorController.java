@@ -215,8 +215,6 @@ public class SimulatorController implements UIController {
             selected = source;
             
         }
-        
-        
     }
 
     @FXML
@@ -258,9 +256,7 @@ public class SimulatorController implements UIController {
 
         }
             
-        }
-        
-        
+        }        
 
     }
 
