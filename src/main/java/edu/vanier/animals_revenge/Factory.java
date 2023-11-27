@@ -15,6 +15,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import edu.vanier.animals_revenge.controllers.SimulatorController;
+import edu.vanier.animals_revenge.models.BuildingBlocks;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
@@ -173,7 +174,6 @@ public class Factory implements EntityFactory {
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
         if (data.get("img") != "null") {
-            
 
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
@@ -201,10 +201,57 @@ public class Factory implements EntityFactory {
     public Entity spawnObstacle(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        
-        physics.setFixtureDef(new FixtureDef().density(0.3f).friction(SimulatorController.getFriction()/10));
-        String imgFile = data.get("img");
 
+        physics.setFixtureDef(new FixtureDef().density(0.3f).friction(SimulatorController.getFriction() / 10));
+        String imgFile = data.get("img");
+        BuildingBlocks build = new BuildingBlocks();
+        switch (build.getShape()) {
+            case "circle" -> {
+                
+                Circle circle = new Circle(5 * Math.pow(SimulatorController.getSize(), 2));
+                circle.setFill(new ImagePattern(new Image("/assets/textures/"+imgFile)));
+
+                //center radius in the middle
+                circle.setTranslateX(5 * Math.pow(SimulatorController.getSize(), 2));
+                circle.setTranslateY(5 * Math.pow(SimulatorController.getSize(), 2));
+
+                return FXGL.entityBuilder(data)
+                        .at(data.getX(), data.getY())
+                        .type(Type.OBSTACLE)
+                        .view(circle)
+                        .bbox(new HitBox(BoundingShape.circle(5 * Math.pow(SimulatorController.getSize(), 2))))
+                        .with(physics)
+                        .rotate(SimulatorController.getRotate())
+                        // .with(new DraggableComponent())
+                        .build();
+
+            }
+            case "rectangle" -> {
+
+                Rectangle rectangle = new Rectangle(4 * Math.pow(SimulatorController.getSize(), 2), 16 * Math.pow(SimulatorController.getSize(), 2));
+                rectangle.setFill(new ImagePattern(new Image("/assets/textures/"+imgFile)));
+
+                return FXGL.entityBuilder(data)
+                        .at(data.getX(), data.getY())
+                        .type(Type.OBSTACLE)
+                        .view(rectangle)
+                        .bbox(new HitBox(BoundingShape.box(4 * Math.pow(SimulatorController.getSize(), 2), 16 * Math.pow(SimulatorController.getSize(), 2))))
+                        .with(physics)
+                        .rotate(SimulatorController.getRotate())
+                        .build();
+
+            }
+            case "square" -> {
+                return FXGL.entityBuilder(data)
+                        .at(data.getX(), data.getY())
+                        .type(Type.OBSTACLE)
+                        .rotate(SimulatorController.getRotate())
+                        .viewWithBBox(imgFile)
+                        // .bbox(new HitBox(BoundingShape.box(32, 32)))
+                        .with(physics)
+                        .build();
+            }
+        }
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.OBSTACLE)
@@ -213,6 +260,7 @@ public class Factory implements EntityFactory {
                 // .bbox(new HitBox(BoundingShape.box(32, 32)))
                 .with(physics)
                 .build();
+
     }
 
     @Spawns("wall")

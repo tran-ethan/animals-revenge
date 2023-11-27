@@ -65,7 +65,7 @@ public class DragAction extends UserAction {
             System.out.println(size);
             int rotate = SimulatorController.getRotate();
             System.out.println(rotate);
-            // TODO Spawn correct obstacle with correct rotation angle
+            // TODO Spawn correct obstacle
             BuildingBlocks build = new BuildingBlocks();
             selected = spawn("obstacle", new SpawnData(x, y).put("img", build.toString()));
             // Mouse offset to the middle of the spawned obstacle

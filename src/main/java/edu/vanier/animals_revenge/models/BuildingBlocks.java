@@ -12,14 +12,12 @@ import edu.vanier.animals_revenge.controllers.SimulatorController;
  */
 public class BuildingBlocks {
 
-    private String Shape;
+    private static String shape = "square";
     private String type;
     private String size;
 
     public BuildingBlocks() {
     }
-    
-    
 
     public String getShape() {
 
@@ -27,7 +25,7 @@ public class BuildingBlocks {
     }
 
     public void setShape(String Shape) {
-        this.Shape = Shape;
+        this.shape = Shape;
     }
 
     public String getType() {
@@ -50,12 +48,17 @@ public class BuildingBlocks {
 
     public String getSize() {
         String tempSize = null;
-        switch(SimulatorController.getSize()){
-            case 1 -> tempSize = "16x16";
-            case 2 -> tempSize = "32x32";
-            case 3 -> tempSize = "64x64";
-            case 4 -> tempSize = "128x128";
-            case 5 -> tempSize = "256x256";
+        switch (SimulatorController.getSize()) {
+            case 1 ->
+                tempSize = "16x16";
+            case 2 ->
+                tempSize = "32x32";
+            case 3 ->
+                tempSize = "64x64";
+            case 4 ->
+                tempSize = "128x128";
+            case 5 ->
+                tempSize = "256x256";
         }
         return tempSize;
     }
