@@ -246,6 +246,8 @@ public class MainApp extends GameApplication {
                 //start of timer
                 startTime = System.currentTimeMillis();
 
+                
+                
                 //gets position of entity every unit of time
                 getGameTimer().runAtInterval(() -> {
 

@@ -226,7 +226,10 @@ public class SimulatorController implements UIController {
 
         File file = fileChooser.showOpenDialog(null);
 
-        CustomProjectile Projectile = (CustomProjectile) CustomProjectileController.deserialize(file.getAbsolutePath());
+        
+        if(file != null) {
+            
+            CustomProjectile Projectile = (CustomProjectile) CustomProjectileController.deserialize(file.getAbsolutePath());
 
         System.out.println(Projectile.getClass().getSimpleName());
 
@@ -254,6 +257,10 @@ public class SimulatorController implements UIController {
             System.out.println("Somethine went wrong...");
 
         }
+            
+        }
+        
+        
 
     }
 
