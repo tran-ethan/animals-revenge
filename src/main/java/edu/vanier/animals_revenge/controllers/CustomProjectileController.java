@@ -90,7 +90,6 @@ public class CustomProjectileController implements UIController, Serializable {
             Shape shape = null;
             double size;
             Color color;
-            Image img;
 
             if (squareCopy.isVisible()) {
                 shape = squareCopy;

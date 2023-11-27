@@ -23,13 +23,13 @@ public class AccelerationGraph extends Pane {
     double lastV1 = 0;
     double lastV2 = 0;
 
-    double displacement;
+    double deltaVelocity;
 
-    ArrayList<Double> VelocityValues = new ArrayList<>();
+    ArrayList<Double> VelocityValues = VelocityGraph.VelocityValues;
 
     private XYChart.Series<Number, Number> series;
 
-    private double speed;
+    private double acceleration;
 
     private Timeline timeline;
 
@@ -70,14 +70,14 @@ public class AccelerationGraph extends Pane {
             lastV1 = VelocityValues.get(VelocityValues.size() - 1);
             lastV2 = VelocityValues.get(VelocityValues.size() - 2);
 
-            displacement = lastV1 - lastV2;
+            deltaVelocity = lastV1 - lastV2;
 
             //bigger numbers are nicer
-            displacement = displacement / 0.01;
+            deltaVelocity = deltaVelocity / 0.01;
 
-            speed = displacement / MainApp.time;
+            acceleration = deltaVelocity / MainApp.time;
 
-            series.getData().add(new XYChart.Data<>(MainApp.time, speed));
+            series.getData().add(new XYChart.Data<>(MainApp.time, acceleration));
         }
 
         if (series.getData().size() > 3) {
@@ -90,7 +90,7 @@ public class AccelerationGraph extends Pane {
             Math.abs(resultantSpeed);
 
             //stopping condition 
-            if (resultantSpeed <= 0.5) {
+            if (resultantSpeed <= 0.005) {
                 timeline.stop();
             }
         }

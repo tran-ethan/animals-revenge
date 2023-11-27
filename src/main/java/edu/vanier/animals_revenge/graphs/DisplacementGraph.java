@@ -29,8 +29,8 @@ public class DisplacementGraph extends Pane {
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time");
-        yAxis.setLabel("Height");
+        xAxis.setLabel("Time (ms)");
+        yAxis.setLabel("Height (cm) ");
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("Displacement VS. Time");

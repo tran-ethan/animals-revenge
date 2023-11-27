@@ -27,7 +27,7 @@ public class VelocityGraph extends Pane {
 
     ArrayList<Double> Ypositions = new ArrayList<>();
 
-    ArrayList<Double> VelocityValues = new ArrayList<>();
+    public static ArrayList<Double> VelocityValues = new ArrayList<>();
     
     private XYChart.Series<Number, Number> series;
 
@@ -69,11 +69,6 @@ public class VelocityGraph extends Pane {
 
             displacement = lastY1 - lastY2;
             
-            //bigger numbers are more readable
-            //displacement = displacement / 0.01;
-
-            
-            
             velocity = displacement / MainApp.time;
 
             VelocityValues.add(velocity);
@@ -92,7 +87,7 @@ public class VelocityGraph extends Pane {
             
             
             //stopping condition 
-            if (resultantSpeed <= 0.5) {
+            if (resultantSpeed <= 0.00005) {
                 timeline.stop();
             }
         }

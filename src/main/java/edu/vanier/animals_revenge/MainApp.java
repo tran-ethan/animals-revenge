@@ -334,6 +334,7 @@ public class MainApp extends GameApplication {
 
                 PosY = PosY * cmConversion;
                 //lower the duration if experiencing lag
+                
             }, Duration.seconds(0.001));
 
         }
