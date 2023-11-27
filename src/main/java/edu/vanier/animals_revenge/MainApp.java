@@ -19,11 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import com.almasb.fxgl.dsl.components.DraggableComponent;
-import edu.vanier.animals_revenge.models.BuildingBlocks;
+
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import edu.vanier.animals_revenge.windows.graphs;
+import edu.vanier.animals_revenge.windows.GraphWindow;
 import javafx.util.Duration;
 
 /**
@@ -205,7 +204,9 @@ public class MainApp extends GameApplication {
      */
     public static void launch(CustomProjectileSquare s, CustomProjectileCircle c) {
 
-        graphs graphWindow = new graphs();
+        GraphWindow graphWindow = new GraphWindow();
+        graphWindow.show();
+        graphWindow.setX(1205);
         double hyp = vector.getScaleY();
         double angle = 90 - vector.getRotate();
         // From trigonometry: cos(angle) = adj / hyp

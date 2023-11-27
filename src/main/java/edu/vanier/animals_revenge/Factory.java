@@ -15,7 +15,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import edu.vanier.animals_revenge.controllers.SimulatorController;
-import edu.vanier.animals_revenge.models.BuildingBlocks;
+import edu.vanier.animals_revenge.models.BuildingBlock;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
@@ -204,7 +204,7 @@ public class Factory implements EntityFactory {
 
         physics.setFixtureDef(new FixtureDef().density(0.3f).friction(SimulatorController.getFriction() / 10));
         String imgFile = data.get("img");
-        BuildingBlocks build = new BuildingBlocks();
+        BuildingBlock build = new BuildingBlock();
         switch (build.getShape()) {
             case "circle" -> {
                 

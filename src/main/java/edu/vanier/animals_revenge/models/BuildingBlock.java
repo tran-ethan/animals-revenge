@@ -10,22 +10,20 @@ import edu.vanier.animals_revenge.controllers.SimulatorController;
  *
  * @author Zachary Tremblay
  */
-public class BuildingBlocks {
+public class BuildingBlock {
 
-    private static String shape = "square";
+    private String shape = "square";
     private String type;
     private String size;
 
-    public BuildingBlocks() {
-    }
+    public BuildingBlock() {}
 
     public String getShape() {
-
         return SimulatorController.getSelected().getId().substring(0, SimulatorController.getSelected().getId().length() - 1);
     }
 
-    public void setShape(String Shape) {
-        this.shape = Shape;
+    public void setShape(String shape) {
+        this.shape = shape;
     }
 
     public String getType() {
@@ -70,7 +68,6 @@ public class BuildingBlocks {
     @Override
     public String toString() {
         return String.format("%s%s.png", getType(), getSize());
-
     }
 
 }
