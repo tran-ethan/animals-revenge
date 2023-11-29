@@ -34,7 +34,7 @@ public class GraphWindow extends Stage {
         
         tabPane.getTabs().addAll(tab1, tab2, tab3);
 
-        Scene scene = new Scene(tabPane, 600, 400);
+        Scene scene = new Scene(tabPane, 600, 500);
 
         setTitle("Projectile Motion Graph");
         getIcons().add(new Image("assets/textures/graph.png"));

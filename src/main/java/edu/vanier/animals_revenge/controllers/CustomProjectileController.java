@@ -56,6 +56,7 @@ public class CustomProjectileController implements UIController, Serializable {
     CustomProjectileSquare squareProjectile;
     CustomProjectileCircle circleProjectile;
 
+    //The shape copies the shapes that appear in the middle of the screen
     @FXML
     private Circle circleCopy;
 
@@ -84,27 +85,35 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     void Save(ActionEvent event) throws MalformedURLException {
 
+        //if the primary save button has not already been pressed than it should act the same as the
+        //Save As button, if the button has already been pressed than it should simply update the file without 
+        //changing the file path
         if (!savedChangesHasAlreadyPressed) {
             SaveAsChanges(event);
         } else {
 
+            //Updating the already saved file
             Shape shape = null;
             Color color;
 
+            //This determines which shape the user has selected
             if (squareCopy.isVisible()) {
                 shape = squareCopy;
             } else if (circleCopy.isVisible()) {
                 shape = circleCopy;
             }
 
+            //sets the color that the user has selected
             color = ColourPicker.getValue();
 
+            //sets the shape that the user has selected and creates an object based on the other parameters
             if (shape == squareCopy) {
 
                 double width = squareCopy.getWidth();
                 double height = squareCopy.getHeight();
                 String StringColor = color.toString().replace("0x", "");
 
+                //This determines if the projectile has an image on it or not and saves the file accordingly
                 if (SelectedImgFile != null) {
                     String imgPath = SelectedImgFile.getAbsolutePath();
                     squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
@@ -136,67 +145,75 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
-    //Save as button event handler
+    //Save as button event handler (located in the file menu button)
     @FXML
     void SaveAsChanges(ActionEvent event) throws MalformedURLException {
 
         Shape shape = null;
         Color color;
 
-        FileChooser saveLocation = new FileChooser();
+        //if there is not shape visible than there is nothing to save and thus should not open the save dialogue
+        if (squareCopy.isVisible() || circleCopy.isVisible()) {
+            //Opens file chooser 
+            FileChooser saveLocation = new FileChooser();
 
-        saveLocation.setInitialFileName("myCustomProjectile" + fileExtension);
+            //sets initial file name
+            saveLocation.setInitialFileName("myCustomProjectile" + fileExtension);
 
-        saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Custom Projectile", "*proj"), new FileChooser.ExtensionFilter("All Files", "*"));
+            //Provides the extension(s) the file will have
+            saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Custom Projectile", "*proj"), new FileChooser.ExtensionFilter("All Files", "*"));
 
-        SaveFile = saveLocation.showSaveDialog(null);
+            SaveFile = saveLocation.showSaveDialog(null);
 
-        if (SaveFile != null) {
+            //if no file is selected
+            if (SaveFile != null) {
 
-            if (squareCopy.isVisible()) {
-                shape = squareCopy;
-            } else if (circleCopy.isVisible()) {
-                shape = circleCopy;
-            }
-
-            color = ColourPicker.getValue();
-
-            if (shape == squareCopy) {
-
-                double width = squareCopy.getWidth();
-                double height = squareCopy.getHeight();
-                String StringColor = color.toString().replace("0x", "");
-
-                if (SelectedImgFile != null) {
-                    String imgPath = SelectedImgFile.getAbsolutePath();
-                    squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
-                } else {
-                    squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+                if (squareCopy.isVisible()) {
+                    shape = squareCopy;
+                } else if (circleCopy.isVisible()) {
+                    shape = circleCopy;
                 }
 
-                serialize(SaveFile.getAbsolutePath(), squareProjectile);
-                savedChangesHasAlreadyPressed = true;
+                color = ColourPicker.getValue();
 
-            } else if (shape == circleCopy) {
+                //creates a projecitle based on the parameters the user has selected
+                if (shape == squareCopy) {
 
-                double radius = circleCopy.getRadius();
-                String StringColor = color.toString().replace("0x", "");
+                    double width = squareCopy.getWidth();
+                    double height = squareCopy.getHeight();
+                    String StringColor = color.toString().replace("0x", "");
 
-                if (SelectedImgFile != null) {
-                    String imgPath = SelectedImgFile.getAbsolutePath();
-                    circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
-                } else {
-                    circleProjectile = new CustomProjectileCircle(radius, StringColor);
+                    if (SelectedImgFile != null) {
+                        String imgPath = SelectedImgFile.getAbsolutePath();
+                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+                    } else {
+                        squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+                    }
+
+                    serialize(SaveFile.getAbsolutePath(), squareProjectile);
+                    savedChangesHasAlreadyPressed = true;
+
+                } else if (shape == circleCopy) {
+
+                    double radius = circleCopy.getRadius();
+                    String StringColor = color.toString().replace("0x", "");
+
+                    if (SelectedImgFile != null) {
+                        String imgPath = SelectedImgFile.getAbsolutePath();
+                        circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
+                    } else {
+                        circleProjectile = new CustomProjectileCircle(radius, StringColor);
+                    }
+
+                    System.out.println(circleProjectile.getColor());
+
+                    serialize(SaveFile.getAbsolutePath(), circleProjectile);
+                    savedChangesHasAlreadyPressed = true;
+
                 }
-
-                System.out.println(circleProjectile.getColor());
-
-                serialize(SaveFile.getAbsolutePath(), circleProjectile);
-                savedChangesHasAlreadyPressed = true;
-
-            }
+            } 
         } else {
-            logger.info("No File Selected");
+            SimulatorController.throwWarning("Please Provide Properties To Save!", "Saving Error");
         }
 
     }

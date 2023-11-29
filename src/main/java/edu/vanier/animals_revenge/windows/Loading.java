@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 /**
  *
  * @author macke
+ * 
+ * Provides a short window loading bar that gives the application more professionalism
+ * 
  */
 public class Loading extends Stage{
 

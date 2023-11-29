@@ -56,7 +56,6 @@ public class DisplacementGraph extends Pane {
         //using real time
         if (MainApp.PosY >= 0) {
             series.getData().add(new XYChart.Data<>(MainApp.time, MainApp.PosY));
-            System.out.println(MainApp.PosY);
         }
 
         //if the ball is not moving in the y direction then stop

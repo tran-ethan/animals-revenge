@@ -35,7 +35,6 @@ import javafx.util.Duration;
  */
 public class MainApp extends GameApplication {
 
-    
     public static double cmConversion = 0.0264583333;
     public static double PosX = 0;
     public static double PosY = 0;
@@ -116,7 +115,6 @@ public class MainApp extends GameApplication {
 //        spawn("obstacle", new SpawnData(WIDTH - 550, HEIGHT - 130).put("img", "brick32x32.png"));
 //        spawn("obstacle", new SpawnData(WIDTH - 650, HEIGHT - 130).put("img", "brick32x32.png"));
 //        spawn("obstacle", new SpawnData(WIDTH - 600, HEIGHT - 195).put("img", "brick32x32.png"));
-
     }
 
     /**
@@ -204,9 +202,8 @@ public class MainApp extends GameApplication {
      */
     public static void launch(CustomProjectileSquare s, CustomProjectileCircle c) {
 
-        GraphWindow graphWindow = new GraphWindow();
-        graphWindow.show();
-        graphWindow.setX(1205);
+        graphSetup();
+
         double hyp = vector.getScaleY();
         double angle = 90 - vector.getRotate();
         // From trigonometry: cos(angle) = adj / hyp
@@ -215,8 +212,6 @@ public class MainApp extends GameApplication {
         double vY = Math.sin(Math.toRadians(angle)) * hyp;
 
         if (s != null) {
-            System.out.println(s.getColour() + " " + s.getHeight() + " " + s.getImgPath());
-
             if (s.getImgPath() != null) {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -225,21 +220,7 @@ public class MainApp extends GameApplication {
                         .put("width", s.getShapeWidth())
                         .put("height", s.getShapeHeight()));
 
-                //start of timer
-                startTime = System.currentTimeMillis();
-
-                //gets position of entity every unit of time
-                getGameTimer().runAtInterval(() -> {
-
-                    //end of timer
-                    time = System.currentTimeMillis() - startTime;
-
-                    PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-
-                    PosY = PosY * cmConversion;
-                    
-                    //lower the duration if experiencing lag
-                }, Duration.seconds(0.001));
+                SetTimerAndGetPostion(e);
 
             } else {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
@@ -249,26 +230,13 @@ public class MainApp extends GameApplication {
                         .put("width", s.getShapeWidth())
                         .put("height", s.getShapeHeight()));
 
-                //start of timer
-                startTime = System.currentTimeMillis();
-                
-                //gets position of entity every unit of time
-                getGameTimer().runAtInterval(() -> {
-
-                    //end of timer
-                    time = System.currentTimeMillis() - startTime;
-
-                    PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-
-                    PosY = PosY * cmConversion;
-                    
-                    //lower the duration if experiencing lag
-                }, Duration.seconds(0.001));
+                SetTimerAndGetPostion(e);
 
             }
 
         } else if (c != null) {
 
+            //if object has an image 
             if (c.getImgPath() != null) {
                 Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -276,22 +244,9 @@ public class MainApp extends GameApplication {
                         .put("img", c.getImgPath())
                         .put("radius", c.getRadius()));
 
-                //start of timer
-                startTime = System.currentTimeMillis();
+                SetTimerAndGetPostion(e);
 
-                //gets position of entity every unit of time
-                getGameTimer().runAtInterval(() -> {
-
-                    //end of timer
-                    time = System.currentTimeMillis() - startTime;
-
-                    PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-
-                    PosY = PosY * cmConversion;
-                    
-                    //lower the duration if experiencing lag
-                }, Duration.seconds(0.001));
-
+                //if object has no image
             } else {
                 Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -299,20 +254,7 @@ public class MainApp extends GameApplication {
                         .put("radius", c.getRadius())
                         .put("colour", c.getColor()));
 
-                ///start of timer
-                startTime = System.currentTimeMillis();
-                //gets position of entity every unit of time
-                getGameTimer().runAtInterval(() -> {
-
-                    //end of timer
-                    time = System.currentTimeMillis() - startTime;
-
-                    PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-
-                    PosY = PosY * cmConversion;
-                    
-                    //lower the duration if experiencing lag
-                }, Duration.seconds(0.001));
+                SetTimerAndGetPostion(e);
 
             }
 
@@ -322,26 +264,37 @@ public class MainApp extends GameApplication {
                     .put("vY", vY)
                     .put("img", "soccer.png"));
 
-            //start of timer
-            startTime = System.currentTimeMillis();
-
-            //gets position of entity every unit of time
-            getGameTimer().runAtInterval(() -> {
-
-                //end of timer
-                time = System.currentTimeMillis() - startTime;
-
-                PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-
-                PosY = PosY * cmConversion;
-                //lower the duration if experiencing lag
-                
-            }, Duration.seconds(0.001));
-
+            SetTimerAndGetPostion(e);
         }
 
         // TODO fix projectile spawn y location ( do not hard code 32, get obstacle height)
         //spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
+    }
+
+    public static void SetTimerAndGetPostion(Entity e) {
+        //start of timer
+        startTime = System.currentTimeMillis();
+
+        //gets position of entity every unit of time
+        getGameTimer().runAtInterval(() -> {
+
+            //end of timer
+            time = System.currentTimeMillis() - startTime;
+
+            PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
+
+            PosY = PosY * cmConversion;
+            //lower the duration if experiencing lag
+
+        }, Duration.seconds(0.001));
+    }
+
+    public static void graphSetup() {
+        //sets up graph
+        GraphWindow graphWindow = new GraphWindow();
+        graphWindow.show();
+        //Sets position of window 
+        graphWindow.setX(720);
     }
 
     /**
@@ -354,6 +307,6 @@ public class MainApp extends GameApplication {
      */
     public static void main(String[] args) {
         launch(args);
-        
+
     }
 }
