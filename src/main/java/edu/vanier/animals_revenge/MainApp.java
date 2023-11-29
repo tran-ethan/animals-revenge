@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+import com.almasb.fxgl.physics.PhysicsComponent;
 
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
@@ -36,8 +37,12 @@ import javafx.util.Duration;
 public class MainApp extends GameApplication {
 
     public static double cmConversion = 0.0264583333;
+    
     public static double PosX = 0;
     public static double PosY = 0;
+    
+    public static double velocityX = 0;
+    public static double velocityY = 0;
     public static double time = 0;
     public static long startTime;
 
@@ -264,6 +269,10 @@ public class MainApp extends GameApplication {
                     .put("vY", vY)
                     .put("img", "soccer.png"));
 
+            
+            
+            
+            
             SetTimerAndGetPostion(e);
         }
 
@@ -281,6 +290,13 @@ public class MainApp extends GameApplication {
             //end of timer
             time = System.currentTimeMillis() - startTime;
 
+            //negative values because x = 0 and y = 0 are at the top left of the screen thus will make velocity 
+            //positive
+            velocityX = -1 * e.getComponent(PhysicsComponent.class).getVelocityX();
+            velocityY = -1 * e.getComponent(PhysicsComponent.class).getVelocityY();
+            
+            
+            
             PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
             PosY = PosY * cmConversion;

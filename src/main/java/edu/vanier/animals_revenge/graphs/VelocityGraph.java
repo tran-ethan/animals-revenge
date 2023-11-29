@@ -20,14 +20,10 @@ import javafx.util.Duration;
  */
 public class VelocityGraph extends Pane {
 
-    double lastY1 = 0;
+    double lastV1 = 0;
     double lastY2 = 0;
 
     double displacement;
-
-    ArrayList<Double> Ypositions = new ArrayList<>();
-
-    public static ArrayList<Double> VelocityValues = new ArrayList<>();
     
     private XYChart.Series<Number, Number> series;
 
@@ -60,21 +56,8 @@ public class VelocityGraph extends Pane {
 
     private void updateVelocitytGraph() {
 
-        // Add the current Y position to the list
-        Ypositions.add(MainApp.PosY);
-
-        if (Ypositions.size() > 2) {
-            lastY1 = Ypositions.get(Ypositions.size() - 1);
-            lastY2 = Ypositions.get(Ypositions.size() - 2);
-
-            displacement = lastY1 - lastY2;
-            
-            velocity = displacement / MainApp.time;
-
-            VelocityValues.add(velocity);
-            
-            series.getData().add(new XYChart.Data<>(MainApp.time, velocity));
-        }
+        // Add the current Y velocity to the list
+        series.getData().add(new XYChart.Data<>(MainApp.time, MainApp.velocityY));
 
         if (series.getData().size() > 3) {
             double lastSpeed1 = series.getData().get(series.getData().size() - 1).getYValue().doubleValue();
