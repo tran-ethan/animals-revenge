@@ -9,6 +9,7 @@ import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -66,26 +67,25 @@ public class SimulatorController implements UIController {
 
     @FXML
     private Slider sizeSlider;
-    
+
     @FXML
     private Slider frictionSlider;
-    
+
     @FXML
     private TextField sizeTextField;
-    
+
     @FXML
     private TextField rotateTextField;
-    
+
     @FXML
     private TextField frictionTextField;
-    
 
     private static StackPane selected;
 
     private static int size = 1;
 
     private static int rotate = 1;
-    
+
     private static int friction = 1;
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
@@ -161,18 +161,18 @@ public class SimulatorController implements UIController {
                 rotate = newValue.intValue();
             }
         }));
-        
+
         frictionSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
             // Value should be only set after slider knob snaps to major unit tick
             if (newValue.intValue() == newValue.doubleValue()) {
                 friction = newValue.intValue();
             }
         }));
-        
+
         sizeTextField.textProperty().bind(sizeSlider.valueProperty().asString("%.0f"));
         rotateTextField.textProperty().bind(rotateSlider.valueProperty().asString("%.0f"));
         frictionTextField.textProperty().bind(frictionSlider.valueProperty().asString("%.0f"));
-        
+
         logger.info("Initializing SimulatorController...");
     }
 
@@ -212,7 +212,7 @@ public class SimulatorController implements UIController {
             source.setStyle("-fx-background-color: lightgray");
             selected.setStyle("-fx-background-color: white");
             selected = source;
-            
+
         }
     }
 
@@ -223,40 +223,32 @@ public class SimulatorController implements UIController {
 
         File file = fileChooser.showOpenDialog(null);
 
-        
-        if(file != null) {
-            
+        if (file != null) {
+
+            //will throw an error in the deserilization method if not a valid file
             CustomProjectile Projectile = (CustomProjectile) CustomProjectileController.deserialize(file.getAbsolutePath());
 
-        System.out.println(Projectile.getClass().getSimpleName());
+            if (Projectile instanceof CustomProjectileCircle) {
 
-        if (Projectile instanceof CustomProjectileCircle) {
+                circle = (CustomProjectileCircle) Projectile;
 
-            circle = (CustomProjectileCircle) Projectile;
+            } else if (Projectile instanceof CustomProjectileSquare) {
 
-            System.out.println(circle.getImgPath());
+                square = (CustomProjectileSquare) Projectile;
 
-            System.out.println("This is a circle");
+            }
 
-        } else if (Projectile instanceof CustomProjectileSquare) {
-
-            square = (CustomProjectileSquare) Projectile;
-
-            System.out.println(square.getImgPath());
-
-            System.out.println("This is a square, its color is " + square.getColour() + "Its width is "
-                    + square.getWidth()
-                    + " Its height is: " + square.getHeight()
-            );
-
-        } else {
-
-            System.out.println("Somethine went wrong...");
-
+        } else if (file == null) {
+            throwWarning("No File Selected", "File Selection");
         }
-            
-        }        
 
+    }
+
+    public static void throwWarning(String warningMessage, String title) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText(warningMessage);
+        alert.setTitle(title);
+        alert.showAndWait();
     }
 
     public static StackPane getSelected() {
@@ -270,7 +262,7 @@ public class SimulatorController implements UIController {
     public static int getRotate() {
         return rotate;
     }
-    
+
     public static int getFriction() {
         return friction;
     }
@@ -290,10 +282,5 @@ public class SimulatorController implements UIController {
     public void setSquare(CustomProjectileSquare square) {
         this.square = square;
     }
-    
-    
-    
-    
-    
-    
+
 }

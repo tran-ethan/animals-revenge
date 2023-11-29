@@ -80,7 +80,7 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     private TextField sliderTextValue;
 
-    //this is the save button
+    //save button (not to be confused with Save As button) event handler
     @FXML
     void Save(ActionEvent event) throws MalformedURLException {
 
@@ -96,7 +96,7 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (circleCopy.isVisible()) {
                 shape = circleCopy;
             }
-            
+
             color = ColourPicker.getValue();
 
             if (shape == squareCopy) {
@@ -136,7 +136,7 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
-    //this is the file -> save as button
+    //Save as button event handler
     @FXML
     void SaveAsChanges(ActionEvent event) throws MalformedURLException {
 
@@ -158,7 +158,7 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (circleCopy.isVisible()) {
                 shape = circleCopy;
             }
-            
+
             color = ColourPicker.getValue();
 
             if (shape == squareCopy) {
@@ -230,15 +230,13 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (obj instanceof CustomProjectileCircle) {
                 return (CustomProjectileCircle) obj;
             } else {
-                System.out.println("Something went wrong");
+                SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Serialization Error");
             }
 
         } catch (IOException | ClassNotFoundException e) {
+            SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Deserialization Error");
 
-            System.out.println("Error during deserilization process");
-            e.printStackTrace();
         }
-
         return null;
     }
 
