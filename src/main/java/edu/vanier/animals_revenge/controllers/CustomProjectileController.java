@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
 public class CustomProjectileController implements UIController, Serializable {
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
+    private final static String fileExtension = ".proj";
 
     static Color borderColor = Color.RED;
 
@@ -84,11 +85,10 @@ public class CustomProjectileController implements UIController, Serializable {
     void Save(ActionEvent event) throws MalformedURLException {
 
         if (!savedChangesHasAlreadyPressed) {
-            SaveChanges(event);
+            SaveAsChanges(event);
         } else {
 
             Shape shape = null;
-            double size;
             Color color;
 
             if (squareCopy.isVisible()) {
@@ -96,8 +96,7 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (circleCopy.isVisible()) {
                 shape = circleCopy;
             }
-
-            size = sizeSlider.getValue();
+            
             color = ColourPicker.getValue();
 
             if (shape == squareCopy) {
@@ -139,20 +138,16 @@ public class CustomProjectileController implements UIController, Serializable {
 
     //this is the file -> save as button
     @FXML
-    void SaveChanges(ActionEvent event) throws MalformedURLException {
-
-        savedChangesHasAlreadyPressed = true;
+    void SaveAsChanges(ActionEvent event) throws MalformedURLException {
 
         Shape shape = null;
-        double size;
         Color color;
-        Image img;
 
         FileChooser saveLocation = new FileChooser();
 
-        saveLocation.setInitialFileName("myCustomProjectile");
+        saveLocation.setInitialFileName("myCustomProjectile" + fileExtension);
 
-        saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Object file", "*obj"), new FileChooser.ExtensionFilter("All Files", "*"));
+        saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Custom Projectile", "*proj"), new FileChooser.ExtensionFilter("All Files", "*"));
 
         SaveFile = saveLocation.showSaveDialog(null);
 
@@ -163,8 +158,7 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (circleCopy.isVisible()) {
                 shape = circleCopy;
             }
-
-            size = sizeSlider.getValue();
+            
             color = ColourPicker.getValue();
 
             if (shape == squareCopy) {
@@ -181,6 +175,7 @@ public class CustomProjectileController implements UIController, Serializable {
                 }
 
                 serialize(SaveFile.getAbsolutePath(), squareProjectile);
+                savedChangesHasAlreadyPressed = true;
 
             } else if (shape == circleCopy) {
 
@@ -197,6 +192,7 @@ public class CustomProjectileController implements UIController, Serializable {
                 System.out.println(circleProjectile.getColor());
 
                 serialize(SaveFile.getAbsolutePath(), circleProjectile);
+                savedChangesHasAlreadyPressed = true;
 
             }
         } else {
@@ -210,7 +206,7 @@ public class CustomProjectileController implements UIController, Serializable {
         try {
             Loading load = new Loading();
         } catch (InterruptedException ex) {
-            logger.info("Loader failed");
+            logger.info("Loader Failed During Serialization Process");
         }
 
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
