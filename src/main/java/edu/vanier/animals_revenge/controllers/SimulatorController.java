@@ -6,6 +6,7 @@ import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.windows.Selection;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +32,9 @@ public class SimulatorController implements UIController {
 
     @FXML
     private Button BTNCustom;
+
+    @FXML
+    private Button SelectProjectileBTN;
 
     @FXML
     private StackPane circle1;
@@ -93,6 +97,7 @@ public class SimulatorController implements UIController {
     @Override
     public void init() {
         MainApp.initGameObjects();
+
         ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick32x32.png"));
         ImagePattern dirt = new ImagePattern(new Image("/assets/textures/dirt32x32.png"));
         ImagePattern wood = new ImagePattern(new Image("/assets/textures/wood32x32.png"));
@@ -218,29 +223,34 @@ public class SimulatorController implements UIController {
 
     @FXML
     void selectProjectile(ActionEvent event) throws Exception {
+        System.out.println(CustomProjectileController.customProjectiles);
 
-        FileChooser fileChooser = new FileChooser();
-
+        
+        Selection sel = new Selection();
+        sel.show();
+        
+        /*FileChooser fileChooser = new FileChooser();
+        
         File file = fileChooser.showOpenDialog(null);
-
+        
         if (file != null) {
-
-            //will throw an error in the deserilization method if not a valid file
-            CustomProjectile Projectile = (CustomProjectile) CustomProjectileController.deserialize(file.getAbsolutePath());
-
-            if (Projectile instanceof CustomProjectileCircle) {
-
-                circle = (CustomProjectileCircle) Projectile;
-
-            } else if (Projectile instanceof CustomProjectileSquare) {
-
-                square = (CustomProjectileSquare) Projectile;
-
-            }
-
-        } else if (file == null) {
-            throwWarning("No File Selected", "File Selection");
+        
+        //will throw an error in the deserilization method if not a valid file
+        CustomProjectile Projectile = (CustomProjectile) CustomProjectileController.deserialize(file.getAbsolutePath());
+        
+        if (Projectile instanceof CustomProjectileCircle) {
+        
+        circle = (CustomProjectileCircle) Projectile;
+        
+        } else if (Projectile instanceof CustomProjectileSquare) {
+        
+        square = (CustomProjectileSquare) Projectile;
+        
         }
+        
+        } else if (file == null) {
+        throwWarning("No File Selected", "File Selection");
+        }*/
 
     }
 

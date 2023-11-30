@@ -4,12 +4,16 @@
  */
 package edu.vanier.animals_revenge.models;
 
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
+
 /**
  *
  * @author macke
  */
 public class CustomProjectileCircle extends CustomProjectile {
-    
+
+    private String fillProperty;
     private double radius;
     private String color;
     private String imgPath;
@@ -18,13 +22,15 @@ public class CustomProjectileCircle extends CustomProjectile {
         this.radius = radius;
         this.color = color;
         this.imgPath = imgPath;
+        this.fillProperty = imgPath;
     }
 
     public CustomProjectileCircle(double radius, String color) {
         this.radius = radius;
         this.color = color;
+        this.fillProperty = color;
     }
-    
+
     public double getRadius() {
         return radius;
     }
@@ -48,7 +54,17 @@ public class CustomProjectileCircle extends CustomProjectile {
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
+
+    public String getFillProperty() {
+        return fillProperty;
+    }
+
+    public void setFillProperty(String fillProperty) {
+        this.fillProperty = fillProperty;
+    }
+
     
+
     
-    
+
 }

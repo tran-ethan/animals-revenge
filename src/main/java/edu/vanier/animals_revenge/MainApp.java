@@ -24,6 +24,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.windows.GraphWindow;
+import java.util.HashMap;
 import javafx.util.Duration;
 
 /**
@@ -43,6 +44,9 @@ public class MainApp extends GameApplication {
     
     public static double velocityX = 0;
     public static double velocityY = 0;
+    
+    public static HashMap<Double, Double> timeVelocityValues = new HashMap<>();
+    
     public static double time = 0;
     public static long startTime;
 
@@ -268,10 +272,6 @@ public class MainApp extends GameApplication {
             Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
-
-            
-            
-            
             
             SetTimerAndGetPostion(e);
         }
@@ -289,20 +289,28 @@ public class MainApp extends GameApplication {
 
             //end of timer
             time = System.currentTimeMillis() - startTime;
+            
+            //converts milliseconds to seconds
+            time /= 1000;
 
             //negative values because x = 0 and y = 0 are at the top left of the screen thus will make velocity 
             //positive
             velocityX = -1 * e.getComponent(PhysicsComponent.class).getVelocityX();
             velocityY = -1 * e.getComponent(PhysicsComponent.class).getVelocityY();
             
+            //key is velocity value is time
+            timeVelocityValues.put(velocityY, time);
             
+            
+            //System.out.println("Velocity: " + velocityY + " at time: " + time);
             
             PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
+            //converting from pixels to centimeters
             PosY = PosY * cmConversion;
             //lower the duration if experiencing lag
 
-        }, Duration.seconds(0.001));
+        }, Duration.seconds(0.01));
     }
 
     public static void graphSetup() {

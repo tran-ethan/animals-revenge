@@ -24,12 +24,14 @@ public class DisplacementGraph extends Pane {
     private double time = 0.0;
 
     private Timeline timeline;
+    
+    public static boolean graphIsStopped;
 
     public DisplacementGraph() {
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time (ms)");
+        xAxis.setLabel("Time (s)");
         yAxis.setLabel("Height (cm) ");
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
@@ -45,6 +47,7 @@ public class DisplacementGraph extends Pane {
         timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> updateDisplacementGraph()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        graphIsStopped = false;
 
     }
 
@@ -68,6 +71,7 @@ public class DisplacementGraph extends Pane {
             //stopping conditino
             if (lastY1 == lastY2 && lastY2 == lastY3) {
                 timeline.stop();
+                graphIsStopped = true;
             }
         }
 

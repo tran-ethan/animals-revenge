@@ -4,6 +4,11 @@
  */
 package edu.vanier.animals_revenge.models;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+
 
 /**
  *
@@ -11,7 +16,7 @@ package edu.vanier.animals_revenge.models;
  */
 public class CustomProjectileSquare extends CustomProjectile{
     
-    private static final long serialVersionUID = 1597950689045739892L;
+    private String fillProperty;
     
     private double ShapeWidth;
     
@@ -20,27 +25,37 @@ public class CustomProjectileSquare extends CustomProjectile{
     private String colour;
     
     private String imgPath;
-
-    public CustomProjectileSquare() {
-    }
-    
-    
     
     public CustomProjectileSquare(double width, double height, String colour, String imgPath) {
+        
         this.ShapeWidth = width;
         this.ShapeHeight = height;
         this.colour = colour;
         this.imgPath = imgPath;
+        this.fillProperty = imgPath;
+        
     }
     
     public CustomProjectileSquare(double width, double height, String colour) {
+        
         this.ShapeWidth = width;
         this.ShapeHeight = height;
         this.colour = colour;
+        this.fillProperty = colour;
+       
     }
-    
-    
 
+    public String getFillProperty() {
+        return fillProperty;
+    }
+
+    public void setFillProperty(String fillProperty) {
+        this.fillProperty = fillProperty;
+    }
+
+   
+    
+    
     public double getShapeWidth() {
         return ShapeWidth;
     }

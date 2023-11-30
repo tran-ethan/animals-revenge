@@ -18,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
@@ -42,10 +43,12 @@ import org.slf4j.LoggerFactory;
  */
 public class CustomProjectileController implements UIController, Serializable {
 
+    public static ArrayList<CustomProjectile> customProjectiles = new ArrayList<>();
+    
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
-    private final static String fileExtension = ".proj";
+    private final static String FILE_EXTENSION = ".proj";
 
-    static Color borderColor = Color.RED;
+    public static final Color borderColor = Color.RED;
 
     private boolean savedChangesHasAlreadyPressed = false;
 
@@ -120,7 +123,8 @@ public class CustomProjectileController implements UIController, Serializable {
                 } else {
                     squareProjectile = new CustomProjectileSquare(width, height, StringColor);
                 }
-
+                
+                customProjectiles.add(squareProjectile);
                 serialize(SaveFile.getAbsolutePath(), squareProjectile);
 
             } else if (shape == circleCopy) {
@@ -137,6 +141,7 @@ public class CustomProjectileController implements UIController, Serializable {
 
                 System.out.println(circleProjectile.getColor());
 
+                customProjectiles.add(circleProjectile);
                 serialize(SaveFile.getAbsolutePath(), circleProjectile);
 
             }
@@ -158,7 +163,7 @@ public class CustomProjectileController implements UIController, Serializable {
             FileChooser saveLocation = new FileChooser();
 
             //sets initial file name
-            saveLocation.setInitialFileName("myCustomProjectile" + fileExtension);
+            saveLocation.setInitialFileName("myCustomProjectile" + FILE_EXTENSION);
 
             //Provides the extension(s) the file will have
             saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Custom Projectile", "*proj"), new FileChooser.ExtensionFilter("All Files", "*"));
@@ -189,8 +194,11 @@ public class CustomProjectileController implements UIController, Serializable {
                     } else {
                         squareProjectile = new CustomProjectileSquare(width, height, StringColor);
                     }
-
+                    
                     serialize(SaveFile.getAbsolutePath(), squareProjectile);
+                    
+                    customProjectiles.add(squareProjectile);
+                    
                     savedChangesHasAlreadyPressed = true;
 
                 } else if (shape == circleCopy) {
@@ -204,10 +212,9 @@ public class CustomProjectileController implements UIController, Serializable {
                     } else {
                         circleProjectile = new CustomProjectileCircle(radius, StringColor);
                     }
-
-                    System.out.println(circleProjectile.getColor());
-
+                    
                     serialize(SaveFile.getAbsolutePath(), circleProjectile);
+                    customProjectiles.add(circleProjectile);
                     savedChangesHasAlreadyPressed = true;
 
                 }
@@ -418,4 +425,10 @@ public class CustomProjectileController implements UIController, Serializable {
         circleCopy.setVisible(false);
 
     }
+    
+
+    
+    
+    
+    
 }

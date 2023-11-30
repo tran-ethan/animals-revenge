@@ -25,6 +25,8 @@ public class VelocityGraph extends Pane {
 
     double displacement;
     
+    public static boolean graphIsStopped;
+    
     private XYChart.Series<Number, Number> series;
 
     public double velocity;
@@ -35,7 +37,7 @@ public class VelocityGraph extends Pane {
 
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time");
+        xAxis.setLabel("Time (s)");
         yAxis.setLabel("Velocity");
 
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
@@ -51,6 +53,7 @@ public class VelocityGraph extends Pane {
         timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> updateVelocitytGraph()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        graphIsStopped = false;
 
     }
 
@@ -72,6 +75,9 @@ public class VelocityGraph extends Pane {
             //stopping condition 
             if (resultantSpeed <= 0.00005) {
                 timeline.stop();
+                
+                graphIsStopped = true;
+                
             }
         }
     }
