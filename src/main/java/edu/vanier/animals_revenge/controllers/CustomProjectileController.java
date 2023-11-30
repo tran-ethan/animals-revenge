@@ -9,7 +9,6 @@ import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import edu.vanier.animals_revenge.windows.Loading;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -226,13 +225,6 @@ public class CustomProjectileController implements UIController, Serializable {
     }
 
     public static void serialize(String filePath, CustomProjectile p) {
-
-        try {
-            Loading load = new Loading();
-        } catch (InterruptedException ex) {
-            logger.info("Loader Failed During Serialization Process");
-        }
-
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
             o.writeObject(p);
         } catch (IOException e) {
