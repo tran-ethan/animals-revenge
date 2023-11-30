@@ -34,45 +34,29 @@ public class ProjectileSelectionController {
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-          
+
                 System.out.println("Please work");
-                
+
             }
-             
+
         };
-        
+
         //adding the custom projectiles to the hbox
         for (int i = 0; i < customProjectiles.size(); i++) {
 
-            customObjectRow.getChildren().add(conv.createShapeFromProjectile(customProjectiles.get(i)));
-
-            customProjectiles.get(i).addEventFilter(MouseEvent.MOUSE_ENTERED, eventHandler);
-            
-        }
-
-        
-        
-        for (int i = 0; i < customProjectiles.size(); i++) {
-
             final int finalIndex = i;
+            System.out.println(customProjectiles.get(i));
+            customProjectiles.get(i).setOnMouseEntered((event) -> {
 
-            customProjectiles.get(i).setOnMouseEntered(
-                    (event) -> {
-
-                        System.out.println("is this working???");
-
-                        customProjectiles.get(finalIndex).setStroke(borderColor);
-
-                    });
-
-            customProjectiles.get(i).setOnMouseExited((event) -> {
-
-                customProjectiles.get(finalIndex).setStroke(Color.TRANSPARENT);
+                customProjectiles.get(finalIndex).setStroke(borderColor);
+                customProjectiles.get(finalIndex).setStrokeWidth(5);
+                customProjectiles.get(finalIndex).requestFocus();
+                
 
             });
+
+            customObjectRow.getChildren().add(conv.createShapeFromProjectile(customProjectiles.get(i)));
         }
-        
-        
 
     }
 
