@@ -1,4 +1,4 @@
-package edu.vanier.animals_revenge;
+package edu.vanier.animals_revenge.util;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.DraggableComponent;
@@ -9,6 +9,7 @@ import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.util.Type;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import com.almasb.fxgl.entity.Entity;

@@ -4,7 +4,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import edu.vanier.animals_revenge.Type;
+import edu.vanier.animals_revenge.util.Type;
 import edu.vanier.animals_revenge.controllers.SimulatorController;
 import javafx.geometry.Rectangle2D;
 
