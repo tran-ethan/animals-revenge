@@ -26,7 +26,8 @@ public class CustomProjectileSquare extends CustomProjectile{
     
     private String imgPath;
     
-    public CustomProjectileSquare(double width, double height, String colour, String imgPath) {
+    public CustomProjectileSquare(double width, double height, String colour, String imgPath, float restitution, double mass, float density) {
+        super(restitution, mass, density);
         
         this.ShapeWidth = width;
         this.ShapeHeight = height;
@@ -36,7 +37,10 @@ public class CustomProjectileSquare extends CustomProjectile{
         
     }
     
-    public CustomProjectileSquare(double width, double height, String colour) {
+    public CustomProjectileSquare(double width, double height, String colour, float restitution, double mass, float density) {
+        
+        super(restitution, mass, density);
+        
         
         this.ShapeWidth = width;
         this.ShapeHeight = height;

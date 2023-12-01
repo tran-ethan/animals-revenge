@@ -55,16 +55,10 @@ public class Factory implements EntityFactory {
 
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
+        physics.setFixtureDef(new FixtureDef().density(data.get("density")).restitution(data.get("restitution")));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
         if (data.get("img") != "null") {
-
-            CustomProjectileSquare squareProjectile = new CustomProjectileSquare(
-                    data.get("width"),
-                    data.get("height"),
-                    data.get("colour"),
-                    data.get("img"));
 
             String imgPath = data.get("img");
             Image image = new Image("file:" + imgPath);
@@ -78,7 +72,9 @@ public class Factory implements EntityFactory {
 
             double imageWidth = imgView.getFitWidth();
             double imageHeight = imgView.getFitHeight();
-
+            
+            
+            
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
                     .type(Type.CUSTOM_PROJECTILE)
@@ -114,7 +110,7 @@ public class Factory implements EntityFactory {
 
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
+        physics.setFixtureDef(new FixtureDef().density(data.get("density")).restitution(data.get("restitution")));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
         if (data.get("img") != "null") {
@@ -157,40 +153,6 @@ public class Factory implements EntityFactory {
                     .type(Type.PROJECTILE)
                     .view(circle)
                     .bbox(new HitBox(BoundingShape.circle(radius)))
-                    .with(physics)
-                    .with(new DraggableComponent())
-                    .build();
-
-        }
-    }
-
-    @Spawns("customProjectileTriangle")
-    public Entity spawnCustomProjectileTriangle(SpawnData data) {
-        double vX = data.get("vX");
-        double vY = data.get("vY");
-
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.DYNAMIC);
-        physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
-        physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
-
-        if (data.get("img") != "null") {
-
-            return FXGL.entityBuilder(data)
-                    .at(data.getX(), data.getY())
-                    .type(Type.CUSTOM_PROJECTILE)
-                    //.view()
-                    //.bbox(new HitBox())
-                    .with(physics)
-                    .with(new DraggableComponent())
-                    .build();
-        } else {
-
-            return FXGL.entityBuilder(data)
-                    .at(data.getX(), data.getY())
-                    .type(Type.PROJECTILE)
-                    //.view()
-                    //.bbox(new HitBox())
                     .with(physics)
                     .with(new DraggableComponent())
                     .build();

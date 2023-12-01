@@ -25,7 +25,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -49,6 +48,10 @@ public class CustomProjectileController implements UIController, Serializable {
     private final static String FILE_EXTENSION = ".proj";
 
     public static final Color borderColor = Color.RED;
+    
+    private static double mass;
+    private static float density;
+    private static float restitution;
 
     private boolean savedChangesHasAlreadyPressed = false;
 
@@ -79,76 +82,19 @@ public class CustomProjectileController implements UIController, Serializable {
     private Rectangle square;
 
     @FXML
+    private TextField txtFieldDensity;
+    
+    @FXML
+    private TextField txtFieldMass;
+    
+    @FXML
+    private TextField txtFieldRestitution;
+    
+    @FXML
     private Slider sizeSlider;
 
     @FXML
     private TextField sliderTextValue;
-
-    //save button (not to be confused with Save As button) event handler
-    @FXML
-    void Save(ActionEvent event) throws MalformedURLException {
-
-        //if the primary save button has not already been pressed than it should act the same as the
-        //Save As button, if the button has already been pressed than it should simply update the file without 
-        //changing the file path
-        if (!savedChangesHasAlreadyPressed) {
-            SaveAsChanges(event);
-        } else {
-
-            //Updating the already saved file
-            Shape shape = null;
-            Color color;
-
-            //This determines which shape the user has selected
-            if (squareCopy.isVisible()) {
-                shape = squareCopy;
-            } else if (circleCopy.isVisible()) {
-                shape = circleCopy;
-            }
-
-            //sets the color that the user has selected
-            color = ColourPicker.getValue();
-
-            //sets the shape that the user has selected and creates an object based on the other parameters
-            if (shape == squareCopy) {
-
-                double width = squareCopy.getWidth();
-                double height = squareCopy.getHeight();
-                String StringColor = color.toString().replace("0x", "");
-
-                //This determines if the projectile has an image on it or not and saves the file accordingly
-                if (SelectedImgFile != null) {
-                    String imgPath = SelectedImgFile.getAbsolutePath();
-                    squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
-                } else {
-                    squareProjectile = new CustomProjectileSquare(width, height, StringColor);
-                }
-                
-                customProjectiles.add(squareProjectile);
-                serialize(SaveFile.getAbsolutePath(), squareProjectile);
-
-            } else if (shape == circleCopy) {
-
-                double radius = circleCopy.getRadius();
-                String StringColor = color.toString().replace("0x", "");
-
-                if (SelectedImgFile != null) {
-                    String imgPath = SelectedImgFile.getAbsolutePath();
-                    circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
-                } else {
-                    circleProjectile = new CustomProjectileCircle(radius, StringColor);
-                }
-
-                System.out.println(circleProjectile.getColor());
-
-                customProjectiles.add(circleProjectile);
-                serialize(SaveFile.getAbsolutePath(), circleProjectile);
-
-            }
-
-        }
-
-    }
 
     //Save as button event handler (located in the file menu button)
     @FXML
@@ -190,9 +136,9 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     if (SelectedImgFile != null) {
                         String imgPath = SelectedImgFile.getAbsolutePath();
-                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath);
+                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath, restitution, mass, density);
                     } else {
-                        squareProjectile = new CustomProjectileSquare(width, height, StringColor);
+                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, restitution, mass, density);
                     }
                     
                     serialize(SaveFile.getAbsolutePath(), squareProjectile);
@@ -208,9 +154,9 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     if (SelectedImgFile != null) {
                         String imgPath = SelectedImgFile.getAbsolutePath();
-                        circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath);
+                        circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath, restitution, mass, density);
                     } else {
-                        circleProjectile = new CustomProjectileCircle(radius, StringColor);
+                        circleProjectile = new CustomProjectileCircle(radius, StringColor, restitution, mass, density);
                     }
                     
                     serialize(SaveFile.getAbsolutePath(), circleProjectile);
@@ -311,6 +257,28 @@ public class CustomProjectileController implements UIController, Serializable {
             circleCopy.setRadius(newSize);
         }
 
+    }
+    
+    @FXML
+    void setRestitution(ActionEvent event) {
+
+        restitution = Float.valueOf(txtFieldRestitution.getText());
+        
+    }
+    
+    @FXML
+    void setDensity(ActionEvent event) {
+
+      
+        density = Float.valueOf(txtFieldDensity.getText());
+        
+    }
+    
+    @FXML
+    void setMass(ActionEvent event) {
+
+        mass = Double.valueOf(txtFieldMass.getText());
+        
     }
 
     @FXML

@@ -18,14 +18,16 @@ public class CustomProjectileCircle extends CustomProjectile {
     private String color;
     private String imgPath;
 
-    public CustomProjectileCircle(double radius, String color, String imgPath) {
+    public CustomProjectileCircle(double radius, String color, String imgPath, float restitution, double mass, float density) {
+        super(restitution, mass, density);
         this.radius = radius;
         this.color = color;
         this.imgPath = imgPath;
         this.fillProperty = imgPath;
     }
 
-    public CustomProjectileCircle(double radius, String color) {
+    public CustomProjectileCircle(double radius, String color, float restitution, double mass, float density) {
+        super(restitution, mass, density);
         this.radius = radius;
         this.color = color;
         this.fillProperty = color;

@@ -240,6 +240,9 @@ public class MainApp extends GameApplication {
                         .put("colour", p.getColour())
                         .put("img", p.getImgPath())
                         .put("width", p.getShapeWidth())
+                        .put("restitution", p.getRestitution())
+                        .put("mass", p.getMass())
+                        .put("density", p.getDensity())
                         .put("height", p.getShapeHeight()));
 
                 SetTimerAndGetPosition(e);
@@ -249,6 +252,9 @@ public class MainApp extends GameApplication {
                         .put("vY", vY)
                         .put("img", "null")
                         .put("colour", p.getColour())
+                        .put("restitution", p.getRestitution())
+                        .put("mass", p.getMass())
+                        .put("density", p.getDensity())
                         .put("width", p.getShapeWidth())
                         .put("height", p.getShapeHeight()));
 
@@ -265,16 +271,11 @@ public class MainApp extends GameApplication {
                         .put("vY", vY)
                         .put("colour", p.getColor())
                         .put("img", p.getImgPath())
+                        .put("restitution", p.getRestitution())
+                        .put("mass", p.getMass())
+                        .put("density", p.getDensity())
                         .put("radius", p.getRadius()));
-                
         
-        
-        
-        
-                SetTimerAndGetPosition(e);
-
-
-                // If object has no image
                 SetTimerAndGetPosition(e);
 
 
@@ -283,7 +284,12 @@ public class MainApp extends GameApplication {
                         .put("vY", vY)
                         .put("img", "null")
                         .put("radius", p.getRadius())
+                        .put("restitution", p.getRestitution())
+                        .put("mass", p.getMass())
+                        .put("density", p.getDensity())
                         .put("colour", p.getColor()));
+                
+                
 
                 SetTimerAndGetPosition(e);
 
