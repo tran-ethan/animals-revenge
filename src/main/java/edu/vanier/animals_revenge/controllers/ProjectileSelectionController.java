@@ -12,6 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
 
 /**
  *
@@ -22,42 +26,62 @@ public class ProjectileSelectionController {
     @FXML
     public HBox customObjectRow;
 
+    public static CustomProjectile finalProjectile;
+
     public static final Color borderColor = Color.BLACK;
 
     @FXML
     public void initialize() {
 
         ProjectileConverterController conv = new ProjectileConverterController();
-
+        
         ArrayList<CustomProjectile> customProjectiles = CustomProjectileController.customProjectiles;
 
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-
-                System.out.println("Please work");
-
-            }
-
-        };
-
         //adding the custom projectiles to the hbox
+        //normal rectangle works but custom projectile doesn't
         for (int i = 0; i < customProjectiles.size(); i++) {
+            
+            Shape projectile = conv.createShapeFromProjectile(customProjectiles.get(i));
 
             final int finalIndex = i;
-            System.out.println(customProjectiles.get(i));
-            customProjectiles.get(i).setOnMouseEntered((event) -> {
 
-                customProjectiles.get(finalIndex).setStroke(borderColor);
-                customProjectiles.get(finalIndex).setStrokeWidth(5);
-                customProjectiles.get(finalIndex).requestFocus();
+            projectile.setOnMouseEntered(
+                    (event) -> {
+
+                        projectile.setStroke(borderColor);
+
+                    });
+
+            projectile.setOnMouseExited(
+                    (event) -> {
+
+                        projectile.setStroke(Color.TRANSPARENT);
+
+                    });
+
+            
+            
+            projectile.setOnMouseClicked((event) -> {
                 
+                finalProjectile = customProjectiles.get(finalIndex);
+
+                ((Stage) projectile.getScene().getWindow()).close();
 
             });
 
-            customObjectRow.getChildren().add(conv.createShapeFromProjectile(customProjectiles.get(i)));
+            customObjectRow.getChildren().add(projectile);
         }
 
     }
+
+    public static CustomProjectile getFinalProjectile() {
+        return finalProjectile;
+    }
+
+    public static void setFinalProjectile(CustomProjectile finalProjectile) {
+        ProjectileSelectionController.finalProjectile = finalProjectile;
+    }
+
+   
 
 }
