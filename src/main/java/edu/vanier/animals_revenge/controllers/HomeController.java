@@ -43,7 +43,7 @@ public class HomeController implements UIController {
         } else if (clickButton == btnLoad) {
             System.out.println("TODO");
         } else if (clickButton == btnCustomProjectile) {
-            MainApp.loadFXML("CustomProjectile.fxml", new CustomProjectileController());
+            MainApp.loadFXML("1CustomProjectile.fxml", new CustomProjectileController());
         } else if (clickButton == btnSettings) {
             MainApp.loadFXML("Settings.fxml", new SettingsController());
         }

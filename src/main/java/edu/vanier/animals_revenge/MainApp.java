@@ -261,7 +261,7 @@ public class MainApp extends GameApplication {
                         .put("colour", p.getColor())
                         .put("img", p.getImgPath())
                         .put("radius", p.getRadius()));
-
+                
                 SetTimerAndGetPostion(e);
             } else {
                 Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)

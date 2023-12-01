@@ -26,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -66,7 +67,7 @@ public class CustomProjectileController implements UIController, Serializable {
     private Rectangle squareCopy;
 
     @FXML
-    private AnchorPane anchorPane;
+    private BorderPane borderPane;
 
     @FXML
     private ColorPicker ColourPicker;
@@ -405,7 +406,7 @@ public class CustomProjectileController implements UIController, Serializable {
         squareCopy.setFill(Color.WHITE);
         circleCopy.setFill(Color.WHITE);
 
-        anchorPane.getChildren().addAll(squareCopy, circleCopy);
+        borderPane.getChildren().addAll(squareCopy, circleCopy);
 
         squareCopy.setLayoutX(centerX - squareCopy.getWidth());
         squareCopy.setLayoutY(centerY - squareCopy.getHeight());
