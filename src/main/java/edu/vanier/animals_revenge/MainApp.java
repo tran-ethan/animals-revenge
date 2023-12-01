@@ -10,6 +10,7 @@ import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.actions.DragAction;
 import edu.vanier.animals_revenge.actions.LaunchAction;
 import edu.vanier.animals_revenge.controllers.HomeController;
+import edu.vanier.animals_revenge.util.Factory;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
@@ -137,11 +138,14 @@ public class MainApp extends GameApplication {
      * @see com.almasb.fxgl.dsl.EntityBuilder#buildScreenBounds(double)
      */
     private void initScreenBounds() {
+        // Wall around window frame
         Entity walls = entityBuilder()
                 .collidable()
                 .buildScreenBounds(150);
 
+        // Wall covering top menu bar
         spawn("wall", new SpawnData(0, 0).put("width", WIDTH).put("height", 65.0));
+        // Wall covering right side
         spawn("wall", new SpawnData(WIDTH - 350.0, 0).put("width", 350.0).put("height", HEIGHT));
 
         getGameWorld().addEntity(walls);
@@ -181,7 +185,7 @@ public class MainApp extends GameApplication {
 
     /**
      * Animates the vector representing the initial velocity by using the
-     * pythagorean theorem to find the hypotenuse and trigonometry to find the
+     * pythagorean theorem and trigonometry to find the hypotenuse and
      * angle of rotation
      *
      * @param x the x position of the mouse
@@ -238,7 +242,8 @@ public class MainApp extends GameApplication {
                         .put("width", p.getShapeWidth())
                         .put("height", p.getShapeHeight()));
 
-                SetTimerAndGetPostion(e);
+                SetTimerAndGetPosition(e);
+
             } else {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -247,7 +252,7 @@ public class MainApp extends GameApplication {
                         .put("width", p.getShapeWidth())
                         .put("height", p.getShapeHeight()));
 
-                SetTimerAndGetPostion(e);
+                SetTimerAndGetPosition(e);
 
             }
 
@@ -262,7 +267,17 @@ public class MainApp extends GameApplication {
                         .put("img", p.getImgPath())
                         .put("radius", p.getRadius()));
                 
-                SetTimerAndGetPostion(e);
+        
+        
+        
+        
+                SetTimerAndGetPosition(e);
+
+
+                // If object has no image
+                SetTimerAndGetPosition(e);
+
+
             } else {
                 Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -270,7 +285,7 @@ public class MainApp extends GameApplication {
                         .put("radius", p.getRadius())
                         .put("colour", p.getColor()));
 
-                SetTimerAndGetPostion(e);
+                SetTimerAndGetPosition(e);
 
             }
 
@@ -279,72 +294,14 @@ public class MainApp extends GameApplication {
             Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
-
-            SetTimerAndGetPostion(e);
+            SetTimerAndGetPosition(e);
         }
-
-//---- old shit
-/*if (s != null) {
-if (s.getImgPath() != null) {
-Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-.put("vY", vY)
-.put("colour", s.getColour())
-.put("img", s.getImgPath())
-.put("width", s.getShapeWidth())
-.put("height", s.getShapeHeight()));
-
-SetTimerAndGetPostion(e);
-
-} else {
-Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-.put("vY", vY)
-.put("img", "null")
-.put("colour", s.getColour())
-.put("width", s.getShapeWidth())
-.put("height", s.getShapeHeight()));
-
-SetTimerAndGetPostion(e);
-
-}
-
-} else if (c != null) {
-
-//if object has an image
-if (c.getImgPath() != null) {
-Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-.put("vY", vY)
-.put("colour", c.getColor())
-.put("img", c.getImgPath())
-.put("radius", c.getRadius()));
-
-SetTimerAndGetPostion(e);
-
-//if object has no image
-} else {
-Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-.put("vY", vY)
-.put("img", "null")
-.put("radius", c.getRadius())
-.put("colour", c.getColor()));
-
-SetTimerAndGetPostion(e);
-
-}
-
-} else {
-System.out.println("Default Projectile");
-Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
-.put("vY", vY)
-.put("img", "soccer.png"));
-
-SetTimerAndGetPostion(e);
-}*/
 
         // TODO fix projectile spawn y location ( do not hard code 32, get obstacle height)
         //spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
     }
 
-    public static void SetTimerAndGetPostion(Entity e) {
+    public static void SetTimerAndGetPosition(Entity e) {
         //start of timer
         startTime = System.currentTimeMillis();
 
@@ -376,10 +333,8 @@ SetTimerAndGetPostion(e);
     }
 
     public static void graphSetup() {
-        //sets up graph
         GraphWindow graphWindow = new GraphWindow();
         graphWindow.show();
-        //Sets position of window 
         graphWindow.setX(720);
     }
 

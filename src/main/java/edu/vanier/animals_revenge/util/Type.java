@@ -1,4 +1,4 @@
-package edu.vanier.animals_revenge;
+package edu.vanier.animals_revenge.util;
 
 /**
  * An enumeration representing the various types of entities in the game.
