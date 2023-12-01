@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import edu.vanier.animals_revenge.controllers.ProjectileSelectionController;
+import edu.vanier.animals_revenge.models.CustomProjectile;
 
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
@@ -39,15 +41,15 @@ import javafx.util.Duration;
 public class MainApp extends GameApplication {
 
     public static double cmConversion = 0.0264583333;
-    
+
     public static double PosX = 0;
     public static double PosY = 0;
-    
+
     public static double velocityX = 0;
     public static double velocityY = 0;
-    
+
     public static HashMap<Double, Double> timeVelocityValues = new HashMap<>();
-    
+
     public static double time = 0;
     public static long startTime;
 
@@ -224,14 +226,21 @@ public class MainApp extends GameApplication {
         // From trigonometry: sin(angle) = opp / hyp
         double vY = Math.sin(Math.toRadians(angle)) * hyp;
 
-        if (s != null) {
-            if (s.getImgPath() != null) {
+        CustomProjectile proj = ProjectileSelectionController.finalProjectile;
+
+        System.out.println(proj);
+
+        if (proj instanceof CustomProjectileSquare) {
+
+            CustomProjectileSquare p = (CustomProjectileSquare) proj;
+
+            if (p.getImgPath() != null) {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
-                        .put("colour", s.getColour())
-                        .put("img", s.getImgPath())
-                        .put("width", s.getShapeWidth())
-                        .put("height", s.getShapeHeight()));
+                        .put("colour", p.getColour())
+                        .put("img", p.getImgPath())
+                        .put("width", p.getShapeWidth())
+                        .put("height", p.getShapeHeight()));
 
                 SetTimerAndGetPosition(e);
 
@@ -239,33 +248,34 @@ public class MainApp extends GameApplication {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
                         .put("img", "null")
-                        .put("colour", s.getColour())
-                        .put("width", s.getShapeWidth())
-                        .put("height", s.getShapeHeight()));
+                        .put("colour", p.getColour())
+                        .put("width", p.getShapeWidth())
+                        .put("height", p.getShapeHeight()));
 
                 SetTimerAndGetPosition(e);
 
             }
 
-        } else if (c != null) {
+        } else if (proj instanceof CustomProjectileCircle) {
 
-            //if object has an image 
-            if (c.getImgPath() != null) {
+            CustomProjectileCircle p = (CustomProjectileCircle) proj;
+
+            if (p.getImgPath() != null) {
                 Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
-                        .put("colour", c.getColor())
-                        .put("img", c.getImgPath())
-                        .put("radius", c.getRadius()));
+                        .put("colour", p.getColor())
+                        .put("img", p.getImgPath())
+                        .put("radius", p.getRadius()));
 
+                // If object has no image
                 SetTimerAndGetPosition(e);
 
-                //if object has no image
             } else {
                 Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
                         .put("img", "null")
-                        .put("radius", c.getRadius())
-                        .put("colour", c.getColor()));
+                        .put("radius", p.getRadius())
+                        .put("colour", p.getColor()));
 
                 SetTimerAndGetPosition(e);
 
@@ -276,9 +286,65 @@ public class MainApp extends GameApplication {
             Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
-            
             SetTimerAndGetPosition(e);
         }
+
+        //---- old shit
+        /*if (s != null) {
+        if (s.getImgPath() != null) {
+        Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+        .put("vY", vY)
+        .put("colour", s.getColour())
+        .put("img", s.getImgPath())
+        .put("width", s.getShapeWidth())
+        .put("height", s.getShapeHeight()));
+
+        SetTimerAndGetPostion(e);
+
+        } else {
+        Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+        .put("vY", vY)
+        .put("img", "null")
+        .put("colour", s.getColour())
+        .put("width", s.getShapeWidth())
+        .put("height", s.getShapeHeight()));
+
+        SetTimerAndGetPostion(e);
+
+        }
+
+        } else if (c != null) {
+
+        //if object has an image
+        if (c.getImgPath() != null) {
+        Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+        .put("vY", vY)
+        .put("colour", c.getColor())
+        .put("img", c.getImgPath())
+        .put("radius", c.getRadius()));
+
+        SetTimerAndGetPostion(e);
+
+        //if object has no image
+        } else {
+        Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+        .put("vY", vY)
+        .put("img", "null")
+        .put("radius", c.getRadius())
+        .put("colour", c.getColor()));
+
+        SetTimerAndGetPostion(e);
+
+        }
+
+        } else {
+        System.out.println("Default Projectile");
+        Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+        .put("vY", vY)
+        .put("img", "soccer.png"));
+
+        SetTimerAndGetPostion(e);
+        }*/
 
         // TODO fix projectile spawn y location ( do not hard code 32, get obstacle height)
         //spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
@@ -293,7 +359,7 @@ public class MainApp extends GameApplication {
 
             //end of timer
             time = System.currentTimeMillis() - startTime;
-            
+
             //converts milliseconds to seconds
             time /= 1000;
 
@@ -301,13 +367,11 @@ public class MainApp extends GameApplication {
             //positive
             velocityX = -1 * e.getComponent(PhysicsComponent.class).getVelocityX();
             velocityY = -1 * e.getComponent(PhysicsComponent.class).getVelocityY();
-            
+
             //key is velocity value is time
             timeVelocityValues.put(velocityY, time);
-            
-            
+
             //System.out.println("Velocity: " + velocityY + " at time: " + time);
-            
             PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
 
             //converting from pixels to centimeters
