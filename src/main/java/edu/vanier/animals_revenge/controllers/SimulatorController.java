@@ -3,11 +3,9 @@ package edu.vanier.animals_revenge.controllers;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
-import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.windows.Selection;
-import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -20,16 +18,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulatorController implements UIController {
-
-    private CustomProjectileCircle circle;
-
-    private CustomProjectileSquare square;
-
     @FXML
     private Button BTNCustom;
 
@@ -202,7 +194,7 @@ public class SimulatorController implements UIController {
 
     @FXML
     public void launch() {
-        MainApp.launch(square, circle);
+        MainApp.launch();
     }
 
     @FXML
@@ -224,33 +216,9 @@ public class SimulatorController implements UIController {
     @FXML
     void selectProjectile(ActionEvent event) throws Exception {
         System.out.println(CustomProjectileController.customProjectiles);
-
         
         Selection sel = new Selection();
         sel.show();
-        
-        /*FileChooser fileChooser = new FileChooser();
-        
-        File file = fileChooser.showOpenDialog(null);
-        
-        if (file != null) {
-        
-        //will throw an error in the deserilization method if not a valid file
-        CustomProjectile Projectile = (CustomProjectile) CustomProjectileController.deserialize(file.getAbsolutePath());
-        
-        if (Projectile instanceof CustomProjectileCircle) {
-        
-        circle = (CustomProjectileCircle) Projectile;
-        
-        } else if (Projectile instanceof CustomProjectileSquare) {
-        
-        square = (CustomProjectileSquare) Projectile;
-        
-        }
-        
-        } else if (file == null) {
-        throwWarning("No File Selected", "File Selection");
-        }*/
 
     }
 
@@ -277,20 +245,6 @@ public class SimulatorController implements UIController {
         return friction;
     }
 
-    public CustomProjectileCircle getCircle() {
-        return circle;
-    }
-
-    public void setCircle(CustomProjectileCircle circle) {
-        this.circle = circle;
-    }
-
-    public CustomProjectileSquare getSquare() {
-        return square;
-    }
-
-    public void setSquare(CustomProjectileSquare square) {
-        this.square = square;
-    }
+   
 
 }

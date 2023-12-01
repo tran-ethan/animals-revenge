@@ -43,12 +43,12 @@ import org.slf4j.LoggerFactory;
 public class CustomProjectileController implements UIController, Serializable {
 
     public static ArrayList<CustomProjectile> customProjectiles = new ArrayList<>();
-    
+
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
     private final static String FILE_EXTENSION = ".proj";
 
     public static final Color borderColor = Color.RED;
-    
+
     private static double mass;
     private static float density;
     private static float restitution;
@@ -83,13 +83,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     @FXML
     private TextField txtFieldDensity;
-    
+
     @FXML
     private TextField txtFieldMass;
-    
+
     @FXML
     private TextField txtFieldRestitution;
-    
+
     @FXML
     private Slider sizeSlider;
 
@@ -99,6 +99,25 @@ public class CustomProjectileController implements UIController, Serializable {
     //Save as button event handler (located in the file menu button)
     @FXML
     void SaveAsChanges(ActionEvent event) throws MalformedURLException {
+
+        System.out.println("massssss: " + mass);
+
+        if (txtFieldRestitution.getText().trim().equals("")) {
+            restitution = 0.5f;
+        }
+
+        if (txtFieldDensity.getText().trim().equals("")) {
+            // if the text field is empty
+
+            density = 0.3f;
+
+        }
+
+        if (txtFieldMass.getText().trim().equals("")) {
+            // if the text field is empty
+            mass = 0.3f;
+
+        }
 
         Shape shape = null;
         Color color;
@@ -140,11 +159,11 @@ public class CustomProjectileController implements UIController, Serializable {
                     } else {
                         squareProjectile = new CustomProjectileSquare(width, height, StringColor, restitution, mass, density);
                     }
-                    
+
                     serialize(SaveFile.getAbsolutePath(), squareProjectile);
-                    
+
                     customProjectiles.add(squareProjectile);
-                    
+
                     savedChangesHasAlreadyPressed = true;
 
                 } else if (shape == circleCopy) {
@@ -158,13 +177,13 @@ public class CustomProjectileController implements UIController, Serializable {
                     } else {
                         circleProjectile = new CustomProjectileCircle(radius, StringColor, restitution, mass, density);
                     }
-                    
+
                     serialize(SaveFile.getAbsolutePath(), circleProjectile);
                     customProjectiles.add(circleProjectile);
                     savedChangesHasAlreadyPressed = true;
 
                 }
-            } 
+            }
         } else {
             SimulatorController.throwWarning("Please Provide Properties To Save!", "Saving Error");
         }
@@ -258,31 +277,68 @@ public class CustomProjectileController implements UIController, Serializable {
         }
 
     }
-    
+
     @FXML
     void setRestitution(ActionEvent event) {
 
-        restitution = Float.valueOf(txtFieldRestitution.getText());
-        
+        //only valid values are between 0 and 1
+        if (Float.valueOf(txtFieldRestitution.getText()) > 1.00 || Float.valueOf(txtFieldRestitution.getText()) < 0) {
+            txtFieldRestitution.setText("" + 1.00);
+
+            restitution = Float.valueOf(txtFieldRestitution.getText());
+
+        } else {
+            restitution = Float.valueOf(txtFieldRestitution.getText());
+        }
+
     }
-    
+
     @FXML
     void setDensity(ActionEvent event) {
 
-      
-        density = Float.valueOf(txtFieldDensity.getText());
-        
+        //only valid values are between 0 and 1
+        if (Float.valueOf(txtFieldDensity.getText()) > 1.00 || Float.valueOf(txtFieldDensity.getText()) < 0) {
+            txtFieldDensity.setText("" + 1.00);
+
+            density = Float.valueOf(txtFieldDensity.getText());
+
+        } else if (txtFieldDensity.getText().trim().equals("")) {
+            // if the text field is empty
+
+            density = 0.3f;
+
+        } else {
+            density = Float.valueOf(txtFieldDensity.getText());
+        }
+
     }
-    
+
     @FXML
     void setMass(ActionEvent event) {
 
-        mass = Double.valueOf(txtFieldMass.getText());
-        
+        //only valid values are between 0 and 1
+        if (Float.valueOf(txtFieldMass.getText()) > 1.00 || Float.valueOf(txtFieldMass.getText()) < 0) {
+            txtFieldMass.setText("" + 1.00);
+
+            mass = Float.valueOf(txtFieldMass.getText());
+
+        } else if (txtFieldMass.getText().trim().equals("")) {
+            // if the text field is empty
+            mass = 0.3f;
+
+        } else {
+            mass = Float.valueOf(txtFieldMass.getText());
+        }
     }
 
     @FXML
     void circleClick(MouseEvent event) {
+
+        circleCopy.requestFocus();
+
+        txtFieldDensity.setText("");
+        txtFieldMass.setText("");
+        txtFieldRestitution.setText("");
 
         sizeSlider.setMax(90);
         sizeSlider.setMin(5);
@@ -298,6 +354,12 @@ public class CustomProjectileController implements UIController, Serializable {
 
     @FXML
     void rectClick(MouseEvent event) {
+
+        squareCopy.requestFocus();
+
+        txtFieldDensity.setText("");
+        txtFieldMass.setText("");
+        txtFieldRestitution.setText("");
 
         sizeSlider.setMax(150);
         sizeSlider.setMin(5);
@@ -386,10 +448,5 @@ public class CustomProjectileController implements UIController, Serializable {
         circleCopy.setVisible(false);
 
     }
-    
 
-    
-    
-    
-    
 }

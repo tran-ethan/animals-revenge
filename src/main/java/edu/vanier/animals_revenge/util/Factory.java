@@ -24,6 +24,8 @@ import javafx.scene.shape.Circle;
 
 public class Factory implements EntityFactory {
 
+    
+    //currently only used for the default projectile
     @Spawns("projectile")
     public Entity spawnProjectile(SpawnData data) {
         double vX = data.get("vX");
@@ -33,7 +35,7 @@ public class Factory implements EntityFactory {
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
-
+        
         String imgPath = data.get("img");
 
         Image image = new Image("file:" + imgPath);
@@ -57,6 +59,12 @@ public class Factory implements EntityFactory {
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(data.get("density")).restitution(data.get("restitution")));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
+        
+        double mass = data.get("mass");
+        float density = data.get("density");
+        float restitution = data.get("restitution");
+        
+        //System.out.println("mass: " + mass + " density: " + density + " restitution: " + restitution);
 
         if (data.get("img") != "null") {
 

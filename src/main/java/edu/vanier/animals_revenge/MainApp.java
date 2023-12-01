@@ -215,7 +215,7 @@ public class MainApp extends GameApplication {
      * @param c
      *
      */
-    public static void launch(CustomProjectileSquare s, CustomProjectileCircle c) {
+    public static void launch() {
 
         graphSetup();
 
@@ -228,12 +228,14 @@ public class MainApp extends GameApplication {
 
         CustomProjectile proj = ProjectileSelectionController.finalProjectile;
 
+        
+        
         System.out.println(proj);
 
         if (proj instanceof CustomProjectileSquare) {
 
             CustomProjectileSquare p = (CustomProjectileSquare) proj;
-
+            
             if (p.getImgPath() != null) {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -287,9 +289,7 @@ public class MainApp extends GameApplication {
                         .put("restitution", p.getRestitution())
                         .put("mass", p.getMass())
                         .put("density", p.getDensity())
-                        .put("colour", p.getColor()));
-                
-                
+                        .put("colour", p.getColor()));                
 
                 SetTimerAndGetPosition(e);
 
@@ -302,9 +302,6 @@ public class MainApp extends GameApplication {
                     .put("img", "soccer.png"));
             SetTimerAndGetPosition(e);
         }
-
-        // TODO fix projectile spawn y location ( do not hard code 32, get obstacle height)
-        //spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX).put("vY", vY).put("img", "soccer.png"));
     }
 
     public static void SetTimerAndGetPosition(Entity e) {
