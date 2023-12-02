@@ -217,8 +217,6 @@ public class MainApp extends GameApplication {
      */
     public static void launch() {
 
-        graphSetup();
-
         double hyp = vector.getScaleY();
         double angle = 90 - vector.getRotate();
         // From trigonometry: cos(angle) = adj / hyp
@@ -305,6 +303,9 @@ public class MainApp extends GameApplication {
     }
 
     public static void SetTimerAndGetPosition(Entity e) {
+
+        graphSetup(e);
+
         //start of timer
         startTime = System.currentTimeMillis();
 
@@ -335,8 +336,8 @@ public class MainApp extends GameApplication {
         }, Duration.seconds(0.01));
     }
 
-    public static void graphSetup() {
-        GraphWindow graphWindow = new GraphWindow();
+    public static void graphSetup(Entity e) {
+        GraphWindow graphWindow = new GraphWindow(e);
         graphWindow.show();
         graphWindow.setX(720);
     }

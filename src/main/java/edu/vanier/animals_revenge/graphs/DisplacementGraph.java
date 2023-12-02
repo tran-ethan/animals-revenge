@@ -1,5 +1,6 @@
 package edu.vanier.animals_revenge.graphs;
 
+import com.almasb.fxgl.entity.Entity;
 import edu.vanier.animals_revenge.MainApp;
 import javafx.event.ActionEvent;
 import javafx.scene.chart.XYChart;
@@ -15,8 +16,8 @@ public class DisplacementGraph extends KinematicsGraph {
 
     AccelerationGraph accelerationGraph;
 
-    public DisplacementGraph(VelocityGraph velocityGraph, AccelerationGraph accelerationGraph) {
-        super("Height", "cm");
+    public DisplacementGraph(Entity entity, VelocityGraph velocityGraph, AccelerationGraph accelerationGraph) {
+        super(entity, "Height", "cm");
         this.velocityGraph = velocityGraph;
         this.accelerationGraph = accelerationGraph;
     }
@@ -27,9 +28,11 @@ public class DisplacementGraph extends KinematicsGraph {
     @Override
     public void updateGraph(ActionEvent event) {
 
-        //using real time
-        if (MainApp.PosY >= 0) {
-            series.getData().add(new XYChart.Data<>(MainApp.time, MainApp.PosY));
+        // Get Y position from the bottom of the screen and convert to cm
+        double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * MainApp.cmConversion;
+
+        if (posY >= 0) {
+            series.getData().add(new XYChart.Data<>(MainApp.time, posY));
         }
 
         // Get number of data points in series
@@ -43,13 +46,17 @@ public class DisplacementGraph extends KinematicsGraph {
 
             // Stopping condition
             if (lastY1 == lastY2 && lastY2 == lastY3) {
-                // Stops this, velocity, and acceleration graph
+                // Stops this, velocity, and acceleration graph once this graph is stopped
                 this.stop();
                 velocityGraph.stop();
                 accelerationGraph.stop();
             }
         }
 
+    }
+
+    public double getYValue(int index) {
+        return series.getData().get(index).getYValue().doubleValue();
     }
 }
 

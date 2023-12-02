@@ -1,5 +1,6 @@
 package edu.vanier.animals_revenge.windows;
 
+import com.almasb.fxgl.entity.Entity;
 import edu.vanier.animals_revenge.graphs.AccelerationGraph;
 import edu.vanier.animals_revenge.graphs.DisplacementGraph;
 import edu.vanier.animals_revenge.graphs.VelocityGraph;
@@ -17,12 +18,12 @@ public class GraphWindow extends Stage {
     /**
      * Constructor for the Graphs class.
      */
-    public GraphWindow() {
+    public GraphWindow(Entity e) {
         TabPane tabPane = new TabPane();
 
-        VelocityGraph velocityGraph = new VelocityGraph();
-        AccelerationGraph accelerationGraph = new AccelerationGraph();
-        DisplacementGraph displacementGraph = new DisplacementGraph(velocityGraph, accelerationGraph);
+        VelocityGraph velocityGraph = new VelocityGraph(e);
+        AccelerationGraph accelerationGraph = new AccelerationGraph(e);
+        DisplacementGraph displacementGraph = new DisplacementGraph(e, velocityGraph, accelerationGraph);
 
         Tab tab1 = new Tab("Displacement");
         Tab tab2 = new Tab("Velocity");
