@@ -27,9 +27,8 @@ public class PositionGraph extends KinematicsGraph {
      */
     @Override
     public void updateGraph(ActionEvent event) {
-        double pxToCm = 0.0264583333;
         // Get Y position from the bottom of the screen and convert to cm
-        double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * pxToCm;
+        double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * PX_TO_CM_CONVERSION;
 
         if (posY >= 0) {
             series.getData().add(new XYChart.Data<>(time, posY));

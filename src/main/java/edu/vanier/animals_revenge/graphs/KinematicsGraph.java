@@ -14,6 +14,7 @@ import javafx.util.Duration;
 
 /**
  * @author Ethan Tran
+ * @author Mackenzie Rouchdy
  */
 public abstract class KinematicsGraph extends Pane {
 
@@ -24,6 +25,8 @@ public abstract class KinematicsGraph extends Pane {
     public Entity entity;
 
     public double time = 0;
+
+    public static final double PX_TO_CM_CONVERSION = 0.0264583333;
 
     public KinematicsGraph(Entity entity, String yAxisLabel, String unit) {
         this.entity = entity;

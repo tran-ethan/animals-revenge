@@ -142,8 +142,8 @@ public class MainApp extends GameApplication {
      * Maps the corresponding user inputs to their respective actions.
      * <p>
      * Right-click and hold from launcher to create initial velocity vector.
-     * Left-click and hold to drag obstacles around. Hold CTRL + Left-click and
-     * hold to create new obstacle.
+     * Left-click and hold to drag obstacles around.
+     * Hold CTRL + Left-click and hold to create new obstacle.
      */
     @Override
     protected void initInput() {
@@ -171,7 +171,7 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Animates the vector representing the initial velocity by using the
+     * Animates the vector representing the initial velocity by using
      * pythagorean theorem and trigonometry to find the hypotenuse and
      * angle of rotation
      *
