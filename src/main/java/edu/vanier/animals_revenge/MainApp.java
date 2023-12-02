@@ -40,22 +40,6 @@ import javafx.util.Duration;
  */
 public class MainApp extends GameApplication {
 
-    public static double cmConversion = 0.0264583333;
-
-    public static double PosX = 0;
-
-    public static double PosY = 0;
-
-    public static double velocityX = 0;
-
-    public static double velocityY = 0;
-
-    public static HashMap<Double, Double> timeVelocityValues = new HashMap<>();
-
-    public static double time = 0;
-
-    public static long startTime;
-
     public final static double WIDTH = 1480;
 
     public final static double HEIGHT = 820;
@@ -245,7 +229,7 @@ public class MainApp extends GameApplication {
                         .put("density", p.getDensity())
                         .put("height", p.getShapeHeight()));
 
-                SetTimerAndGetPosition(e);
+                graphSetup(e);
 
             } else {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
@@ -258,7 +242,7 @@ public class MainApp extends GameApplication {
                         .put("width", p.getShapeWidth())
                         .put("height", p.getShapeHeight()));
 
-                SetTimerAndGetPosition(e);
+                graphSetup(e);
 
             }
 
@@ -276,7 +260,7 @@ public class MainApp extends GameApplication {
                         .put("density", p.getDensity())
                         .put("radius", p.getRadius()));
         
-                SetTimerAndGetPosition(e);
+                graphSetup(e);
 
 
             } else {
@@ -289,7 +273,7 @@ public class MainApp extends GameApplication {
                         .put("density", p.getDensity())
                         .put("colour", p.getColor()));                
 
-                SetTimerAndGetPosition(e);
+                graphSetup(e);
 
             }
 
@@ -298,42 +282,8 @@ public class MainApp extends GameApplication {
             Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
-            SetTimerAndGetPosition(e);
+            graphSetup(e);
         }
-    }
-
-    public static void SetTimerAndGetPosition(Entity e) {
-
-        graphSetup(e);
-
-        //start of timer
-        startTime = System.currentTimeMillis();
-
-        //gets position of entity every unit of time
-        getGameTimer().runAtInterval(() -> {
-
-            //end of timer
-            time = System.currentTimeMillis() - startTime;
-
-            //converts milliseconds to seconds
-            time /= 1000;
-
-            //negative values because x = 0 and y = 0 are at the top left of the screen thus will make velocity 
-            //positive
-            velocityX = -1 * e.getComponent(PhysicsComponent.class).getVelocityX();
-            velocityY = -1 * e.getComponent(PhysicsComponent.class).getVelocityY();
-
-            //key is velocity value is time
-            timeVelocityValues.put(velocityY, time);
-
-            //System.out.println("Velocity: " + velocityY + " at time: " + time);
-            PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-
-            //converting from pixels to centimeters
-            PosY = PosY * cmConversion;
-            //lower the duration if experiencing lag
-
-        }, Duration.seconds(0.01));
     }
 
     public static void graphSetup(Entity e) {

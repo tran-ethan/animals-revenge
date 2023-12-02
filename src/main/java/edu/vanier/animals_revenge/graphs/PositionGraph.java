@@ -10,13 +10,13 @@ import javafx.scene.chart.XYChart;
  * @author Mackenzie Rouchdy
  * @author Ethan Tran
  */
-public class DisplacementGraph extends KinematicsGraph {
+public class PositionGraph extends KinematicsGraph {
 
     VelocityGraph velocityGraph;
 
     AccelerationGraph accelerationGraph;
 
-    public DisplacementGraph(Entity entity, VelocityGraph velocityGraph, AccelerationGraph accelerationGraph) {
+    public PositionGraph(Entity entity, VelocityGraph velocityGraph, AccelerationGraph accelerationGraph) {
         super(entity, "Height", "cm");
         this.velocityGraph = velocityGraph;
         this.accelerationGraph = accelerationGraph;
@@ -27,13 +27,15 @@ public class DisplacementGraph extends KinematicsGraph {
      */
     @Override
     public void updateGraph(ActionEvent event) {
-
+        double pxToCm = 0.0264583333;
         // Get Y position from the bottom of the screen and convert to cm
-        double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * MainApp.cmConversion;
+        double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * pxToCm;
 
         if (posY >= 0) {
-            series.getData().add(new XYChart.Data<>(MainApp.time, posY));
+            series.getData().add(new XYChart.Data<>(time, posY));
         }
+
+        time += 0.1;
 
         // Get number of data points in series
         int size = series.getData().size();

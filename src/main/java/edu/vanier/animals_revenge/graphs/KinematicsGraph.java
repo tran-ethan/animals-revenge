@@ -23,6 +23,8 @@ public abstract class KinematicsGraph extends Pane {
 
     public Entity entity;
 
+    public double time = 0;
+
     public KinematicsGraph(Entity entity, String yAxisLabel, String unit) {
         this.entity = entity;
 
@@ -47,7 +49,7 @@ public abstract class KinematicsGraph extends Pane {
         EventHandler<ActionEvent> onFinished = this::updateGraph;
 
         // Timeline
-        timeline = new Timeline(new KeyFrame(Duration.millis(120), onFinished));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), onFinished));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }

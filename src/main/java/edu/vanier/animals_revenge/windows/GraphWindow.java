@@ -2,7 +2,7 @@ package edu.vanier.animals_revenge.windows;
 
 import com.almasb.fxgl.entity.Entity;
 import edu.vanier.animals_revenge.graphs.AccelerationGraph;
-import edu.vanier.animals_revenge.graphs.DisplacementGraph;
+import edu.vanier.animals_revenge.graphs.PositionGraph;
 import edu.vanier.animals_revenge.graphs.VelocityGraph;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -23,13 +23,13 @@ public class GraphWindow extends Stage {
 
         VelocityGraph velocityGraph = new VelocityGraph(e);
         AccelerationGraph accelerationGraph = new AccelerationGraph(e);
-        DisplacementGraph displacementGraph = new DisplacementGraph(e, velocityGraph, accelerationGraph);
+        PositionGraph positionGraph = new PositionGraph(e, velocityGraph, accelerationGraph);
 
         Tab tab1 = new Tab("Displacement");
         Tab tab2 = new Tab("Velocity");
         Tab tab3 = new Tab("Acceleration");
 
-        tab1.setContent(displacementGraph);
+        tab1.setContent(positionGraph);
         tab2.setContent(velocityGraph);
         tab3.setContent(accelerationGraph);
         
