@@ -20,17 +20,17 @@ public class GraphWindow extends Stage {
     public GraphWindow() {
         TabPane tabPane = new TabPane();
 
-        DisplacementGraph DisplacementGraph = new DisplacementGraph();
-        VelocityGraph VelocityGraph = new VelocityGraph();
-        AccelerationGraph AccelerationGraph = new AccelerationGraph();
+        VelocityGraph velocityGraph = new VelocityGraph();
+        AccelerationGraph accelerationGraph = new AccelerationGraph();
+        DisplacementGraph displacementGraph = new DisplacementGraph(velocityGraph, accelerationGraph);
 
         Tab tab1 = new Tab("Displacement");
         Tab tab2 = new Tab("Velocity");
         Tab tab3 = new Tab("Acceleration");
 
-        tab1.setContent(DisplacementGraph);
-        tab2.setContent(VelocityGraph);
-        tab3.setContent(AccelerationGraph);
+        tab1.setContent(displacementGraph);
+        tab2.setContent(velocityGraph);
+        tab3.setContent(accelerationGraph);
         
         tabPane.getTabs().addAll(tab1, tab2, tab3);
 

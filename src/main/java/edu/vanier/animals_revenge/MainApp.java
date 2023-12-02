@@ -43,14 +43,17 @@ public class MainApp extends GameApplication {
     public static double cmConversion = 0.0264583333;
 
     public static double PosX = 0;
+
     public static double PosY = 0;
 
     public static double velocityX = 0;
+
     public static double velocityY = 0;
 
     public static HashMap<Double, Double> timeVelocityValues = new HashMap<>();
 
     public static double time = 0;
+
     public static long startTime;
 
     public final static double WIDTH = 1480;
@@ -210,9 +213,6 @@ public class MainApp extends GameApplication {
     /**
      * Launches the projectile by calculating initial x and y velocity using
      * velocity vector
-     *
-     * @param s
-     * @param c
      *
      */
     public static void launch() {

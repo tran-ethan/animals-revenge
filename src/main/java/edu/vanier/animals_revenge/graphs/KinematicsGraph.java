@@ -52,4 +52,8 @@ public abstract class KinematicsGraph extends Pane {
     public double getYValue(int index) {
         return series.getData().get(index).getYValue().doubleValue();
     }
+
+    public void stop() {
+        timeline.stop();
+    }
 }

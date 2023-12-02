@@ -11,8 +11,14 @@ import javafx.scene.chart.XYChart;
  */
 public class DisplacementGraph extends KinematicsGraph {
 
-    public DisplacementGraph() {
+    VelocityGraph velocityGraph;
+
+    AccelerationGraph accelerationGraph;
+
+    public DisplacementGraph(VelocityGraph velocityGraph, AccelerationGraph accelerationGraph) {
         super("Height", "cm");
+        this.velocityGraph = velocityGraph;
+        this.accelerationGraph = accelerationGraph;
     }
 
     /**
@@ -37,7 +43,10 @@ public class DisplacementGraph extends KinematicsGraph {
 
             // Stopping condition
             if (lastY1 == lastY2 && lastY2 == lastY3) {
-                timeline.stop();
+                // Stops this, velocity, and acceleration graph
+                this.stop();
+                velocityGraph.stop();
+                accelerationGraph.stop();
             }
         }
 
