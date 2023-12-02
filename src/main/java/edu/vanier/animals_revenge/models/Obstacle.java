@@ -10,13 +10,13 @@ import edu.vanier.animals_revenge.controllers.SimulatorController;
  *
  * @author Zachary Tremblay
  */
-public class BuildingBlock {
+public class Obstacle {
 
     private String shape = "square";
     private String type;
     private String size;
 
-    public BuildingBlock() {}
+    public Obstacle() {}
 
     public String getShape() {
         return SimulatorController.getSelected().getId().substring(0, SimulatorController.getSelected().getId().length() - 1);

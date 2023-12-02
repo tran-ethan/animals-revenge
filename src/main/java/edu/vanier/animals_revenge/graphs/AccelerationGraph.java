@@ -3,15 +3,14 @@ package edu.vanier.animals_revenge.graphs;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import edu.vanier.animals_revenge.MainApp;
 import javafx.event.ActionEvent;
 import javafx.scene.chart.XYChart;
 
-import java.util.ArrayList;
 
 /**
  *
- * @author 2268182
+ * @author Ethan Tran
+ * @author Mackenzie Rouchdy
  */
 public class AccelerationGraph extends KinematicsGraph {
 
@@ -32,7 +31,7 @@ public class AccelerationGraph extends KinematicsGraph {
         // The only moment acceleration changes is when the previous velocity and current velocity are
         // opposite in direction, meaning it has collided with ceiling/floor
         // Ignore imprecision from small changes in acceleration, meaning it has not hit floor/ceiling
-        if ((vF * vI) < 0 && Math.abs(vF - vI) > 1) {
+        if ((vF * vI) < 0 && Math.abs(vF - vI) > 2) {
             // Acceleration = final velocity - initial velocity / time
             acceleration = (vF - vI) / 0.1 ;
         } else {
