@@ -4,11 +4,6 @@
  */
 package edu.vanier.animals_revenge.models;
 
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
-
 
 /**
  *
@@ -26,8 +21,8 @@ public class CustomProjectileSquare extends CustomProjectile{
     
     private String imgPath;
     
-    public CustomProjectileSquare(double width, double height, String colour, String imgPath, float restitution, double mass, float density) {
-        super(restitution, mass, density);
+    public CustomProjectileSquare(double width, double height, String colour, String imgPath, float restitution, float density) {
+        super(restitution, density);
         
         this.ShapeWidth = width;
         this.ShapeHeight = height;
@@ -37,10 +32,9 @@ public class CustomProjectileSquare extends CustomProjectile{
         
     }
     
-    public CustomProjectileSquare(double width, double height, String colour, float restitution, double mass, float density) {
+    public CustomProjectileSquare(double width, double height, String colour, float restitution, float density) {
         
-        super(restitution, mass, density);
-        
+        super(restitution, density);
         
         this.ShapeWidth = width;
         this.ShapeHeight = height;

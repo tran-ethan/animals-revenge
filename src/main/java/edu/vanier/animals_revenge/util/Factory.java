@@ -59,11 +59,11 @@ public class Factory implements EntityFactory {
         physics.setFixtureDef(new FixtureDef().density(data.get("density")).restitution(data.get("restitution")));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
         
-        double mass = data.get("mass");
+       
         float density = data.get("density");
         float restitution = data.get("restitution");
         
-        //System.out.println("mass: " + mass + " density: " + density + " restitution: " + restitution);
+       
 
         if (data.get("img") != "null") {
 

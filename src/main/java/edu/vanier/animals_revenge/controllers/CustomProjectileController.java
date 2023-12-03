@@ -48,8 +48,7 @@ public class CustomProjectileController implements UIController, Serializable {
     private final static String FILE_EXTENSION = ".proj";
 
     public static final Color borderColor = Color.RED;
-
-    private static double mass;
+    
     private static float density;
     private static float restitution;
 
@@ -85,9 +84,6 @@ public class CustomProjectileController implements UIController, Serializable {
     private TextField txtFieldDensity;
 
     @FXML
-    private TextField txtFieldMass;
-
-    @FXML
     private TextField txtFieldRestitution;
 
     @FXML
@@ -100,8 +96,6 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     void SaveAsChanges(ActionEvent event) throws MalformedURLException {
 
-        System.out.println("massssss: " + mass);
-
         if (txtFieldRestitution.getText().trim().equals("")) {
             restitution = 0.5f;
         }
@@ -110,12 +104,6 @@ public class CustomProjectileController implements UIController, Serializable {
             // if the text field is empty
 
             density = 0.3f;
-
-        }
-
-        if (txtFieldMass.getText().trim().equals("")) {
-            // if the text field is empty
-            mass = 0.3f;
 
         }
 
@@ -155,9 +143,9 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     if (SelectedImgFile != null) {
                         String imgPath = SelectedImgFile.getAbsolutePath();
-                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath, restitution, mass, density);
+                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, imgPath, restitution, density);
                     } else {
-                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, restitution, mass, density);
+                        squareProjectile = new CustomProjectileSquare(width, height, StringColor, restitution, density);
                     }
 
                     serialize(SaveFile.getAbsolutePath(), squareProjectile);
@@ -173,9 +161,9 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     if (SelectedImgFile != null) {
                         String imgPath = SelectedImgFile.getAbsolutePath();
-                        circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath, restitution, mass, density);
+                        circleProjectile = new CustomProjectileCircle(radius, StringColor, imgPath, restitution, density);
                     } else {
-                        circleProjectile = new CustomProjectileCircle(radius, StringColor, restitution, mass, density);
+                        circleProjectile = new CustomProjectileCircle(radius, StringColor, restitution, density);
                     }
 
                     serialize(SaveFile.getAbsolutePath(), circleProjectile);
@@ -314,30 +302,11 @@ public class CustomProjectileController implements UIController, Serializable {
     }
 
     @FXML
-    void setMass(ActionEvent event) {
-
-        //only valid values are between 0 and 1
-        if (Float.valueOf(txtFieldMass.getText()) > 1.00 || Float.valueOf(txtFieldMass.getText()) < 0) {
-            txtFieldMass.setText("" + 1.00);
-
-            mass = Float.valueOf(txtFieldMass.getText());
-
-        } else if (txtFieldMass.getText().trim().equals("")) {
-            // if the text field is empty
-            mass = 0.3f;
-
-        } else {
-            mass = Float.valueOf(txtFieldMass.getText());
-        }
-    }
-
-    @FXML
     void circleClick(MouseEvent event) {
 
         circleCopy.requestFocus();
 
         txtFieldDensity.setText("");
-        txtFieldMass.setText("");
         txtFieldRestitution.setText("");
 
         sizeSlider.setMax(90);
@@ -358,7 +327,6 @@ public class CustomProjectileController implements UIController, Serializable {
         squareCopy.requestFocus();
 
         txtFieldDensity.setText("");
-        txtFieldMass.setText("");
         txtFieldRestitution.setText("");
 
         sizeSlider.setMax(150);

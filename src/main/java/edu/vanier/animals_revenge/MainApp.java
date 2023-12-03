@@ -48,6 +48,8 @@ public class MainApp extends GameApplication {
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     private static UI ui;
+    
+    private static Entity e;
 
     /**
      * Initializes application settings.
@@ -200,37 +202,31 @@ public class MainApp extends GameApplication {
 
         CustomProjectile proj = ProjectileSelectionController.finalProjectile;
 
-        System.out.println(proj);
-
         if (proj instanceof CustomProjectileSquare) {
 
             CustomProjectileSquare p = (CustomProjectileSquare) proj;
 
             if (p.getImgPath() != null) {
-                Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                 e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
                         .put("colour", p.getColour())
                         .put("img", p.getImgPath())
                         .put("width", p.getShapeWidth())
                         .put("restitution", p.getRestitution())
-                        .put("mass", p.getMass())
                         .put("density", p.getDensity())
                         .put("height", p.getShapeHeight()));
 
-                graphSetup(e);
+                
 
             } else {
-                Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
                         .put("img", "null")
                         .put("colour", p.getColour())
                         .put("restitution", p.getRestitution())
-                        .put("mass", p.getMass())
                         .put("density", p.getDensity())
                         .put("width", p.getShapeWidth())
                         .put("height", p.getShapeHeight()));
-
-                graphSetup(e);
 
             }
 
@@ -239,38 +235,35 @@ public class MainApp extends GameApplication {
             CustomProjectileCircle p = (CustomProjectileCircle) proj;
 
             if (p.getImgPath() != null) {
-                Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
                         .put("colour", p.getColor())
                         .put("img", p.getImgPath())
                         .put("restitution", p.getRestitution())
-                        .put("mass", p.getMass())
                         .put("density", p.getDensity())
                         .put("radius", p.getRadius()));
 
-                graphSetup(e);
-
             } else {
-                Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
                         .put("img", "null")
                         .put("radius", p.getRadius())
                         .put("restitution", p.getRestitution())
-                        .put("mass", p.getMass())
                         .put("density", p.getDensity())
                         .put("colour", p.getColor()));
 
-                graphSetup(e);
 
             }
 
         } else {
-            System.out.println("Default Projectile");
-            Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+            e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
-            graphSetup(e);
+            
         }
+        
+        graphSetup(e);
+        
     }
 
     public static void graphSetup(Entity e) {
