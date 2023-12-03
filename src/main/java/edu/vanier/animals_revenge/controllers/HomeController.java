@@ -45,7 +45,7 @@ public class HomeController implements UIController {
         } else if (clickButton == btnCustomProjectile) {
             MainApp.loadFXML("1CustomProjectile.fxml", new CustomProjectileController());
         } else if (clickButton == btnSettings) {
-            MainApp.loadFXML("Settings.fxml", new SettingsController());
+            MainApp.loadFXML("Setting.fxml", new SettingsController());
         }
     }
 }
