@@ -7,41 +7,37 @@ package edu.vanier.animals_revenge.models;
 import edu.vanier.animals_revenge.controllers.SimulatorController;
 
 /**
- * The BuildingBlock class represents a basic building block in a simulator. Each block has attributes such as
- * shape, type, and size, which determine its appearance and characteristics. The class provides methods to access
- * and modify these attributes, as well as a method to generate a String representation of the block based on its
- * type and size.
+ * The Obstacle class represents a basic obstacle in a simulator.
+ * Each obstacle has attributes such as shape, type, and size, which determine its
+ * appearance and characteristics. The class provides methods to access and
+ * modify these attributes, as well as a method to generate a String
+ * representation of the obstacle based on its type and size.
  *
  * @author Zachary Tremblay
  */
-<<<<<<< Updated upstream:src/main/java/edu/vanier/animals_revenge/models/Obstacle.java
 public class Obstacle {
 
-=======
-public class BuildingBlock {
-    
-    /** The default shape of the building block. */
->>>>>>> Stashed changes:src/main/java/edu/vanier/animals_revenge/models/BuildingBlock.java
-    private String shape = "square";
-    
-    /** The type of the building block (e.g., brick, dirt, wood). */
-    private String type;
-    
-     /** The size of the building block (e.g., 16x16, 32x32, 64x64). */
-    private String size;
-<<<<<<< Updated upstream:src/main/java/edu/vanier/animals_revenge/models/Obstacle.java
-
-    public Obstacle() {}
-
-=======
-    
-     /**
-     * Constructs a BuildingBlock object with default values.
+    /**
+     * The default shape of the obstacle.
      */
-    public BuildingBlock() {}
-    
-    
->>>>>>> Stashed changes:src/main/java/edu/vanier/animals_revenge/models/BuildingBlock.java
+    private String shape = "square";
+
+    /**
+     * The type of the obstacle (e.g., brick, dirt, wood).
+     */
+    private String type;
+
+    /**
+     * The size of the obstacle (e.g., 16x16, 32x32, 64x64).
+     */
+    private String size;
+
+    /**
+     * Constructs a Obstacle object with default values.
+     */
+    public Obstacle() {
+    }
+
     public String getShape() {
         return SimulatorController.getSelected().getId().substring(0, SimulatorController.getSelected().getId().length() - 1);
     }
