@@ -36,7 +36,7 @@ public class HomeController implements UIController {
     
     @FXML 
     void switchScenes(ActionEvent event) {
-        Button clickButton = (Button) event.getSource();
+        Object clickButton = event.getSource();
         
         if (clickButton == btnNew) {
             MainApp.loadFXML("Simulator.fxml", new SimulatorController());

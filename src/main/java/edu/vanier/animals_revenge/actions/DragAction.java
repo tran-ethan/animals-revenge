@@ -72,7 +72,7 @@ public class DragAction extends UserAction {
             offsetX = selected.getWidth() / 2;
             offsetY = selected.getHeight() / 2;
         } else {
-            getGameWorld().getEntitiesInRange(new Rectangle2D(x - 1.0, y - 1.0, 2.0, 2.0))
+            getGameWorld().getEntitiesInRange(new Rectangle2D(x - 2.0, y - 2.0, 4.0, 4.0))
                     .stream()
                     .filter(entity -> entity.isType(Type.OBSTACLE))
                     .findFirst()
