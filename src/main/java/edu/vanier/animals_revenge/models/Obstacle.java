@@ -98,9 +98,9 @@ public class Obstacle {
     public float getDensity() {
         // Density of obstacle depends on the type of material (brick, wood, dirt)
         return switch (type) {
-            case "brick" -> 1f;
-            case "wood" -> 0.5f;
-            case "dirt" -> 0.1f;
+            case "brick" -> 0.8f;
+            case "wood" -> 0.3f;
+            case "dirt" -> 0.05f;
             default -> throw new IllegalStateException("Illegal type: " + type);
         };
     }
