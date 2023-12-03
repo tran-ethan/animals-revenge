@@ -10,7 +10,13 @@ import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.actions.DragAction;
 import edu.vanier.animals_revenge.actions.LaunchAction;
 import edu.vanier.animals_revenge.controllers.HomeController;
+import edu.vanier.animals_revenge.controllers.ParametersController;
+import edu.vanier.animals_revenge.controllers.ProjectileSelectionController;
+import edu.vanier.animals_revenge.models.CustomProjectile;
+import edu.vanier.animals_revenge.models.CustomProjectileCircle;
+import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.util.Factory;
+import edu.vanier.animals_revenge.windows.GraphWindow;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
@@ -20,17 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import com.almasb.fxgl.physics.PhysicsComponent;
-import edu.vanier.animals_revenge.controllers.ParametersController;
-import edu.vanier.animals_revenge.controllers.ProjectileSelectionController;
-import edu.vanier.animals_revenge.models.CustomProjectile;
-
-import edu.vanier.animals_revenge.models.CustomProjectileCircle;
-import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import edu.vanier.animals_revenge.windows.GraphWindow;
-import edu.vanier.animals_revenge.windows.Parameters;
-import java.util.HashMap;
-import javafx.util.Duration;
 
 /**
  * Main entry point of the FXGL application.
@@ -173,15 +168,9 @@ public class MainApp extends GameApplication {
     }
 
     /**
-<<<<<<< Updated upstream
      * Animates the vector representing the initial velocity by using
      * pythagorean theorem and trigonometry to find the hypotenuse and
      * angle of rotation
-=======
-     * Animates the vector representing the initial velocity by using the
-     * pythagorean theorem and trigonometry to find the hypotenuse and angle of
-     * rotation
->>>>>>> Stashed changes
      *
      * @param x the x position of the mouse
      * @param y the y position of the mouse

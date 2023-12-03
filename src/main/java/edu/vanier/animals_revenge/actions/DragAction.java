@@ -14,7 +14,7 @@ import edu.vanier.animals_revenge.models.Obstacle;
 public class DragAction extends UserAction {
 
     /**
-     * A Boolean representing whether it selects an obstacle or creates a new one
+     * A boolean representing whether it selects an obstacle or creates a new one
      */
     private final boolean newObstacle;
 
@@ -64,9 +64,10 @@ public class DragAction extends UserAction {
             System.out.println(size);
             int rotate = SimulatorController.getRotate();
             System.out.println(rotate);
-            // TODO Spawn correct obstacle
-            Obstacle build = new Obstacle();
-            selected = spawn("obstacle", new SpawnData(x, y).put("img", build.toString()));
+            float friction = SimulatorController.getFriction();
+
+            Obstacle obstacle = new Obstacle(id, size, rotate, friction);
+            selected = spawn("obstacle", new SpawnData(x, y).put("obstacle", obstacle));
             // Mouse offset to the middle of the spawned obstacle
             offsetX = selected.getWidth() / 2;
             offsetY = selected.getHeight() / 2;

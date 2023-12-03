@@ -4,7 +4,11 @@
  */
 package edu.vanier.animals_revenge.models;
 
-import edu.vanier.animals_revenge.controllers.SimulatorController;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 /**
  * The Obstacle class represents a basic obstacle in a simulator.
@@ -20,7 +24,7 @@ public class Obstacle {
     /**
      * The default shape of the obstacle.
      */
-    private String shape = "square";
+    private String shape;
 
     /**
      * The type of the obstacle (e.g., brick, dirt, wood).
@@ -30,64 +34,74 @@ public class Obstacle {
     /**
      * The size of the obstacle (e.g., 16x16, 32x32, 64x64).
      */
-    private String size;
+    private int size;
+
+    private int rotate;
+
+    private float friction;
 
     /**
      * Constructs a Obstacle object with default values.
      */
-    public Obstacle() {
-    }
-
-    public String getShape() {
-        return SimulatorController.getSelected().getId().substring(0, SimulatorController.getSelected().getId().length() - 1);
-    }
-
-    public void setShape(String shape) {
-        this.shape = shape;
-    }
-
-    public String getType() {
-        String tempType = null;
-        switch (SimulatorController.getSelected().getId().substring(SimulatorController.getSelected().getId().length() - 1)) {
-            case "1" ->
-                tempType = "brick";
-            case "2" ->
-                tempType = "dirt";
-            case "3" ->
-                tempType = "wood";
-
-        }
-        return tempType;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getSize() {
-        String tempSize = null;
-        switch (SimulatorController.getSize()) {
-            case 1 ->
-                tempSize = "16x16";
-            case 2 ->
-                tempSize = "32x32";
-            case 3 ->
-                tempSize = "64x64";
-            case 4 ->
-                tempSize = "128x128";
-            case 5 ->
-                tempSize = "256x256";
-        }
-        return tempSize;
-    }
-
-    public void setSize(String size) {
+    public Obstacle(String id, int size, int rotate, float friction) {
+        this.shape = id.substring(0, id.length() - 1);
+        this.type = setType(id.charAt(id.length() - 1));
         this.size = size;
+        this.rotate = rotate;
+        this.friction = friction;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s%s.png", getType(), getSize());
+    public String setType(char c) {
+        return switch (c) {
+            case '1' -> "brick";
+            case '2' -> "dirt";
+            case '3' -> "wood";
+            default -> throw new IllegalStateException("Unexpected value: " + c);
+        };
     }
 
+    public Shape getShape() {
+        int[] sizes = {16, 32, 64, 128, 256};
+        int size = sizes[this.size - 1];
+
+        Shape shape;
+        if (this.shape.equals("circle")) {
+            int radius = size / 2;
+            shape = new Circle(radius);
+
+            // Centers the center of the circle at the cursor
+            shape.setTranslateX(radius);
+            shape.setTranslateY(radius);
+        } else if (this.shape.equals("rectangle")) {
+            // Elongate the rectangle to balance width and height
+            int w = size / 2;
+            int h = size * 2;
+            shape = new Rectangle(w, h);
+        } else {
+            // Default shape is a square
+            shape = new Rectangle(size, size);
+        }
+
+        shape.setFill(new ImagePattern(new Image(String.format("/assets/textures/%s.png", type))));
+
+        return shape;
+    }
+
+    public int getRotate() {
+        return rotate;
+    }
+
+    public float getFriction() {
+        return friction;
+    }
+
+    public float getDensity() {
+        // Density of obstacle depends on the type of material (brick, wood, dirt)
+        return switch (type) {
+            case "brick" -> 1f;
+            case "wood" -> 0.5f;
+            case "dirt" -> 0.1f;
+            default -> throw new IllegalStateException("Illegal type: " + type);
+        };
+    }
 }

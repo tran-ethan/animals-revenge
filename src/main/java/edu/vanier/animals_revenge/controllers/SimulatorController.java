@@ -87,7 +87,7 @@ public class SimulatorController implements UIController {
 
     private static int rotate = 1;
 
-    private static int friction = 1;
+    private static float friction = 0.5f;
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
@@ -165,15 +165,12 @@ public class SimulatorController implements UIController {
         }));
 
         frictionSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
-            // Value should be only set after slider knob snaps to major unit tick
-            if (newValue.intValue() == newValue.doubleValue()) {
-                friction = newValue.intValue();
-            }
+            friction = newValue.floatValue();
         }));
 
         sizeTextField.textProperty().bind(sizeSlider.valueProperty().asString("%.0f"));
         rotateTextField.textProperty().bind(rotateSlider.valueProperty().asString("%.0f"));
-        frictionTextField.textProperty().bind(frictionSlider.valueProperty().asString("%.0f"));
+        frictionTextField.textProperty().bind(frictionSlider.valueProperty().asString("%.1f"));
 
         logger.info("Initializing SimulatorController...");
 
@@ -220,7 +217,6 @@ public class SimulatorController implements UIController {
             source.setStyle("-fx-background-color: lightgray");
             selected.setStyle("-fx-background-color: white");
             selected = source;
-
         }
     }
 
@@ -252,7 +248,7 @@ public class SimulatorController implements UIController {
         return rotate;
     }
 
-    public static int getFriction() {
+    public static float getFriction() {
         return friction;
     }
 

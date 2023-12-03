@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 
 public class Factory implements EntityFactory {
 
@@ -171,65 +172,35 @@ public class Factory implements EntityFactory {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
 
-        physics.setFixtureDef(new FixtureDef().density(0.3f).friction(SimulatorController.getFriction() / 10));
-        String imgFile = data.get("img");
-        Obstacle build = new Obstacle();
-        switch (build.getShape()) {
-            case "circle" -> {
-                
-                Circle circle = new Circle(5 * Math.pow(SimulatorController.getSize(), 2));
-                circle.setFill(new ImagePattern(new Image("/assets/textures/"+imgFile)));
+        Obstacle obstacle = data.get("obstacle");
+        Shape shape = obstacle.getShape();
 
-                //center radius in the middle
-                circle.setTranslateX(5 * Math.pow(SimulatorController.getSize(), 2));
-                circle.setTranslateY(5 * Math.pow(SimulatorController.getSize(), 2));
+        System.out.println(obstacle.getFriction());
+        physics.setFixtureDef(new FixtureDef().density(obstacle.getDensity()).friction(obstacle.getFriction()));
 
-                return FXGL.entityBuilder(data)
-                        .at(data.getX(), data.getY())
-                        .type(Type.OBSTACLE)
-                        .view(circle)
-                        .bbox(new HitBox(BoundingShape.circle(5 * Math.pow(SimulatorController.getSize(), 2))))
-                        .with(physics)
-                        .rotate(SimulatorController.getRotate())
-                        // .with(new DraggableComponent())
-                        .build();
+        // Default obstacle is a 16x16 square
+        HitBox hitbox = new HitBox(BoundingShape.box(16, 16));
 
-            }
-            case "rectangle" -> {
-
-                Rectangle rectangle = new Rectangle(4 * Math.pow(SimulatorController.getSize(), 2), 16 * Math.pow(SimulatorController.getSize(), 2));
-                rectangle.setFill(new ImagePattern(new Image("/assets/textures/"+imgFile)));
-
-                return FXGL.entityBuilder(data)
-                        .at(data.getX(), data.getY())
-                        .type(Type.OBSTACLE)
-                        .view(rectangle)
-                        .bbox(new HitBox(BoundingShape.box(4 * Math.pow(SimulatorController.getSize(), 2), 16 * Math.pow(SimulatorController.getSize(), 2))))
-                        .with(physics)
-                        .rotate(SimulatorController.getRotate())
-                        .build();
-
-            }
-            case "square" -> {
-                return FXGL.entityBuilder(data)
-                        .at(data.getX(), data.getY())
-                        .type(Type.OBSTACLE)
-                        .rotate(SimulatorController.getRotate())
-                        .viewWithBBox(imgFile)
-                        // .bbox(new HitBox(BoundingShape.box(32, 32)))
-                        .with(physics)
-                        .build();
-            }
+        // Customize the shape of the obstacle
+        double x = 0;
+        double y = 0;
+        if (shape instanceof Rectangle rectangle) {
+            hitbox = new HitBox(BoundingShape.box(rectangle.getWidth(), rectangle.getHeight()));
+            // Get X and Y coords for the top left corner (spawn location)
+            x = data.getX() - rectangle.getWidth() / 2;
+            y = data.getY() - rectangle.getHeight() / 2;
+        } else if (shape instanceof Circle circle) {
+            hitbox = new HitBox(BoundingShape.circle(circle.getRadius()));
         }
+
         return FXGL.entityBuilder(data)
-                .at(data.getX(), data.getY())
+                .at(x, y)
                 .type(Type.OBSTACLE)
-                .rotate(SimulatorController.getRotate())
-                .viewWithBBox(imgFile)
-                // .bbox(new HitBox(BoundingShape.box(32, 32)))
+                .rotate(obstacle.getRotate())
+                .view(shape)
+                .bbox(hitbox)
                 .with(physics)
                 .build();
-
     }
 
     @Spawns("wall")
