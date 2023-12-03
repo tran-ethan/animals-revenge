@@ -72,17 +72,19 @@ public class Obstacle {
             // Centers the center of the circle at the cursor
             shape.setTranslateX(radius);
             shape.setTranslateY(radius);
+            shape.setFill(new ImagePattern(new Image(String.format("/assets/textures/%s.png", type))));
         } else if (this.shape.equals("rectangle")) {
             // Elongate the rectangle to balance width and height
             int w = size / 2;
             int h = size * 2;
             shape = new Rectangle(w, h);
+            shape.setFill(new ImagePattern(new Image(String.format("/assets/textures/long_%s.png", type))));
         } else {
             // Default shape is a square
             shape = new Rectangle(size, size);
+            shape.setFill(new ImagePattern(new Image(String.format("/assets/textures/%s.png", type))));
         }
 
-        shape.setFill(new ImagePattern(new Image(String.format("/assets/textures/%s.png", type))));
 
         return shape;
     }

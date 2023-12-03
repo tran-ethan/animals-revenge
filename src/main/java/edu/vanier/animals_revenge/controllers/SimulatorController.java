@@ -95,9 +95,12 @@ public class SimulatorController implements UIController {
     public void init() {
         MainApp.initGameObjects();
 
-        ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick32x32.png"));
-        ImagePattern dirt = new ImagePattern(new Image("/assets/textures/dirt32x32.png"));
-        ImagePattern wood = new ImagePattern(new Image("/assets/textures/wood32x32.png"));
+        ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick.png"));
+        ImagePattern long_brick = new ImagePattern(new Image("/assets/textures/long_brick.png"));
+        ImagePattern dirt = new ImagePattern(new Image("/assets/textures/dirt.png"));
+        ImagePattern long_dirt = new ImagePattern(new Image("/assets/textures/long_dirt.png"));
+        ImagePattern wood = new ImagePattern(new Image("/assets/textures/wood.png"));
+        ImagePattern long_wood = new ImagePattern(new Image("/assets/textures/long_wood.png"));
         selected = square1;
 
         square1.getChildren().
@@ -110,12 +113,11 @@ public class SimulatorController implements UIController {
                 .map(node -> (Circle) node)
                 .findFirst()
                 .ifPresent(rectangle -> rectangle.setFill(brick));
-        // TODO fix image pattern squeeze
         rectangle1.getChildren().
                 stream()
                 .map(node -> (Rectangle) node)
                 .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(brick));
+                .ifPresent(rectangle -> rectangle.setFill(long_brick));
         square2.getChildren().
                 stream()
                 .map(node -> (Rectangle) node)
@@ -126,12 +128,11 @@ public class SimulatorController implements UIController {
                 .map(node -> (Circle) node)
                 .findFirst()
                 .ifPresent(rectangle -> rectangle.setFill(dirt));
-        // TODO fix image pattern squeeze
         rectangle2.getChildren().
                 stream()
                 .map(node -> (Rectangle) node)
                 .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(dirt));
+                .ifPresent(rectangle -> rectangle.setFill(long_dirt));
         square3.getChildren().
                 stream()
                 .map(node -> (Rectangle) node)
@@ -142,12 +143,11 @@ public class SimulatorController implements UIController {
                 .map(node -> (Circle) node)
                 .findFirst()
                 .ifPresent(rectangle -> rectangle.setFill(wood));
-        // TODO fix image pattern squeeze
         rectangle3.getChildren().
                 stream()
                 .map(node -> (Rectangle) node)
                 .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(wood));
+                .ifPresent(rectangle -> rectangle.setFill(long_wood));
 
         // Add event listener for sliders
         sizeSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
