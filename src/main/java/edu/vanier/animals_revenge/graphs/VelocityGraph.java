@@ -1,6 +1,7 @@
 package edu.vanier.animals_revenge.graphs;
 
-import edu.vanier.animals_revenge.MainApp;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.event.ActionEvent;
 import javafx.scene.chart.XYChart;
 
@@ -11,32 +12,19 @@ import javafx.scene.chart.XYChart;
  */
 public class VelocityGraph extends KinematicsGraph {
 
-    public VelocityGraph() {
-        super("Velocity", "cm/s");
+    public VelocityGraph(Entity entity) {
+        super(entity, "Velocity", "cm/s");
     }
 
     @Override
     public void updateGraph(ActionEvent event) {
+        // getVelocityY returns velocity positive increasing downwards in px/s
+        double velocityY = -1.0 * entity.getComponent(PhysicsComponent.class).getVelocityY() * PX_TO_CM_CONVERSION;
+
         // Add the current Y velocity to the list
-        series.getData().add(new XYChart.Data<>(MainApp.time, MainApp.velocityY));
+        series.getData().add(new XYChart.Data<>(time, velocityY));
 
-        // Get number of data points in series
-        int size = series.getData().size();
-
-        if (series.getData().size() > 3) {
-            double lastVel = getYValue(size - 1);
-            double lastVel2 = getYValue(size - 2);
-            double lastVel3 = getYValue(size - 3);
-            
-            double resultantSpeed = Math.abs(lastVel) + Math.abs(lastVel2) + Math.abs(lastVel3);
-            
-            resultantSpeed = Math.abs(resultantSpeed);
-
-            // Stopping condition
-            if (resultantSpeed <= 0.00005) {
-                timeline.stop();
-            }
-        }
+        time += 0.1;
     }
 
 }

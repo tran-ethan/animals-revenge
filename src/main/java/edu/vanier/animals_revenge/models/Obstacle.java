@@ -7,16 +7,36 @@ package edu.vanier.animals_revenge.models;
 import edu.vanier.animals_revenge.controllers.SimulatorController;
 
 /**
+ * The Obstacle class represents a basic obstacle in a simulator.
+ * Each obstacle has attributes such as shape, type, and size, which determine its
+ * appearance and characteristics. The class provides methods to access and
+ * modify these attributes, as well as a method to generate a String
+ * representation of the obstacle based on its type and size.
  *
  * @author Zachary Tremblay
  */
-public class BuildingBlock {
+public class Obstacle {
 
+    /**
+     * The default shape of the obstacle.
+     */
     private String shape = "square";
+
+    /**
+     * The type of the obstacle (e.g., brick, dirt, wood).
+     */
     private String type;
+
+    /**
+     * The size of the obstacle (e.g., 16x16, 32x32, 64x64).
+     */
     private String size;
 
-    public BuildingBlock() {}
+    /**
+     * Constructs a Obstacle object with default values.
+     */
+    public Obstacle() {
+    }
 
     public String getShape() {
         return SimulatorController.getSelected().getId().substring(0, SimulatorController.getSelected().getId().length() - 1);

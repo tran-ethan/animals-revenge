@@ -10,8 +10,6 @@ import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-import edu.vanier.animals_revenge.models.CustomProjectileSquare;
-import edu.vanier.animals_revenge.util.Type;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import com.almasb.fxgl.entity.Entity;
@@ -19,7 +17,7 @@ import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import edu.vanier.animals_revenge.controllers.SimulatorController;
-import edu.vanier.animals_revenge.models.BuildingBlock;
+import edu.vanier.animals_revenge.models.Obstacle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
@@ -178,7 +176,7 @@ public class Factory implements EntityFactory {
 
         physics.setFixtureDef(new FixtureDef().density(0.3f).friction(SimulatorController.getFriction() / 10));
         String imgFile = data.get("img");
-        BuildingBlock build = new BuildingBlock();
+        Obstacle build = new Obstacle();
         switch (build.getShape()) {
             case "circle" -> {
                 

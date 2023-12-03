@@ -1,5 +1,6 @@
 package edu.vanier.animals_revenge.graphs;
 
+import com.almasb.fxgl.entity.Entity;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.util.Duration;
 
 /**
  * @author Ethan Tran
+ * @author Mackenzie Rouchdy
  */
 public abstract class KinematicsGraph extends Pane {
 
@@ -20,7 +22,15 @@ public abstract class KinematicsGraph extends Pane {
 
     public Timeline timeline;
 
-    public KinematicsGraph(String yAxisLabel, String unit) {
+    public Entity entity;
+
+    public double time = 0;
+
+    public static final double PX_TO_CM_CONVERSION = 0.0264583333;
+
+    public KinematicsGraph(Entity entity, String yAxisLabel, String unit) {
+        this.entity = entity;
+
         // Axis
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -42,14 +52,14 @@ public abstract class KinematicsGraph extends Pane {
         EventHandler<ActionEvent> onFinished = this::updateGraph;
 
         // Timeline
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), onFinished));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), onFinished));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 
     public abstract void updateGraph(ActionEvent event);
 
-    public double getYValue(int index) {
-        return series.getData().get(index).getYValue().doubleValue();
+    public void stop() {
+        timeline.stop();
     }
 }

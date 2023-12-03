@@ -9,7 +9,7 @@ import edu.vanier.animals_revenge.controllers.SimulatorController;
 import javafx.geometry.Rectangle2D;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import edu.vanier.animals_revenge.models.BuildingBlock;
+import edu.vanier.animals_revenge.models.Obstacle;
 
 public class DragAction extends UserAction {
 
@@ -65,7 +65,7 @@ public class DragAction extends UserAction {
             int rotate = SimulatorController.getRotate();
             System.out.println(rotate);
             // TODO Spawn correct obstacle
-            BuildingBlock build = new BuildingBlock();
+            Obstacle build = new Obstacle();
             selected = spawn("obstacle", new SpawnData(x, y).put("img", build.toString()));
             // Mouse offset to the middle of the spawned obstacle
             offsetX = selected.getWidth() / 2;

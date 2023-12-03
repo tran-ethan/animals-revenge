@@ -22,12 +22,14 @@ import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import edu.vanier.animals_revenge.controllers.ParametersController;
 import edu.vanier.animals_revenge.controllers.ProjectileSelectionController;
 import edu.vanier.animals_revenge.models.CustomProjectile;
 
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.windows.GraphWindow;
+import edu.vanier.animals_revenge.windows.Parameters;
 import java.util.HashMap;
 import javafx.util.Duration;
 
@@ -40,19 +42,6 @@ import javafx.util.Duration;
  * @author Anton Lisunov
  */
 public class MainApp extends GameApplication {
-
-    public static double cmConversion = 0.0264583333;
-
-    public static double PosX = 0;
-    public static double PosY = 0;
-
-    public static double velocityX = 0;
-    public static double velocityY = 0;
-
-    public static HashMap<Double, Double> timeVelocityValues = new HashMap<>();
-
-    public static double time = 0;
-    public static long startTime;
 
     public final static double WIDTH = 1480;
 
@@ -162,8 +151,8 @@ public class MainApp extends GameApplication {
      * Maps the corresponding user inputs to their respective actions.
      * <p>
      * Right-click and hold from launcher to create initial velocity vector.
-     * Left-click and hold to drag obstacles around. Hold CTRL + Left-click and
-     * hold to create new obstacle.
+     * Left-click and hold to drag obstacles around.
+     * Hold CTRL + Left-click and hold to create new obstacle.
      */
     @Override
     protected void initInput() {
@@ -191,9 +180,15 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Animates the vector representing the initial velocity by using the
+<<<<<<< Updated upstream
+     * Animates the vector representing the initial velocity by using
      * pythagorean theorem and trigonometry to find the hypotenuse and
      * angle of rotation
+=======
+     * Animates the vector representing the initial velocity by using the
+     * pythagorean theorem and trigonometry to find the hypotenuse and angle of
+     * rotation
+>>>>>>> Stashed changes
      *
      * @param x the x position of the mouse
      * @param y the y position of the mouse
@@ -218,13 +213,8 @@ public class MainApp extends GameApplication {
      * Launches the projectile by calculating initial x and y velocity using
      * velocity vector
      *
-     * @param s
-     * @param c
-     *
      */
     public static void launch() {
-
-        graphSetup();
 
         double hyp = vector.getScaleY();
         double angle = 90 - vector.getRotate();
@@ -235,14 +225,12 @@ public class MainApp extends GameApplication {
 
         CustomProjectile proj = ProjectileSelectionController.finalProjectile;
 
-        
-        
         System.out.println(proj);
 
         if (proj instanceof CustomProjectileSquare) {
 
             CustomProjectileSquare p = (CustomProjectileSquare) proj;
-            
+
             if (p.getImgPath() != null) {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -254,7 +242,7 @@ public class MainApp extends GameApplication {
                         .put("density", p.getDensity())
                         .put("height", p.getShapeHeight()));
 
-                SetTimerAndGetPosition(e);
+                graphSetup(e);
 
             } else {
                 Entity e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
@@ -267,7 +255,7 @@ public class MainApp extends GameApplication {
                         .put("width", p.getShapeWidth())
                         .put("height", p.getShapeHeight()));
 
-                SetTimerAndGetPosition(e);
+                graphSetup(e);
 
             }
 
@@ -284,9 +272,8 @@ public class MainApp extends GameApplication {
                         .put("mass", p.getMass())
                         .put("density", p.getDensity())
                         .put("radius", p.getRadius()));
-        
-                SetTimerAndGetPosition(e);
 
+                graphSetup(e);
 
             } else {
                 Entity e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
@@ -296,9 +283,9 @@ public class MainApp extends GameApplication {
                         .put("restitution", p.getRestitution())
                         .put("mass", p.getMass())
                         .put("density", p.getDensity())
-                        .put("colour", p.getColor()));                
+                        .put("colour", p.getColor()));
 
-                SetTimerAndGetPosition(e);
+                graphSetup(e);
 
             }
 
@@ -307,45 +294,16 @@ public class MainApp extends GameApplication {
             Entity e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
-            SetTimerAndGetPosition(e);
+            graphSetup(e);
         }
     }
 
-    public static void SetTimerAndGetPosition(Entity e) {
-        //start of timer
-        startTime = System.currentTimeMillis();
-
-        //gets position of entity every unit of time
-        getGameTimer().runAtInterval(() -> {
-
-            //end of timer
-            time = System.currentTimeMillis() - startTime;
-
-            //converts milliseconds to seconds
-            time /= 1000;
-
-            //negative values because x = 0 and y = 0 are at the top left of the screen thus will make velocity 
-            //positive
-            velocityX = -1 * e.getComponent(PhysicsComponent.class).getVelocityX();
-            velocityY = -1 * e.getComponent(PhysicsComponent.class).getVelocityY();
-
-            //key is velocity value is time
-            timeVelocityValues.put(velocityY, time);
-
-            //System.out.println("Velocity: " + velocityY + " at time: " + time);
-            PosY = (HEIGHT - e.getPosition().getY() - e.getHeight());
-
-            //converting from pixels to centimeters
-            PosY = PosY * cmConversion;
-            //lower the duration if experiencing lag
-
-        }, Duration.seconds(0.01));
-    }
-
-    public static void graphSetup() {
-        GraphWindow graphWindow = new GraphWindow();
-        graphWindow.show();
-        graphWindow.setX(720);
+    public static void graphSetup(Entity e) {
+        if (!ParametersController.isIsGraphOff()) {
+            GraphWindow graphWindow = new GraphWindow(e);
+            graphWindow.show();
+            graphWindow.setX(720);
+        }
     }
 
     /**

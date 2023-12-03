@@ -1,7 +1,8 @@
 package edu.vanier.animals_revenge.windows;
 
+import com.almasb.fxgl.entity.Entity;
 import edu.vanier.animals_revenge.graphs.AccelerationGraph;
-import edu.vanier.animals_revenge.graphs.DisplacementGraph;
+import edu.vanier.animals_revenge.graphs.PositionGraph;
 import edu.vanier.animals_revenge.graphs.VelocityGraph;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -17,20 +18,20 @@ public class GraphWindow extends Stage {
     /**
      * Constructor for the Graphs class.
      */
-    public GraphWindow() {
+    public GraphWindow(Entity e) {
         TabPane tabPane = new TabPane();
 
-        DisplacementGraph DisplacementGraph = new DisplacementGraph();
-        VelocityGraph VelocityGraph = new VelocityGraph();
-        AccelerationGraph AccelerationGraph = new AccelerationGraph();
+        VelocityGraph velocityGraph = new VelocityGraph(e);
+        AccelerationGraph accelerationGraph = new AccelerationGraph(e);
+        PositionGraph positionGraph = new PositionGraph(e, velocityGraph, accelerationGraph);
 
         Tab tab1 = new Tab("Displacement");
         Tab tab2 = new Tab("Velocity");
         Tab tab3 = new Tab("Acceleration");
 
-        tab1.setContent(DisplacementGraph);
-        tab2.setContent(VelocityGraph);
-        tab3.setContent(AccelerationGraph);
+        tab1.setContent(positionGraph);
+        tab2.setContent(velocityGraph);
+        tab3.setContent(accelerationGraph);
         
         tabPane.getTabs().addAll(tab1, tab2, tab3);
 

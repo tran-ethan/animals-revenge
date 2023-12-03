@@ -1,12 +1,11 @@
 package edu.vanier.animals_revenge.controllers;
 
-import static com.almasb.fxgl.dsl.FXGL.spawn;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.windows.Parameters;
 import edu.vanier.animals_revenge.windows.Selection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,6 +78,9 @@ public class SimulatorController implements UIController {
     @FXML
     private TextField frictionTextField;
 
+    @FXML
+    private Button btnParameters;
+
     private static StackPane selected;
 
     private static int size = 1;
@@ -91,9 +93,7 @@ public class SimulatorController implements UIController {
 
     @Override
     public void init() {
-
         MainApp.initGameObjects();
-        
 
         ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick32x32.png"));
         ImagePattern dirt = new ImagePattern(new Image("/assets/textures/dirt32x32.png"));
@@ -175,8 +175,12 @@ public class SimulatorController implements UIController {
         rotateTextField.textProperty().bind(rotateSlider.valueProperty().asString("%.0f"));
         frictionTextField.textProperty().bind(frictionSlider.valueProperty().asString("%.0f"));
 
-        
         logger.info("Initializing SimulatorController...");
+
+        btnParameters.setOnAction((event) -> {
+            Parameters parameters = new Parameters();
+            parameters.show();
+        });
 
     }
 
@@ -211,7 +215,6 @@ public class SimulatorController implements UIController {
 
     @FXML
     void select(MouseEvent event) {
-
         StackPane source = (StackPane) event.getSource();
         if (selected != source) {
             source.setStyle("-fx-background-color: lightgray");
@@ -229,8 +232,6 @@ public class SimulatorController implements UIController {
         sel.show();
 
     }
-
-   
 
     public static void throwWarning(String warningMessage, String title) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
