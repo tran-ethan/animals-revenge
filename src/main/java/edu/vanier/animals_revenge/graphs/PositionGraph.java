@@ -45,7 +45,7 @@ public class PositionGraph extends KinematicsGraph {
             double lastY2 = getYValue(size - 2);
             double lastY3 = getYValue(size - 3);
 
-            // Stopping condition
+            // Stopping condition if the ball has stopped moving vertically
             if (lastY1 == lastY2 && lastY2 == lastY3) {
                 // Stops this, velocity, and acceleration graph once this graph is stopped
                 this.stop();

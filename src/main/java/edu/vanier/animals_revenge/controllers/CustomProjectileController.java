@@ -45,6 +45,7 @@ public class CustomProjectileController implements UIController, Serializable {
     public static ArrayList<CustomProjectile> customProjectiles = new ArrayList<>();
 
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
+
     private final static String FILE_EXTENSION = ".proj";
 
     public static final Color borderColor = Color.RED;
@@ -59,6 +60,7 @@ public class CustomProjectileController implements UIController, Serializable {
     File SaveFile;
 
     CustomProjectileSquare squareProjectile;
+
     CustomProjectileCircle circleProjectile;
 
     //The shape copies the shapes that appear in the middle of the screen
@@ -102,9 +104,7 @@ public class CustomProjectileController implements UIController, Serializable {
 
         if (txtFieldDensity.getText().trim().equals("")) {
             // if the text field is empty
-
             density = 0.3f;
-
         }
 
         Shape shape = null;

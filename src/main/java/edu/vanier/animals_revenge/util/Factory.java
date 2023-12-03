@@ -178,7 +178,7 @@ public class Factory implements EntityFactory {
         Obstacle obstacle = data.get("obstacle");
         Shape shape = obstacle.getShape();
 
-        System.out.println(obstacle.getFriction());
+        // Set obstacle density and friction fixtures
         physics.setFixtureDef(new FixtureDef().density(obstacle.getDensity()).friction(obstacle.getFriction()));
 
         // Default obstacle is a 16x16 square

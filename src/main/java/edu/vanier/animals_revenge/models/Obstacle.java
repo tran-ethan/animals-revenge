@@ -22,7 +22,7 @@ import javafx.scene.shape.Shape;
 public class Obstacle {
 
     /**
-     * The default shape of the obstacle.
+     * The shape of the obstacle.
      */
     private String shape;
 
