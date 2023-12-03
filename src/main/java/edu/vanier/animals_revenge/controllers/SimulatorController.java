@@ -180,6 +180,7 @@ public class SimulatorController implements UIController {
             parameters.show();
         });
 
+        reset();
         // Spawn in objects
         spawn("launcher", 0, MainApp.HEIGHT - 80);
         if (level != null) {
