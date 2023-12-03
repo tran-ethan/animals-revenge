@@ -1,5 +1,7 @@
 package edu.vanier.animals_revenge.controllers;
 
+import static com.almasb.fxgl.dsl.FXGL.spawn;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
@@ -22,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulatorController implements UIController {
+
     @FXML
     private Button BTNCustom;
 
@@ -88,7 +91,9 @@ public class SimulatorController implements UIController {
 
     @Override
     public void init() {
+
         MainApp.initGameObjects();
+        
 
         ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick32x32.png"));
         ImagePattern dirt = new ImagePattern(new Image("/assets/textures/dirt32x32.png"));
@@ -170,7 +175,9 @@ public class SimulatorController implements UIController {
         rotateTextField.textProperty().bind(rotateSlider.valueProperty().asString("%.0f"));
         frictionTextField.textProperty().bind(frictionSlider.valueProperty().asString("%.0f"));
 
+        
         logger.info("Initializing SimulatorController...");
+
     }
 
     @FXML
@@ -204,6 +211,7 @@ public class SimulatorController implements UIController {
 
     @FXML
     void select(MouseEvent event) {
+
         StackPane source = (StackPane) event.getSource();
         if (selected != source) {
             source.setStyle("-fx-background-color: lightgray");
@@ -216,11 +224,13 @@ public class SimulatorController implements UIController {
     @FXML
     void selectProjectile(ActionEvent event) throws Exception {
         System.out.println(CustomProjectileController.customProjectiles);
-        
+
         Selection sel = new Selection();
         sel.show();
 
     }
+
+   
 
     public static void throwWarning(String warningMessage, String title) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -244,7 +254,5 @@ public class SimulatorController implements UIController {
     public static int getFriction() {
         return friction;
     }
-
-   
 
 }

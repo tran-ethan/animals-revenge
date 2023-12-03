@@ -1,7 +1,9 @@
 package edu.vanier.animals_revenge.util;
 
 import com.almasb.fxgl.dsl.FXGL;
+import static com.almasb.fxgl.dsl.FXGL.texture;
 import com.almasb.fxgl.dsl.components.DraggableComponent;
+import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
@@ -13,6 +15,7 @@ import edu.vanier.animals_revenge.util.Type;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import edu.vanier.animals_revenge.controllers.SimulatorController;
@@ -255,6 +258,15 @@ public class Factory implements EntityFactory {
                 .at(data.getX(), data.getY())
                 .type(Type.LAUNCHER)
                 .view("cannon.png")
+                .build();
+    }
+    
+    @Spawns("background")
+    public Entity newBackground(SpawnData data) {
+        return FXGL.entityBuilder()
+                .view(new ScrollingBackgroundView(new Image("/assets/textures/background/"+ data.get("background")), FXGL.getAppWidth(), FXGL.getAppHeight()))
+                .zIndex(-500)
+                .with(new IrremovableComponent())
                 .build();
     }
 }

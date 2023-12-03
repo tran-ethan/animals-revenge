@@ -1,5 +1,6 @@
 package edu.vanier.animals_revenge;
 
+import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
@@ -110,6 +111,12 @@ public class MainApp extends GameApplication {
         getGameScene().setCursor(Cursor.DEFAULT);
 
         initScreenBounds();
+        /* var entity = getGameWorld().create("background", new SpawnData().put("background","sky.png"));
+            spawnWithScale(entity, Duration.seconds(1), Interpolators.ELASTIC.EASE_OUT());
+
+            runOnce(() -> {
+                despawnWithScale(entity, Duration.seconds(1), Interpolators.ELASTIC.EASE_IN());
+            }, Duration.seconds(2.5));*/
     }
 
     /**
