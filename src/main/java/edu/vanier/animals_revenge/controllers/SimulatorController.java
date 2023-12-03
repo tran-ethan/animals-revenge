@@ -2,7 +2,6 @@ package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -29,8 +28,10 @@ import javafx.stage.FileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.stream.Collectors;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
@@ -180,12 +181,9 @@ public class SimulatorController implements UIController {
             parameters.show();
         });
 
-        reset();
         // Spawn in objects
+        reset();
         spawn("launcher", 0, MainApp.HEIGHT - 80);
-        if (level != null) {
-            level.spawnObstacles();
-        }
     }
 
     /**
@@ -224,7 +222,6 @@ public class SimulatorController implements UIController {
                 .stream()
                 .filter(entity ->
                             entity.isType(Type.OBSTACLE) ||
-                            entity.isType(Type.CUSTOM_PROJECTILE) ||
                             entity.isType(Type.PROJECTILE)
                 ).toList()) {
             e.removeFromWorld();

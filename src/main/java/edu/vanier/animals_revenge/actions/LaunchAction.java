@@ -5,14 +5,30 @@ import edu.vanier.animals_revenge.MainApp;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+/**
+ * The LaunchAction class represents an action that animates an initial velocity vector
+ * in the simulator screen.
+ */
 public class LaunchAction extends UserAction {
 
+    /**
+     * Flag to determine if launching is in progress
+     */
     boolean isLaunching = false;
 
+    /**
+     * Constructs a LaunchAction instance.
+     * Initializes the action with the name "Launch".
+     */
     public LaunchAction() {
         super("Launch");
     }
 
+    /**
+     * Called when the action is initiated (mouse button pressed).
+     * Sets the flag isLaunching to true if the mouse position
+     * falls within a specified area.
+     */
     @Override
     protected void onActionBegin() {
         double x = getInput().getMouseXWorld();
@@ -23,6 +39,11 @@ public class LaunchAction extends UserAction {
         }
     }
 
+    /**
+     * Called repeatedly while the action is ongoing (mouse button held down).
+     * If isLaunching is true, triggers the vector animation based on the
+     * current mouse position in the game world.
+     */
     @Override
     protected void onAction() {
         if (isLaunching) {
@@ -30,6 +51,10 @@ public class LaunchAction extends UserAction {
         }
     }
 
+    /**
+     * Called when the action ends (mouse button released).
+     * Resets the isLaunching flag to false, signifying the end of the launching process.
+     */
     @Override
     protected void onActionEnd() {
         isLaunching = false;

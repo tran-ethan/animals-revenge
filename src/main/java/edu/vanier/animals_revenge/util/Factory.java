@@ -85,7 +85,7 @@ public class Factory implements EntityFactory {
             
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
-                    .type(Type.CUSTOM_PROJECTILE)
+                    .type(Type.PROJECTILE)
                     .view(imgView)
                     .bbox(new HitBox(BoundingShape.box(imageWidth, imageHeight)))
                     .with(physics)
@@ -139,7 +139,7 @@ public class Factory implements EntityFactory {
 
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
-                    .type(Type.CUSTOM_PROJECTILE)
+                    .type(Type.PROJECTILE)
                     .view(circle)
                     .bbox(new HitBox(BoundingShape.circle(radius)))
                     .with(physics)

@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.InputModifier;
 import com.almasb.fxgl.ui.UI;
 import com.almasb.fxgl.ui.UIController;
+import edu.vanier.animals_revenge.actions.DeleteAction;
 import edu.vanier.animals_revenge.actions.DragAction;
 import edu.vanier.animals_revenge.actions.LaunchAction;
 import edu.vanier.animals_revenge.controllers.HomeController;
@@ -19,6 +20,7 @@ import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.util.Factory;
 import edu.vanier.animals_revenge.windows.GraphWindow;
 import javafx.scene.Cursor;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -133,12 +135,14 @@ public class MainApp extends GameApplication {
      * Right-click and hold from launcher to create initial velocity vector.
      * Left-click and hold to drag obstacles around.
      * Hold CTRL + Left-click and hold to create new obstacle.
+     * Hold back-space to delete obstacles at the cursor position.
      */
     @Override
     protected void initInput() {
         getInput().addAction(new LaunchAction(), MouseButton.SECONDARY);
         getInput().addAction(new DragAction(false), MouseButton.PRIMARY);
         getInput().addAction(new DragAction(true), MouseButton.PRIMARY, InputModifier.CTRL);
+        getInput().addAction(new DeleteAction(), KeyCode.BACK_SPACE);
     }
 
     /**
