@@ -34,7 +34,7 @@ public class Selection extends Stage {
         }
 
         Scene scene = new Scene(root);
-        
+
         setScene(scene);
 
     }

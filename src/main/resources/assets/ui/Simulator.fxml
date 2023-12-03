@@ -68,8 +68,7 @@
                         </Menu>
                      </menus>
                   </MenuBar>
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="155.0" stylesheets="@/assets/ui/css/styles.css" text="Building" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="155.0" stylesheets="@/assets/ui/css/styles.css" text="Parameters" />
+                  <Button fx:id="btnParameters" mnemonicParsing="false" prefHeight="62.0" prefWidth="155.0" stylesheets="@/assets/ui/css/styles.css" text="Parameters" />
                </children>
                <HBox.margin>
                   <Insets left="20.0" right="20.0" />

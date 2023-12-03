@@ -5,6 +5,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.windows.Parameters;
 import edu.vanier.animals_revenge.windows.Selection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulatorController implements UIController {
+
     @FXML
     private Button BTNCustom;
 
@@ -75,6 +77,9 @@ public class SimulatorController implements UIController {
 
     @FXML
     private TextField frictionTextField;
+
+    @FXML
+    private Button btnParameters;
 
     private static StackPane selected;
 
@@ -171,6 +176,12 @@ public class SimulatorController implements UIController {
         frictionTextField.textProperty().bind(frictionSlider.valueProperty().asString("%.0f"));
 
         logger.info("Initializing SimulatorController...");
+
+        btnParameters.setOnAction((event) -> {
+            Parameters parameters = new Parameters();
+            parameters.show();
+        });
+
     }
 
     @FXML
@@ -216,7 +227,7 @@ public class SimulatorController implements UIController {
     @FXML
     void selectProjectile(ActionEvent event) throws Exception {
         System.out.println(CustomProjectileController.customProjectiles);
-        
+
         Selection sel = new Selection();
         sel.show();
 
@@ -244,7 +255,5 @@ public class SimulatorController implements UIController {
     public static int getFriction() {
         return friction;
     }
-
-   
 
 }
