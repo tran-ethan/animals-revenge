@@ -1,27 +1,26 @@
 package edu.vanier.animals_revenge.util;
 
 import com.almasb.fxgl.dsl.FXGL;
-import static com.almasb.fxgl.dsl.FXGL.texture;
 import com.almasb.fxgl.dsl.components.DraggableComponent;
 import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
-import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
-import edu.vanier.animals_revenge.controllers.SimulatorController;
+import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import edu.vanier.animals_revenge.models.Obstacle;
+import edu.vanier.animals_revenge.models.ObstacleComponent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class Factory implements EntityFactory {
@@ -199,6 +198,11 @@ public class Factory implements EntityFactory {
             y = data.getY() - circle.getRadius();
         }
 
+        if (obstacle.getY() != 0) {
+            x = obstacle.getX();
+            y = obstacle.getY();
+        }
+
         return FXGL.entityBuilder(data)
                 .at(x, y)
                 .type(Type.OBSTACLE)
@@ -206,6 +210,7 @@ public class Factory implements EntityFactory {
                 .view(shape)
                 .bbox(hitbox)
                 .with(physics)
+                .with(new ObstacleComponent(obstacle))
                 .build();
     }
 

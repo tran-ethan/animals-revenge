@@ -60,7 +60,7 @@ public class DragAction extends UserAction {
         if (newObstacle) {
             String id = SimulatorController.getSelected().getId();
             int size = SimulatorController.getSize();
-            int rotate = SimulatorController.getRotate();
+            double rotate = SimulatorController.getRotate();
             float friction = SimulatorController.getFriction();
 
             Obstacle obstacle = new Obstacle(id, size, rotate, friction);

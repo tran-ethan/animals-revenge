@@ -10,6 +10,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import java.io.Serializable;
+
 /**
  * The Obstacle class represents a basic obstacle in a simulator.
  * Each obstacle has attributes such as shape, type, and size, which determine its
@@ -19,7 +21,7 @@ import javafx.scene.shape.Shape;
  *
  * @author Zachary Tremblay
  */
-public class Obstacle {
+public class Obstacle implements Serializable {
 
     /**
      * The shape of the obstacle.
@@ -36,14 +38,18 @@ public class Obstacle {
      */
     private int size;
 
-    private int rotate;
+    private double rotate;
 
     private float friction;
+
+    private double x;
+
+    private double y;
 
     /**
      * Constructs a Obstacle object with default values.
      */
-    public Obstacle(String id, int size, int rotate, float friction) {
+    public Obstacle(String id, int size, double rotate, float friction) {
         this.shape = id.substring(0, id.length() - 1);
         this.type = setType(id.charAt(id.length() - 1));
         this.size = size;
@@ -89,7 +95,27 @@ public class Obstacle {
         return shape;
     }
 
-    public int getRotate() {
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setRotate(double rotate) {
+        this.rotate = rotate;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getRotate() {
         return rotate;
     }
 

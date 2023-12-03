@@ -1,15 +1,19 @@
 package edu.vanier.animals_revenge.controllers;
 
+import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
-import edu.vanier.animals_revenge.models.CustomProjectileCircle;
-import edu.vanier.animals_revenge.models.CustomProjectileSquare;
+import edu.vanier.animals_revenge.models.Level;
+import edu.vanier.animals_revenge.models.Obstacle;
+import edu.vanier.animals_revenge.models.ObstacleComponent;
+import edu.vanier.animals_revenge.util.Type;
 import edu.vanier.animals_revenge.windows.Parameters;
 import edu.vanier.animals_revenge.windows.Selection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -20,8 +24,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 public class SimulatorController implements UIController {
 
@@ -90,12 +97,18 @@ public class SimulatorController implements UIController {
 
     private static float friction = 0.5f;
 
+    private Level level;
+
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
+
+    public SimulatorController() {}
+
+    public SimulatorController(Level level) {
+        this.level = level;
+    }
 
     @Override
     public void init() {
-        // Spawn in objects
-        MainApp.initGameObjects();
 
         // Get image patterns to fill obstacle shapes on right hand panel
         ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick.png"));
@@ -162,6 +175,11 @@ public class SimulatorController implements UIController {
             parameters.show();
         });
 
+        // Spawn in objects
+        MainApp.initGameObjects();
+        if (level != null) {
+            level.spawnObstacles();
+        }
     }
 
     /**
@@ -189,7 +207,7 @@ public class SimulatorController implements UIController {
 
     @FXML
     public void reset() {
-        // TODO
+        // TODO Reset
         System.out.println("resetting");
     }
 
@@ -208,8 +226,54 @@ public class SimulatorController implements UIController {
 
     @FXML
     void save(ActionEvent event) {
-        // TODO Save scene
-        System.out.println("saving");
+        Level level = new Level();
+
+        // Loop through all obstacles in the game world and add them to level
+        FXGL.getGameWorld().getEntitiesByType(Type.OBSTACLE).forEach(entity -> {
+            Obstacle obstacle = entity.getComponent(ObstacleComponent.class).getObstacle();
+            obstacle.setX(entity.getX());
+            obstacle.setY(entity.getY());
+            double angle = Math.toDegrees(entity.getComponent(PhysicsComponent.class).getBody().getAngle());
+            obstacle.setRotate(-Math.round(angle));
+            level.addObstacle(obstacle);
+        });
+
+        FileChooser saveLocation = new FileChooser();
+        saveLocation.setInitialFileName("myCustomLevel.lvl");
+        saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Level", "*lvl"));
+
+        File saveFile = saveLocation.showSaveDialog(null);
+
+        if (saveFile != null) {
+            String filePath = saveFile.getAbsolutePath();
+
+            try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
+                o.writeObject(level);
+            } catch (IOException e) {
+                System.out.println("Error during serialization process");
+            }
+        }
+    }
+
+    public static Obstacle deserialize(String filePath) {
+
+        try (ObjectInputStream o = new ObjectInputStream(new FileInputStream(filePath))) {
+
+            Object obj = o.readObject();
+
+            System.out.println(obj.getClass().getSimpleName());
+
+            if (obj instanceof Obstacle) {
+                return (Obstacle) obj;
+            } else {
+                throwWarning("File Not A Valid Custom Projectile", "Serialization Error");
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Deserialization Error");
+
+        }
+        return null;
     }
 
     /**
