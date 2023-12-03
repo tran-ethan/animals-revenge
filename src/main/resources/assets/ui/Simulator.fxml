@@ -22,38 +22,38 @@
          <children>
             <HBox alignment="CENTER" prefHeight="9999.0" prefWidth="1280.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button mnemonicParsing="false" onAction="#goHome" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
+                  <Button mnemonicParsing="false" onAction="#goHome" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="HOME" size="17" />
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#launch" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
+                  <Button mnemonicParsing="false" onAction="#launch" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="ROCKET" size="17" />
                      </graphic>
                   </Button>
-                  <Button layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#playPause" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
+                  <Button layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#playPause" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView fx:id="playPauseIcon" glyphName="PAUSE" size="17" />
                      </graphic>
                   </Button>
-                  <Button layoutX="52.0" layoutY="30.0" mnemonicParsing="false" onAction="#reset" styleClass="home-button" stylesheets="@/assets/ui/css/styles.css">
+                  <Button layoutX="52.0" layoutY="30.0" mnemonicParsing="false" onAction="#reset" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="ROTATE_LEFT" size="17" />
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#save">
+                  <Button mnemonicParsing="false" onAction="#save" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="SAVE" size="17" />
                      </graphic>
                   </Button>
                   <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#selectProjectile" text="Select projectile">
+                  <Button mnemonicParsing="false" onAction="#selectProjectile" text="Select projectile" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="PLUS" />
                      </graphic>
                   </Button>
-                  <Button layoutX="1225.0" layoutY="30.0" mnemonicParsing="false" onAction="#openAboutPage" text="About">
+                  <Button layoutX="1225.0" layoutY="30.0" mnemonicParsing="false" onAction="#openAboutPage" text="About" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="QUESTION" size="17" />
                      </graphic>

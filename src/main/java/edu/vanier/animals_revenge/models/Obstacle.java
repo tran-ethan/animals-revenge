@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.models;
 
 import javafx.scene.image.Image;
@@ -20,34 +16,49 @@ import java.io.Serializable;
  * representation of the obstacle based on its type and size.
  *
  * @author Zachary Tremblay
+ * @author Ethan Tran
  */
 public class Obstacle implements Serializable {
 
     /**
      * The shape of the obstacle.
      */
-    private String shape;
+    private final String shape;
 
     /**
      * The type of the obstacle (e.g., brick, dirt, wood).
      */
-    private String type;
+    private final String type;
 
     /**
-     * The size of the obstacle (e.g., 16x16, 32x32, 64x64).
+     * An integer representing the size (1 through 5).
      */
-    private int size;
+    private final int size;
 
+    /**
+     * The rotation angle of the obstacle.
+     */
     private double rotate;
 
-    private float friction;
+    private final float friction;
 
+    /**
+     * The x-coordinate of the top-left of the obstacle.
+     */
     private double x;
 
+    /**
+     * The y-coordinate of the top-left of the obstacle.
+     */
     private double y;
 
     /**
-     * Constructs a Obstacle object with default values.
+     * Constructs an Obstacle object with specified values.
+     *
+     * @param id       An identifier representing by the selected obstacle in the simulator controller
+     * @param size     the size of the obstacle (1 through 5)
+     * @param rotate   the rotation angle of the obstacle
+     * @param friction the friction coefficient of the obstacle
      */
     public Obstacle(String id, int size, double rotate, float friction) {
         this.shape = id.substring(0, id.length() - 1);
@@ -57,6 +68,12 @@ public class Obstacle implements Serializable {
         this.friction = friction;
     }
 
+    /**
+     * Sets the obstacle's type based on the given character.
+     *
+     * @param c the character representing the obstacle type
+     * @return the type of the obstacle
+     */
     public String setType(char c) {
         return switch (c) {
             case '1' -> "brick";
@@ -66,6 +83,12 @@ public class Obstacle implements Serializable {
         };
     }
 
+    /**
+     * Retrieves the JavaFX shape of the obstacle based on its attributes. This will be used in the entity
+     * factory to spawn obstacle.
+     *
+     * @return the shape representing the obstacle
+     */
     public Shape getShape() {
         int[] sizes = {16, 32, 64, 128, 256};
         int size = sizes[this.size - 1];
@@ -123,8 +146,14 @@ public class Obstacle implements Serializable {
         return friction;
     }
 
+    /**
+     * Retrieves the density of the obstacle based on its type. The density of the
+     * obstacle depends on the type of material used.
+     *
+     * @return the density of the obstacle material in kg/m^2
+     */
     public float getDensity() {
-        // Density of obstacle depends on the type of material (brick, wood, dirt)
+        // Density order: brick > wood > dirt
         return switch (type) {
             case "brick" -> 0.8f;
             case "wood" -> 0.3f;

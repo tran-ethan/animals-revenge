@@ -25,7 +25,6 @@ import javafx.scene.shape.Shape;
 
 public class Factory implements EntityFactory {
 
-    
     //currently only used for the default projectile
     @Spawns("projectile")
     public Entity spawnProjectile(SpawnData data) {
@@ -169,6 +168,21 @@ public class Factory implements EntityFactory {
         }
     }
 
+    /**
+     * Spawns an obstacle entity based on provided SpawnData.
+     * This method creates an obstacle entity with physics properties, shape, and position as specified by the provided SpawnData.
+     * The obstacle can have a rectangular or circular shape, and its attributes are retrieved from the SpawnData.
+     * <p>
+     * This method is used to spawn obstacle from the level and from the DragAction.
+     * If an obstacle is created in the DragAction, it will spawn at the x and y position of the mouse.
+     * Otherwise, it will spawn using the position data in the Obstacle object.
+     *
+     * @see edu.vanier.animals_revenge.actions.DragAction
+     * @see edu.vanier.animals_revenge.models.Level
+     *
+     * @param data The SpawnData containing information about the obstacle to be spawned.
+     * @return The Entity representing the spawned obstacle.
+     */
     @Spawns("obstacle")
     public Entity spawnObstacle(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
@@ -198,7 +212,10 @@ public class Factory implements EntityFactory {
             y = data.getY() - circle.getRadius();
         }
 
+        // An obstacle that has been created in the level will have position not equal to 0,0.
+        // An obstacle that has been created using DragAction will always have its position equal to 0,0.
         if (obstacle.getY() != 0) {
+            // Since y=0 is not possible, this means that the obstacle is created in level, so set x and y accordingly
             x = obstacle.getX();
             y = obstacle.getY();
         }
@@ -214,6 +231,15 @@ public class Factory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a wall entity based on provided SpawnData.
+     * This method creates a wall entity with physics properties and specified dimensions (width and height)
+     * as provided by the SpawnData. Walls are static entities used as barriers in the game to cover the
+     * menu bar and the right-hand pane.
+     *
+     * @param data The SpawnData containing information about the wall to be spawned, including width and height.
+     * @return The Entity representing the spawned wall.
+     */
     @Spawns("wall")
     public Entity spawnWall(SpawnData data) {
         PhysicsComponent physics = new PhysicsComponent();
@@ -223,7 +249,6 @@ public class Factory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.WALL)
-                // .view(new Rectangle(width, height, Color.RED))
                 .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(physics)
                 .build();
@@ -234,6 +259,7 @@ public class Factory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.LAUNCHER)
+                .zIndex(100)
                 .view("cannon.png")
                 .build();
     }
