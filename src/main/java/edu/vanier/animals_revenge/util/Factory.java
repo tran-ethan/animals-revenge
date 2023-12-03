@@ -191,6 +191,9 @@ public class Factory implements EntityFactory {
             y = data.getY() - rectangle.getHeight() / 2;
         } else if (shape instanceof Circle circle) {
             hitbox = new HitBox(BoundingShape.circle(circle.getRadius()));
+            // Get X and Y coords for the top left corner of circle
+            x = data.getX() - circle.getRadius();
+            y = data.getY() - circle.getRadius();
         }
 
         return FXGL.entityBuilder(data)
