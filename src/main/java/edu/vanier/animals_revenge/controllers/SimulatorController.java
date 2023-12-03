@@ -1,6 +1,7 @@
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.ui.UIController;
@@ -29,6 +30,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.stream.Collectors;
+
+import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
+import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 public class SimulatorController implements UIController {
 
@@ -176,7 +181,7 @@ public class SimulatorController implements UIController {
         });
 
         // Spawn in objects
-        MainApp.initGameObjects();
+        spawn("launcher", 0, MainApp.HEIGHT - 80);
         if (level != null) {
             level.spawnObstacles();
         }
@@ -205,10 +210,28 @@ public class SimulatorController implements UIController {
         }
     }
 
+    /**
+     * Resets the game world by removing all obstacles and projectiles from the game world,
+     * and reloads the level by spawning obstacles.
+     * If a level is loaded (not null), it will spawn obstacles according to the level's configuration.
+     */
     @FXML
     public void reset() {
-        // TODO Reset
-        System.out.println("resetting");
+        // Remove all obstacles and projectiles from game world
+        for (Entity e: getGameWorld()
+                .getEntities()
+                .stream()
+                .filter(entity ->
+                            entity.isType(Type.OBSTACLE) ||
+                            entity.isType(Type.CUSTOM_PROJECTILE) ||
+                            entity.isType(Type.PROJECTILE)
+                ).toList()) {
+            e.removeFromWorld();
+        }
+        // Load level again
+        if (level != null) {
+            level.spawnObstacles();
+        }
     }
 
     /**
@@ -253,27 +276,6 @@ public class SimulatorController implements UIController {
                 System.out.println("Error during serialization process");
             }
         }
-    }
-
-    public static Obstacle deserialize(String filePath) {
-
-        try (ObjectInputStream o = new ObjectInputStream(new FileInputStream(filePath))) {
-
-            Object obj = o.readObject();
-
-            System.out.println(obj.getClass().getSimpleName());
-
-            if (obj instanceof Obstacle) {
-                return (Obstacle) obj;
-            } else {
-                throwWarning("File Not A Valid Custom Projectile", "Serialization Error");
-            }
-
-        } catch (IOException | ClassNotFoundException e) {
-            SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Deserialization Error");
-
-        }
-        return null;
     }
 
     /**

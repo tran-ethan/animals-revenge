@@ -12,8 +12,7 @@ import java.io.Serializable;
  * The Obstacle class represents a basic obstacle in a simulator.
  * Each obstacle has attributes such as shape, type, and size, which determine its
  * appearance and characteristics. The class provides methods to access and
- * modify these attributes, as well as a method to generate a String
- * representation of the obstacle based on its type and size.
+ * modify these attributes.
  *
  * @author Zachary Tremblay
  * @author Ethan Tran

@@ -106,16 +106,6 @@ public class MainApp extends GameApplication {
     }
 
     /**
-     * Initializes game objects and spawns them into the game world. There is
-     * only a single projectile which represents the animal that the player can
-     * shoot, and multiple obstacles in a single execution of the simulator.
-     */
-    public static void initGameObjects() {
-        spawn("launcher", 0, HEIGHT - 80);
-        // TODO load level
-    }
-
-    /**
      * Initializes and adds screen boundary walls to the game world. Screen
      * boundary walls are used to restrict the movement of entities within the
      * game world. These walls are placed around the visible screen area

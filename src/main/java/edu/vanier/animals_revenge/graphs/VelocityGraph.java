@@ -18,13 +18,17 @@ public class VelocityGraph extends KinematicsGraph {
 
     @Override
     public void updateGraph(ActionEvent event) {
-        // getVelocityY returns velocity positive increasing downwards in px/s
-        double velocityY = -1.0 * entity.getComponent(PhysicsComponent.class).getVelocityY() * PX_TO_CM_CONVERSION;
+        if (entity.hasComponent(PhysicsComponent.class)) {
+            // getVelocityY returns velocity positive increasing downwards in px/s
+            double velocityY = -1.0 * entity.getComponent(PhysicsComponent.class).getVelocityY() * PX_TO_CM_CONVERSION;
 
-        // Add the current Y velocity to the list
-        series.getData().add(new XYChart.Data<>(time, velocityY));
+            // Add the current Y velocity to the list
+            series.getData().add(new XYChart.Data<>(time, velocityY));
 
-        time += 0.1;
+            time += 0.1;
+        } else {
+            stop();
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package edu.vanier.animals_revenge.graphs;
 
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import edu.vanier.animals_revenge.MainApp;
 import javafx.event.ActionEvent;
 import javafx.scene.chart.XYChart;
@@ -27,31 +28,35 @@ public class PositionGraph extends KinematicsGraph {
      */
     @Override
     public void updateGraph(ActionEvent event) {
-        // Get Y position from the bottom of the screen and convert to cm
-        double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * PX_TO_CM_CONVERSION;
+        if (entity.hasComponent(PhysicsComponent.class)) {
+            // Get Y position from the bottom of the screen and convert to cm
+            double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * PX_TO_CM_CONVERSION;
 
-        if (posY >= 0) {
-            series.getData().add(new XYChart.Data<>(time, posY));
-        }
-
-        time += 0.1;
-
-        // Get number of data points in series
-        int size = series.getData().size();
-
-        // If the ball is not moving in the y direction then stop
-        if (series.getData().size() > 3) {
-            double lastY1 = getYValue(size - 1);
-            double lastY2 = getYValue(size - 2);
-            double lastY3 = getYValue(size - 3);
-
-            // Stopping condition if the ball has stopped moving vertically
-            if (lastY1 == lastY2 && lastY2 == lastY3) {
-                // Stops this, velocity, and acceleration graph once this graph is stopped
-                this.stop();
-                velocityGraph.stop();
-                accelerationGraph.stop();
+            if (posY >= 0) {
+                series.getData().add(new XYChart.Data<>(time, posY));
             }
+
+            time += 0.1;
+
+            // Get number of data points in series
+            int size = series.getData().size();
+
+            // If the ball is not moving in the y direction then stop
+            if (series.getData().size() > 3) {
+                double lastY1 = getYValue(size - 1);
+                double lastY2 = getYValue(size - 2);
+                double lastY3 = getYValue(size - 3);
+
+                // Stopping condition if the ball has stopped moving vertically, or projectile has been deleted from world
+                if (lastY1 == lastY2 && lastY2 == lastY3) {
+                    // Stops this, velocity, and acceleration graph once this graph is stopped
+                    this.stop();
+                    velocityGraph.stop();
+                    accelerationGraph.stop();
+                }
+            }
+        } else {
+            stop();
         }
 
     }
