@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
@@ -33,8 +29,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Controller class for managing custom projectiles in the application. This
@@ -49,11 +43,6 @@ public class CustomProjectileController implements UIController, Serializable {
      * Provides a list of custom projectiles.
      */
     public static ArrayList<CustomProjectile> customProjectiles = new ArrayList<>();
-
-    /**
-     * Provides a logger to log messages.
-     */
-    private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
     /**
      * Provides the file extension that is used when serializing a custom

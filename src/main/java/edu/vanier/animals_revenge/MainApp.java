@@ -88,7 +88,7 @@ public class MainApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new Factory());
-        getGameScene().setBackgroundColor(Color.LIGHTGRAY);
+        getGameScene().setBackgroundColor(Color.LIGHTBLUE);
         getGameScene().setCursor(Cursor.DEFAULT);
 
         initScreenBounds();

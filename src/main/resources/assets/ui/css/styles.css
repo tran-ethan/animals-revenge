@@ -1,8 +1,8 @@
 .button {
-    -fx-background-color: white;
+    -fx-background-color: beige;
     -fx-background-radius: 0;
 }
 
 .button:hover {
-    -fx-background-color: lightgray;
+    -fx-background-color: #dedec8;
 }

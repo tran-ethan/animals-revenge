@@ -10,7 +10,7 @@ import javafx.scene.chart.XYChart;
 /**
  * The AccelerationGraph class represents a graph that visualizes the vertical acceleration of an entity over time.
  * It extends the KinematicsGraph class.
- *
+ * <p>
  * This class calculates the acceleration based on gravity and changes in velocity over time.
  *
  * @author Ethan Tran

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.controllers;
 
 import edu.vanier.animals_revenge.util.ProjectileConverterController;
@@ -10,7 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
@@ -21,17 +16,12 @@ import javafx.stage.Stage;
  * This class is responsible for handling the functionality related to the
  * selection and import of custom projectiles in the application.
  *
- *
- * @author macke
- * @version 1.0
+ * @author Mackenzie Rouchdy
  */
 public class ProjectileSelectionController {
 
     @FXML
     public HBox customObjectRow;
-
-    @FXML
-    private Button BTNImport;
 
     public static CustomProjectile finalProjectile;
 

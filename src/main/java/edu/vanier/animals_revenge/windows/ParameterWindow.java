@@ -3,8 +3,6 @@ package edu.vanier.animals_revenge.windows;
 import edu.vanier.animals_revenge.controllers.ParametersController;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -35,7 +33,7 @@ public class ParameterWindow extends Stage {
         try {
             root = loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ParameterWindow.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Could not load Parameters.fxml file");
         }
 
         Scene scene = new Scene(root);

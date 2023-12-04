@@ -33,6 +33,16 @@ import java.io.ObjectOutputStream;
 import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
+/**
+ * The controller for the simulator screen.
+ * <p>
+ * Encapsulates functionality for launching projectiles, saving levels, resetting level, selecting
+ * projectiles, and customizing parameters.
+ *
+ * @author Ethan Tran
+ * @author Mackenzie Rouchdy
+ * @author Zachary Tremblay
+ */
 public class SimulatorController implements UIController {
 
     @FXML
@@ -87,7 +97,7 @@ public class SimulatorController implements UIController {
 
     private static int size = 1;
 
-    private static int rotate = 1;
+    private static int rotate = 0;
 
     private static float friction = 0.5f;
 
@@ -117,7 +127,7 @@ public class SimulatorController implements UIController {
         fillPattern(dirt, long_dirt, square2, circle2, rectangle2);
         fillPattern(wood, long_wood, square3, circle3, rectangle3);
 
-        // Spawn in objects
+        // Calls reset to remove any preexisting objects and spawn in obstacles from level if any
         reset();
         spawn("launcher", 0, MainApp.HEIGHT - 80);
     }

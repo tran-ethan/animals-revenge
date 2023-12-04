@@ -2,8 +2,6 @@ package edu.vanier.animals_revenge.windows;
 
 import edu.vanier.animals_revenge.controllers.ProjectileSelectionController;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -42,7 +40,7 @@ public class SelectionWindow extends Stage {
         try {
             root = loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(SelectionWindow.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
         Scene scene = new Scene(root);
