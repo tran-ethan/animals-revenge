@@ -46,13 +46,11 @@ public class Factory implements EntityFactory {
         
         String imgPath = data.get("img");
 
-        Image image = new Image("file:" + imgPath);
-
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.PROJECTILE)
                 .view(imgPath)
-                .bbox(new HitBox(BoundingShape.circle(14)))
+                .bbox(new HitBox(BoundingShape.circle(16)))
                 .with(physics)
                 .with(new DraggableComponent())
                 .build();
@@ -67,12 +65,6 @@ public class Factory implements EntityFactory {
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(data.get("density")).restitution(data.get("restitution")));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
-        
-       
-        float density = data.get("density");
-        float restitution = data.get("restitution");
-        
-       
 
         if (data.get("img") != "null") {
 
@@ -88,7 +80,6 @@ public class Factory implements EntityFactory {
 
             double imageWidth = imgView.getFitWidth();
             double imageHeight = imgView.getFitHeight();
-            
             
             
             return FXGL.entityBuilder(data)

@@ -88,7 +88,7 @@ public class MainApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new Factory());
-        getGameScene().setBackgroundColor(Color.LIGHTBLUE);
+        getGameScene().setBackgroundColor(Color.SKYBLUE);
         getGameScene().setCursor(Cursor.DEFAULT);
 
         initScreenBounds();
@@ -244,9 +244,10 @@ public class MainApp extends GameApplication {
                         .put("colour", p.getColor()));
             }
         } else {
-            e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+            e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32)
+                    .put("vX", vX)
                     .put("vY", vY)
-                    .put("img", "soccer.png"));
+                    .put("img", "red.png"));
             
         }
         
