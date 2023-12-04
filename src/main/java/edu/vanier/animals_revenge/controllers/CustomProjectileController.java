@@ -49,7 +49,7 @@ public class CustomProjectileController implements UIController, Serializable {
     private final static String FILE_EXTENSION = ".proj";
 
     public static final Color borderColor = Color.RED;
-    
+
     private static float density;
     private static float restitution;
 
@@ -62,6 +62,12 @@ public class CustomProjectileController implements UIController, Serializable {
     CustomProjectileSquare squareProjectile;
 
     CustomProjectileCircle circleProjectile;
+
+    @FXML
+    private Slider densitySlider;
+
+    @FXML
+    private Slider restitutionSlider;
 
     //The shape copies the shapes that appear in the middle of the screen
     @FXML
@@ -92,7 +98,7 @@ public class CustomProjectileController implements UIController, Serializable {
     private Slider sizeSlider;
 
     @FXML
-    private TextField sliderTextValue;
+    private TextField txtFieldSize;
 
     //Save as button event handler (located in the file menu button)
     @FXML
@@ -250,12 +256,9 @@ public class CustomProjectileController implements UIController, Serializable {
         }
     }
 
-    @FXML
-    void setSize(MouseEvent event) {
+    void setSize() {
 
-        sliderTextValue.setText("" + sizeSlider.getValue());
-
-        double newSize = sizeSlider.getValue();
+        double newSize = Double.valueOf(txtFieldSize.getText());
 
         if (squareCopy.isVisible()) {
             squareCopy.setWidth(newSize);
@@ -263,6 +266,8 @@ public class CustomProjectileController implements UIController, Serializable {
         } else if (circleCopy.isVisible()) {
             circleCopy.setRadius(newSize);
         }
+
+        sizeSlider.setValue(newSize);
 
     }
 
@@ -275,8 +280,11 @@ public class CustomProjectileController implements UIController, Serializable {
 
             restitution = Float.valueOf(txtFieldRestitution.getText());
 
+            restitutionSlider.setValue(restitution);
+
         } else {
             restitution = Float.valueOf(txtFieldRestitution.getText());
+            restitutionSlider.setValue(restitution);
         }
 
     }
@@ -290,13 +298,78 @@ public class CustomProjectileController implements UIController, Serializable {
 
             density = Float.valueOf(txtFieldDensity.getText());
 
+            densitySlider.setValue(density);
+
         } else if (txtFieldDensity.getText().trim().equals("")) {
             // if the text field is empty
 
+            //default value
             density = 0.3f;
+            densitySlider.setValue(density);
 
         } else {
             density = Float.valueOf(txtFieldDensity.getText());
+            densitySlider.setValue(density);
+        }
+
+    }
+
+    @FXML
+    void onSliderChange(MouseEvent event) {
+        Object source = event.getSource();
+
+        if (source == densitySlider) {
+
+            try {
+
+                density = (float) densitySlider.getValue();
+
+                txtFieldDensity.setText(String.format("%.0f", densitySlider.getValue()));
+
+            } catch (Exception e) {
+
+                System.out.println("error");
+
+            }
+
+        } else if (source == restitutionSlider) {
+
+            restitution = (float) restitutionSlider.getValue();
+
+            txtFieldRestitution.setText(String.format("%.0f", restitutionSlider.getValue()));
+
+        } else if (source == sizeSlider) {
+
+            txtFieldSize.setText(String.format("%.0f", sizeSlider.getValue()));
+
+            double newSize = sizeSlider.getValue();
+
+            if (squareCopy.isVisible()) {
+                squareCopy.setWidth(newSize);
+                squareCopy.setHeight(newSize);
+            } else if (circleCopy.isVisible()) {
+                circleCopy.setRadius(newSize);
+            }
+
+        }
+
+    }
+
+    @FXML
+    void onTextChange(ActionEvent event) {
+        Object source = event.getSource();
+
+        if (source == txtFieldDensity) {
+
+            setDensity(event);
+
+        } else if (source == txtFieldRestitution) {
+
+            setRestitution(event);
+
+        } else if (source == txtFieldSize) {
+
+            setSize();
         }
 
     }
@@ -311,6 +384,8 @@ public class CustomProjectileController implements UIController, Serializable {
 
         sizeSlider.setMax(90);
         sizeSlider.setMin(5);
+        txtFieldSize.setPromptText("");
+        txtFieldSize.setPromptText("5-90");
 
         sizeSlider.setValue(circle.getRadius());
         circleCopy.setRadius(circle.getRadius());
@@ -331,6 +406,8 @@ public class CustomProjectileController implements UIController, Serializable {
 
         sizeSlider.setMax(150);
         sizeSlider.setMin(5);
+        txtFieldSize.setPromptText("");
+        txtFieldSize.setPromptText("5-150");
 
         sizeSlider.setValue(square.getHeight());
         System.out.println(square.getHeight());
@@ -382,11 +459,9 @@ public class CustomProjectileController implements UIController, Serializable {
         squareCopy.setTranslateX(squareCopy.getX() + squareCopy.getWidth() / 2);
         squareCopy.setTranslateY(squareCopy.getY() + squareCopy.getHeight() / 2);
 
-        sliderTextValue.setDisable(true);
-
         sizeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-            sliderTextValue.setText(String.format("%.2f", newValue));
+            txtFieldSize.setText(String.format("%.2f", newValue));
 
             if (squareCopy.isVisible()) {
 
@@ -396,6 +471,22 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (circleCopy.isVisible()) {
                 circleCopy.setRadius(sizeSlider.getValue());
             }
+
+        });
+
+        restitutionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            txtFieldRestitution.setText(String.format("%.2f", newValue));
+
+            restitution = (float) restitutionSlider.getValue();
+
+        });
+
+        densitySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            txtFieldDensity.setText(String.format("%.2f", newValue));
+
+            density = (float) densitySlider.getValue();
 
         });
         double centerX = MainApp.WIDTH / 2;
