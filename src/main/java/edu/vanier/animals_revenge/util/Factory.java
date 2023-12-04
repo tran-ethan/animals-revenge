@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
@@ -25,6 +26,9 @@ import javafx.scene.shape.Shape;
 
 public class Factory implements EntityFactory {
 
+    private static Entity background;
+    private static Entity launcher;
+
     //currently only used for the default projectile
     @Spawns("projectile")
     public Entity spawnProjectile(SpawnData data) {
@@ -35,7 +39,7 @@ public class Factory implements EntityFactory {
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(0.3f).restitution(0.7f));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
-        
+
         String imgPath = data.get("img");
 
         Image image = new Image("file:" + imgPath);
@@ -47,6 +51,7 @@ public class Factory implements EntityFactory {
                 .bbox(new HitBox(BoundingShape.circle(14)))
                 .with(physics)
                 .with(new DraggableComponent())
+                .with(new CollidableComponent(true))
                 .build();
     }
 
@@ -59,12 +64,9 @@ public class Factory implements EntityFactory {
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(data.get("density")).restitution(data.get("restitution")));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
-        
-       
+
         float density = data.get("density");
         float restitution = data.get("restitution");
-        
-       
 
         if (data.get("img") != "null") {
 
@@ -80,9 +82,7 @@ public class Factory implements EntityFactory {
 
             double imageWidth = imgView.getFitWidth();
             double imageHeight = imgView.getFitHeight();
-            
-            
-            
+
             return FXGL.entityBuilder(data)
                     .at(data.getX(), data.getY())
                     .type(Type.CUSTOM_PROJECTILE)
@@ -90,6 +90,7 @@ public class Factory implements EntityFactory {
                     .bbox(new HitBox(BoundingShape.box(imageWidth, imageHeight)))
                     .with(physics)
                     .with(new DraggableComponent())
+                    .with(new CollidableComponent(true))
                     .build();
         } else {
 
@@ -104,6 +105,7 @@ public class Factory implements EntityFactory {
                     .bbox(new HitBox(BoundingShape.box(rect.getWidth(), rect.getHeight())))
                     .with(physics)
                     .with(new DraggableComponent())
+                    .with(new CollidableComponent(true))
                     .build();
         }
 
@@ -144,6 +146,7 @@ public class Factory implements EntityFactory {
                     .bbox(new HitBox(BoundingShape.circle(radius)))
                     .with(physics)
                     .with(new DraggableComponent())
+                    .with(new CollidableComponent(true))
                     .build();
         } else {
 
@@ -163,24 +166,29 @@ public class Factory implements EntityFactory {
                     .bbox(new HitBox(BoundingShape.circle(radius)))
                     .with(physics)
                     .with(new DraggableComponent())
+                    .with(new CollidableComponent(true))
                     .build();
 
         }
     }
 
     /**
-     * Spawns an obstacle entity based on provided SpawnData.
-     * This method creates an obstacle entity with physics properties, shape, and position as specified by the provided SpawnData.
-     * The obstacle can have a rectangular or circular shape, and its attributes are retrieved from the SpawnData.
+     * Spawns an obstacle entity based on provided SpawnData. This method
+     * creates an obstacle entity with physics properties, shape, and position
+     * as specified by the provided SpawnData. The obstacle can have a
+     * rectangular or circular shape, and its attributes are retrieved from the
+     * SpawnData.
      * <p>
-     * This method is used to spawn obstacle from the level and from the DragAction.
-     * If an obstacle is created in the DragAction, it will spawn at the x and y position of the mouse.
-     * Otherwise, it will spawn using the position data in the Obstacle object.
+     * This method is used to spawn obstacle from the level and from the
+     * DragAction. If an obstacle is created in the DragAction, it will spawn at
+     * the x and y position of the mouse. Otherwise, it will spawn using the
+     * position data in the Obstacle object.
      *
      * @see edu.vanier.animals_revenge.actions.DragAction
      * @see edu.vanier.animals_revenge.models.Level
      *
-     * @param data The SpawnData containing information about the obstacle to be spawned.
+     * @param data The SpawnData containing information about the obstacle to be
+     * spawned.
      * @return The Entity representing the spawned obstacle.
      */
     @Spawns("obstacle")
@@ -228,16 +236,18 @@ public class Factory implements EntityFactory {
                 .bbox(hitbox)
                 .with(physics)
                 .with(new ObstacleComponent(obstacle))
+                .with(new CollidableComponent(true))
                 .build();
     }
 
     /**
-     * Spawns a wall entity based on provided SpawnData.
-     * This method creates a wall entity with physics properties and specified dimensions (width and height)
-     * as provided by the SpawnData. Walls are static entities used as barriers in the game to cover the
-     * menu bar and the right-hand pane.
+     * Spawns a wall entity based on provided SpawnData. This method creates a
+     * wall entity with physics properties and specified dimensions (width and
+     * height) as provided by the SpawnData. Walls are static entities used as
+     * barriers in the game to cover the menu bar and the right-hand pane.
      *
-     * @param data The SpawnData containing information about the wall to be spawned, including width and height.
+     * @param data The SpawnData containing information about the wall to be
+     * spawned, including width and height.
      * @return The Entity representing the spawned wall.
      */
     @Spawns("wall")
@@ -251,25 +261,58 @@ public class Factory implements EntityFactory {
                 .type(Type.WALL)
                 .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(physics)
+                .with(new CollidableComponent(true))
                 .build();
     }
 
     @Spawns("launcher")
     public Entity spawnLauncher(SpawnData data) {
-        return FXGL.entityBuilder(data)
+        if (launcher != null) {
+            FXGL.getGameWorld().removeEntity(launcher);
+            launcher = null;
+            return new Entity();
+        }
+
+        launcher = FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.LAUNCHER)
                 .zIndex(100)
                 .view("cannon.png")
                 .build();
+        return launcher;
     }
-    
+
+    /**
+     * Spawns a background entity based on provided SpawnData. This method
+     * creates a background entity with specified dimensions (width and height)
+     * as provided by the SpawnData. Background is a static entity used as
+     * decoration in the game to cover the scene.Removes old background whenever
+     * new is created
+     *
+     * @param data The SpawnData containing information about the background to
+     * be spawned, including image and color.
+     * @return The Entity representing the spawned background.
+     */
     @Spawns("background")
-    public Entity newBackground(SpawnData data) {
-        return FXGL.entityBuilder()
-                .view(new ScrollingBackgroundView(new Image("/assets/textures/background/"+ data.get("background")), FXGL.getAppWidth(), FXGL.getAppHeight()))
-                .zIndex(-500)
-                .with(new IrremovableComponent())
-                .build();
+    public Entity spawnBackground(SpawnData data) {
+        if (background != null) {
+            FXGL.getGameWorld().removeEntity(background);
+        }
+        if (data.get("background") == "") {
+            background = FXGL.entityBuilder()
+                    .view(new Rectangle(FXGL.getAppWidth(), FXGL.getAppHeight(), data.get("color")))
+                    .zIndex(-500)
+                    .with(new IrremovableComponent())
+                    .build();
+        } else {
+            background = FXGL.entityBuilder()
+                    .view(new ScrollingBackgroundView(new Image("/assets/textures/background/" + data.get("background")), FXGL.getAppWidth(), FXGL.getAppHeight()))
+                    .zIndex(-500)
+                    .with(new IrremovableComponent())
+                    .build();
+        }
+
+        return background;
     }
+
 }

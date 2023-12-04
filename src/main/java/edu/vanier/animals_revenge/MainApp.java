@@ -3,6 +3,10 @@ package edu.vanier.animals_revenge;
 import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.audio.AudioType;
+import com.almasb.fxgl.audio.Music;
+import com.almasb.fxgl.audio.Sound;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.InputModifier;
@@ -27,6 +31,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+import com.almasb.fxgl.physics.CollisionHandler;
+import edu.vanier.animals_revenge.util.SavedSetting;
+import static edu.vanier.animals_revenge.util.Type.CUSTOM_PROJECTILE;
+import static edu.vanier.animals_revenge.util.Type.OBSTACLE;
+import static edu.vanier.animals_revenge.util.Type.PLATFORM;
+import static edu.vanier.animals_revenge.util.Type.PROJECTILE;
+import static edu.vanier.animals_revenge.util.Type.WALL;
 
 /**
  * Main entry point of the FXGL application.
@@ -49,9 +60,12 @@ public class MainApp extends GameApplication {
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     private static UI ui;
-    
-    private static Entity e;
 
+    private static Entity e;
+    
+    private SavedSetting settings;
+
+    
     /**
      * Initializes application settings.
      *
@@ -64,6 +78,73 @@ public class MainApp extends GameApplication {
         settings.setHeight((int) HEIGHT);
     }
 
+    @Override
+    protected void initPhysics() {
+       
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, WALL) {
+
+            // order of types is the same as passed into the constructor
+            @Override
+            protected void onCollisionBegin(Entity obstacle, Entity wall) {
+               settings.playSound();
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PROJECTILE) {
+
+            @Override
+            protected void onCollisionBegin(Entity obstacle, Entity projectile) {
+               settings.playSound();
+
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, CUSTOM_PROJECTILE) {
+
+            @Override
+            protected void onCollisionBegin(Entity obstacle, Entity custom_projectile) {
+               settings.playSound();
+
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, OBSTACLE) {
+
+            @Override
+            protected void onCollisionBegin(Entity obstacle1, Entity obstacle2) {
+               settings.playSound();
+
+            }
+        });
+        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PLATFORM) {
+
+            @Override
+            protected void onCollisionBegin(Entity obstacle1, Entity obstacle2) {
+               settings.playSound();
+
+            }
+        });
+    }
+
+    @Override
+    protected void onPreInit() {
+        // Load music
+        //Music backgroundMusic = FXGL.getAssetLoader().loadMusic("music1.mp3");
+        // Start playing the music in a loop
+        // FXGL.getAudioPlayer().loopMusic(backgroundMusic);
+        getSettings().setGlobalSoundVolume(0.0);
+        getSettings().setGlobalMusicVolume(0.0);
+        
+    }
+
+    /**
+     * Initializes the UI layer which is built on top of the game world layer.
+     * Called once when the app is first launched to render the home screen.
+     */
+    /*@Override
+    protected void onPreInit() {
+        getSettings().setGlobalSoundVolume(0.1);
+        getSettings().setGlobalMusicVolume(0.1);
+
+        loopBGM("music1.mp3");
+    }*/
     /**
      * Initializes the UI layer which is built on top of the game world layer.
      * Called once when the app is first launched to render the home screen.
@@ -97,12 +178,10 @@ public class MainApp extends GameApplication {
         getGameScene().setCursor(Cursor.DEFAULT);
 
         initScreenBounds();
-        /* var entity = getGameWorld().create("background", new SpawnData().put("background","sky.png"));
-            spawnWithScale(entity, Duration.seconds(1), Interpolators.ELASTIC.EASE_OUT());
 
-            runOnce(() -> {
-                despawnWithScale(entity, Duration.seconds(1), Interpolators.ELASTIC.EASE_IN());
-            }, Duration.seconds(2.5));*/
+        settings = new SavedSetting();
+        spawn("background", new SpawnData().put("background", settings.getBackground()).put("color", settings.getColor()));
+        settings.playMusic();
     }
 
     /**
@@ -125,14 +204,15 @@ public class MainApp extends GameApplication {
         spawn("wall", new SpawnData(WIDTH - 350.0, 0).put("width", 350.0).put("height", HEIGHT));
 
         getGameWorld().addEntity(walls);
+
     }
 
     /**
      * Maps the corresponding user inputs to their respective actions.
      * <p>
      * Right-click and hold from launcher to create initial velocity vector.
-     * Left-click and hold to drag obstacles around.
-     * Hold CTRL + Left-click and hold to create new obstacle.
+     * Left-click and hold to drag obstacles around. Hold CTRL + Left-click and
+     * hold to create new obstacle.
      */
     @Override
     protected void initInput() {
@@ -161,8 +241,8 @@ public class MainApp extends GameApplication {
 
     /**
      * Animates the vector representing the initial velocity by using
-     * pythagorean theorem and trigonometry to find the hypotenuse and
-     * angle of rotation
+     * pythagorean theorem and trigonometry to find the hypotenuse and angle of
+     * rotation
      *
      * @param x the x position of the mouse
      * @param y the y position of the mouse
@@ -204,7 +284,7 @@ public class MainApp extends GameApplication {
             CustomProjectileSquare p = (CustomProjectileSquare) proj;
 
             if (p.getImgPath() != null) {
-                 e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
+                e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
                         .put("colour", p.getColour())
                         .put("img", p.getImgPath())
@@ -212,8 +292,6 @@ public class MainApp extends GameApplication {
                         .put("restitution", p.getRestitution())
                         .put("density", p.getDensity())
                         .put("height", p.getShapeHeight()));
-
-                
 
             } else {
                 e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
@@ -249,18 +327,18 @@ public class MainApp extends GameApplication {
                         .put("density", p.getDensity())
                         .put("colour", p.getColor()));
 
-
             }
 
         } else {
             e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
                     .put("img", "soccer.png"));
-            
+
         }
-        
+
+        // Register collision handler
         graphSetup(e);
-        
+
     }
 
     public static void graphSetup(Entity e) {

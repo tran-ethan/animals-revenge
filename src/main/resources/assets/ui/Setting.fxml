@@ -61,7 +61,7 @@
                               </Label>
                               <VBox prefHeight="100.0" prefWidth="150.0" spacing="20.0">
                                  <children>
-                                    <Slider fx:id="sldSound" prefHeight="14.0" prefWidth="204.0">
+                                    <Slider fx:id="sldSound" onMouseDragReleased="#setSoundVolume" onMouseReleased="#setSoundVolume" prefHeight="25.0" prefWidth="200.0">
                                        <VBox.margin>
                                           <Insets top="35.0" />
                                        </VBox.margin>
@@ -93,7 +93,7 @@
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </ChoiceBox>
-                                    <Slider fx:id="sldMusic" prefHeight="25.0" prefWidth="111.0" />
+                                    <Slider fx:id="sldMusic" onMouseDragReleased="#setMusicVolume" onMouseReleased="#setMusicVolume" prefHeight="25.0" prefWidth="200.0" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" top="5.0" />
