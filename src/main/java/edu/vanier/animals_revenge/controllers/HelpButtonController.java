@@ -10,11 +10,19 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
+ * This class is responsible for handling the functionality of a help button. It
+ * opens the system's default text editor to view the README file associated
+ * with the application.
  *
  * @author macke
+ * @version 1.0
  */
 public class HelpButtonController {
 
+    /**
+     * Constructs a new HelpButtonController.
+     *
+     */
     public HelpButtonController() {
 
         URL urlPath = getClass().getResource("/other/README.md");

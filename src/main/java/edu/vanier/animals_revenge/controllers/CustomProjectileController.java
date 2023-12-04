@@ -37,70 +37,154 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Controller class for managing custom projectiles in the application. This
+ * controller handles UI events and interactions related to custom projectiles,
+ * allowing users to create, modify, and save custom projectile configurations.
  *
- * @author macke
+ * @author Mackenzie
  */
 public class CustomProjectileController implements UIController, Serializable {
 
+    /**
+     * Provides a list of custom projectiles.
+     */
     public static ArrayList<CustomProjectile> customProjectiles = new ArrayList<>();
 
+    /**
+     * Provides a logger to log messages.
+     */
     private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
 
+    /**
+     * Provides the file extension that is used when serializing a custom
+     * projectile.
+     */
     private final static String FILE_EXTENSION = ".proj";
 
-    public static final Color borderColor = Color.RED;
+    /**
+     * Provides a border colour.
+     */
+    public static final Color borderColour = Color.RED;
 
+    /**
+     * Provides access to the density property.
+     */
     private static float density;
+
+    /**
+     * Provides access to the restitution property.
+     */
     private static float restitution;
 
-    private boolean savedChangesHasAlreadyPressed = false;
-
+    /**
+     * Declaration of the user's selected image file.
+     */
     File SelectedImgFile;
 
+    /**
+     * Declaration of the user's saved file.
+     */
     File SaveFile;
 
+    /**
+     * Declaration of the custom square projectile.
+     */
     CustomProjectileSquare squareProjectile;
 
+    /**
+     * Declaration of the custom circle projectile.
+     */
     CustomProjectileCircle circleProjectile;
 
+    /**
+     * JavaFX density slider component used to change the density property of a
+     * custom projectile.
+     */
     @FXML
     private Slider densitySlider;
 
+    /**
+     * JavaFX restitution slider component used to change the restitution
+     * property of a custom projectile.
+     */
     @FXML
     private Slider restitutionSlider;
 
-    //The shape copies the shapes that appear in the middle of the screen
+    /**
+     * JavaFX Circle component that serves as a copy of a circle shape appearing
+     * in the middle of the screen.
+     */
     @FXML
     private Circle circleCopy;
 
+    /**
+     * JavaFX Rectangle component that serves as a copy of a square shape
+     * appearing in the middle of the screen.
+     */
     @FXML
     private Rectangle squareCopy;
 
+    /**
+     * JavaFX BorderPane component that serves as a container for other UI
+     * elements.
+     */
     @FXML
     private BorderPane borderPane;
 
+    /**
+     * JavaFX ColorPicker component used for selecting colors.
+     */
     @FXML
     private ColorPicker ColourPicker;
 
+    /**
+     * JavaFX Circle component that represents a circle shape in the middle of
+     * the screen.
+     */
     @FXML
     private Circle circle;
 
+    /**
+     * JavaFX Rectangle component that represents a square shape in the middle
+     * of the screen.
+     */
     @FXML
     private Rectangle square;
 
+    /**
+     * JavaFX TextField component used for displaying and editing the density
+     * property of a projectile.
+     */
     @FXML
     private TextField txtFieldDensity;
 
+    /**
+     * JavaFX TextField component used for displaying and editing the
+     * restitution property of a projectile.
+     */
     @FXML
     private TextField txtFieldRestitution;
 
+    /**
+     * JavaFX Slider component used for adjusting the size property of a
+     * projectile.
+     */
     @FXML
     private Slider sizeSlider;
 
+    /**
+     * JavaFX TextField component used for displaying and editing the size
+     * property of a projectile.
+     */
     @FXML
     private TextField txtFieldSize;
 
-    //Save as button event handler (located in the file menu button)
+    /**
+     * Handles the action event for saving changes.
+     *
+     * @param event The ActionEvent triggered by the save button.
+     * @throws MalformedURLException If there is an issue with the provided URL.
+     */
     @FXML
     void SaveAsChanges(ActionEvent event) throws MalformedURLException {
 
@@ -158,8 +242,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     customProjectiles.add(squareProjectile);
 
-                    savedChangesHasAlreadyPressed = true;
-
                 } else if (shape == circleCopy) {
 
                     double radius = circleCopy.getRadius();
@@ -174,7 +256,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     serialize(SaveFile.getAbsolutePath(), circleProjectile);
                     customProjectiles.add(circleProjectile);
-                    savedChangesHasAlreadyPressed = true;
 
                 }
             }
@@ -184,6 +265,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Method to serialize a custom projectile and save it to a file.
+     *
+     * @param filePath The path to the file where the custom projectile will be
+     * saved.
+     * @param p The custom projectile object to be serialized.
+     */
     public static void serialize(String filePath, CustomProjectile p) {
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
             o.writeObject(p);
@@ -193,6 +281,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Method to deserialize a custom projectile from a file.
+     *
+     * @param filePath The path to the file from which the custom projectile
+     * will be deserialized.
+     * @return The deserialized custom projectile object.
+     */
     public static CustomProjectile deserialize(String filePath) {
 
         try (ObjectInputStream o = new ObjectInputStream(new FileInputStream(filePath))) {
@@ -216,6 +311,13 @@ public class CustomProjectileController implements UIController, Serializable {
         return null;
     }
 
+    /**
+     * Handles the action event for choosing a colour. Sets the fill colour of
+     * the visible shape (either square or circle) to the selected color from
+     * the ColourPicker.
+     *
+     * @param event The ActionEvent triggered by the color selection.
+     */
     @FXML
     void chooseColor(ActionEvent event) {
 
@@ -228,6 +330,13 @@ public class CustomProjectileController implements UIController, Serializable {
         }
     }
 
+    /**
+     * Handles the event when the user chooses an image file. It opens a
+     * FileChooser dialog with filters for selecting image files. After selecting a file, it loads the chosen
+     * image and sets the ImagePattern for the visible shape (either square or circle).
+     *
+     * @param event The ActionEvent triggered
+     */
     @FXML
     void chooseImg(ActionEvent event) {
         // Create a FileChooser
@@ -256,6 +365,13 @@ public class CustomProjectileController implements UIController, Serializable {
         }
     }
 
+    /**
+     * Handles the action event for choosing an image. Opens a file chooser
+     * dialog to select an image file, and sets the fill of
+     * the visible shape (either square or circle).
+     *
+     * @param event The ActionEvent triggered by the image selection.
+     */
     void setSize() {
 
         double newSize = Double.valueOf(txtFieldSize.getText());
@@ -271,6 +387,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Handles the action event for setting the restitution value. Validates the
+     * input from the text field to ensure it is within the valid range [0, 1].
+     * 
+     *
+     * @param event The ActionEvent triggered by setting the restitution value.
+     */
     @FXML
     void setRestitution(ActionEvent event) {
 
@@ -289,6 +412,12 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Handles the action event for setting the density value. Validates the
+     * input from the text field to ensure it is within the valid range [0, 1].
+     *
+     * @param event The ActionEvent triggered by setting the density value.
+     */
     @FXML
     void setDensity(ActionEvent event) {
 
@@ -314,6 +443,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Handles the change event for sliders. Updates the corresponding
+     * attributes and text fields based on the slider that triggered the event.
+     * Handles densitySlider, restitutionSlider, and sizeSlider separately.
+     *
+     * @param event The MouseEvent triggered by changing the sliders.
+     */
     @FXML
     void onSliderChange(MouseEvent event) {
         Object source = event.getSource();
@@ -355,6 +491,14 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Handles the change event for text fields. Calls corresponding methods to
+     * handle the change based on the text field that triggered the event.
+     * Handles txtFieldDensity, txtFieldRestitution, and txtFieldSize
+     * separately.
+     *
+     * @param event The ActionEvent triggered by changing the text fields.
+     */
     @FXML
     void onTextChange(ActionEvent event) {
         Object source = event.getSource();
@@ -374,6 +518,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Handles the mouse click event for the circle. Sets focus on the
+     * circle, updates UI elements, and sets the initial values for
+     * size, density, and restitution.
+     *
+     * @param event The MouseEvent triggered by clicking on the circle shape.
+     */
     @FXML
     void circleClick(MouseEvent event) {
 
@@ -396,6 +547,13 @@ public class CustomProjectileController implements UIController, Serializable {
         circleCopy.setVisible(true);
     }
 
+    /**
+     * Handles the mouse click event for the rectangle. Sets focus on the
+     * square, updates UI elements, and sets the initial values for
+     * size, density, and restitution.
+     *
+     * @param event The MouseEvent triggered by clicking on the square shape.
+     */
     @FXML
     void rectClick(MouseEvent event) {
 
@@ -420,31 +578,74 @@ public class CustomProjectileController implements UIController, Serializable {
         circleCopy.setVisible(false);
     }
 
+    /**
+     * Handles the mouse hover enter event for the circle shape. Sets the
+     * circle's stroke color to the specified border color.
+     *
+     * @param event The MouseEvent triggered by entering the hover area of the
+     * circle.
+     */
     @FXML
     void circleHoverEnter(MouseEvent event) {
-        circle.setStroke(borderColor);
+        circle.setStroke(borderColour);
     }
 
+    /**
+     * Handles the mouse hover exit event for the circle shape. Resets the
+     * circle's stroke color to black.
+     *
+     * @param event The MouseEvent triggered by exiting the hover area of the
+     * circle.
+     */
     @FXML
     void circleHoverExit(MouseEvent event) {
         circle.setStroke(Color.BLACK);
     }
 
+    /**
+     * Handles the mouse hover enter event for the square shape. Sets the
+     * square's stroke color to the specified border color.
+     *
+     * @param event The MouseEvent triggered by entering the hover area of the
+     * square.
+     */
     @FXML
     void squareHoverEnter(MouseEvent event) {
-        square.setStroke(borderColor);
+        square.setStroke(borderColour);
     }
 
+    /**
+     * Handles the mouse hover Exit event for the square shape. Resets the
+     * square's stroke color to black.
+     *
+     * @param event The MouseEvent triggered by exiting the hover area of the
+     * square.
+     */
     @FXML
     void squareHoverExit(MouseEvent event) {
         square.setStroke(Color.BLACK);
     }
 
+    /**
+     * Handles the action event for returning to the home page. Loads the
+     * "Home.fxml" file and initializes the HomeController to display the home
+     * page.
+     *
+     * @param event The ActionEvent triggered by clicking the return home
+     * button.
+     */
     @FXML
     void returnHome(ActionEvent event) {
         MainApp.loadFXML("Home.fxml", new HomeController());
     }
 
+    /**
+     * Handles the action event for opening the about page. Creates an instance
+     * of the HelpButtonController to display information about the application.
+     *
+     * @param event The ActionEvent triggered by clicking the open about page
+     * button.
+     */
     @FXML
     void OpenAboutPage(ActionEvent event) {
 
@@ -452,6 +653,12 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Initializes the controller. Adjusts initial positions and appearance
+     * settings for square and circle shapes, sets up listeners for sliders, and
+     * configures default values for restitution, density, and size. This method
+     * is typically called once when the controller is first initialized.
+     */
     @Override
     public void init() {
 
