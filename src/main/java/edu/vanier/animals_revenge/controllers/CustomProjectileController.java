@@ -319,8 +319,9 @@ public class CustomProjectileController implements UIController, Serializable {
 
     /**
      * Handles the event when the user chooses an image file. It opens a
-     * FileChooser dialog with filters for selecting image files. After selecting a file, it loads the chosen
-     * image and sets the ImagePattern for the visible shape (either square or circle).
+     * FileChooser dialog with filters for selecting image files. After
+     * selecting a file, it loads the chosen image and sets the ImagePattern for
+     * the visible shape (either square or circle).
      *
      * @param event The ActionEvent triggered
      */
@@ -354,21 +355,29 @@ public class CustomProjectileController implements UIController, Serializable {
 
     /**
      * Handles the action event for choosing an image. Opens a file chooser
-     * dialog to select an image file, and sets the fill of
-     * the visible shape (either square or circle).
+     * dialog to select an image file, and sets the fill of the visible shape
+     * (either square or circle).
      */
     void setSize() {
 
-        double newSize = Double.parseDouble(txtFieldSize.getText());
+        try {
 
-        if (squareCopy.isVisible()) {
-            squareCopy.setWidth(newSize);
-            squareCopy.setHeight(newSize);
-        } else if (circleCopy.isVisible()) {
-            circleCopy.setRadius(newSize);
+            double newSize = Double.parseDouble(txtFieldSize.getText());
+
+            if (squareCopy.isVisible()) {
+                squareCopy.setWidth(newSize);
+                squareCopy.setHeight(newSize);
+            } else if (circleCopy.isVisible()) {
+                circleCopy.setRadius(newSize);
+            }
+
+            sizeSlider.setValue(newSize);
+
+        } catch (NumberFormatException e) {
+
+            SimulatorController.throwWarning("Please Enter A Valid Value!", "Format Error");
+
         }
-
-        sizeSlider.setValue(newSize);
 
     }
 
@@ -381,17 +390,24 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     void setRestitution(ActionEvent event) {
 
-        //only valid values are between 0 and 1
-        if (Float.parseFloat(txtFieldRestitution.getText()) > 1.00 || Float.parseFloat(txtFieldRestitution.getText()) < 0) {
-            txtFieldRestitution.setText("" + 1.00);
+        try {
 
-            restitution = Float.parseFloat(txtFieldRestitution.getText());
+            //only valid values are between 0 and 1
+            if (Float.parseFloat(txtFieldRestitution.getText()) > 1.00 || Float.parseFloat(txtFieldRestitution.getText()) < 0) {
+                txtFieldRestitution.setText("" + 1.00);
 
-            restitutionSlider.setValue(restitution);
+                restitution = Float.parseFloat(txtFieldRestitution.getText());
 
-        } else {
-            restitution = Float.parseFloat(txtFieldRestitution.getText());
-            restitutionSlider.setValue(restitution);
+                restitutionSlider.setValue(restitution);
+
+            } else {
+                restitution = Float.parseFloat(txtFieldRestitution.getText());
+                restitutionSlider.setValue(restitution);
+            }
+
+        } catch (NumberFormatException e) {
+            SimulatorController.throwWarning("Please Enter A Valid Value!", "Format Error");
+
         }
 
     }
@@ -405,24 +421,32 @@ public class CustomProjectileController implements UIController, Serializable {
     @FXML
     void setDensity(ActionEvent event) {
 
-        //only valid values are between 0 and 1
-        if (Float.parseFloat(txtFieldDensity.getText()) > 1.00 || Float.parseFloat(txtFieldDensity.getText()) < 0) {
-            txtFieldDensity.setText("" + 1.00);
+        try {
 
-            density = Float.parseFloat(txtFieldDensity.getText());
+            //only valid values are between 0 and 1
+            if (Float.parseFloat(txtFieldDensity.getText()) > 1.00 || Float.parseFloat(txtFieldDensity.getText()) < 0) {
+                txtFieldDensity.setText("" + 1.00);
 
-            densitySlider.setValue(density);
+                density = Float.parseFloat(txtFieldDensity.getText());
 
-        } else if (txtFieldDensity.getText().trim().equals("")) {
-            // if the text field is empty
+                densitySlider.setValue(density);
 
-            //default value
-            density = 0.3f;
-            densitySlider.setValue(density);
+            } else if (txtFieldDensity.getText().trim().equals("")) {
+                // if the text field is empty
 
-        } else {
-            density = Float.parseFloat(txtFieldDensity.getText());
-            densitySlider.setValue(density);
+                //default value
+                density = 0.3f;
+                densitySlider.setValue(density);
+
+            } else {
+                density = Float.parseFloat(txtFieldDensity.getText());
+                densitySlider.setValue(density);
+            }
+
+        } catch (NumberFormatException e) {
+            
+            SimulatorController.throwWarning("Please Enter A Valid Value!", "Format Error");
+            
         }
 
     }
@@ -503,9 +527,9 @@ public class CustomProjectileController implements UIController, Serializable {
     }
 
     /**
-     * Handles the mouse click event for the circle. Sets focus on the
-     * circle, updates UI elements, and sets the initial values for
-     * size, density, and restitution.
+     * Handles the mouse click event for the circle. Sets focus on the circle,
+     * updates UI elements, and sets the initial values for size, density, and
+     * restitution.
      *
      * @param event The MouseEvent triggered by clicking on the circle shape.
      */
@@ -533,8 +557,8 @@ public class CustomProjectileController implements UIController, Serializable {
 
     /**
      * Handles the mouse click event for the rectangle. Sets focus on the
-     * square, updates UI elements, and sets the initial values for
-     * size, density, and restitution.
+     * square, updates UI elements, and sets the initial values for size,
+     * density, and restitution.
      *
      * @param event The MouseEvent triggered by clicking on the square shape.
      */
