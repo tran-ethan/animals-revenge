@@ -10,9 +10,9 @@ objects to launch. The user will also be prompted to choose different launchers 
 more unique experience for each user. The customization in this simulation is what will take
 it above and beyond similar applications. Moreover, the application will act as a learning
 medium in which users can experiment with projectile motion. This will be made possible
-with the various parameters and customization ability the users will have. For instance,
+with the various parameterWindow and customization ability the users will have. For instance,
 users will be able to change the launch angle of the projectile. This change will influence the
-path of the projectile thus enabling users to recognize the results of such parameters. The
+path of the projectile thus enabling users to recognize the results of such parameterWindow. The
 application will be comprised of many parameter trackers. These statistics will be enhanced
 with live graphs that track the motion as it is in the air. These details are important as it
 allows the user to understand and interpret what is on their screen.
@@ -29,7 +29,7 @@ In accomplishing this project, our team is hoping to:
   long as it follows the laws of physics, the users will be able to create an almost infinite
   number of scenarios. This will enable them to understand the impact of the different
   factors present in the experiment.
-- **Engage**. By implementing game-like features along with a lot of interactive parameters,
+- **Engage**. By implementing game-like features along with a lot of interactive parameterWindow,
   we make sure that the users are entertained throughout their learning experience.
   This will make them stay longer on our platform and learn even more about the subject.
 
@@ -66,7 +66,7 @@ each other in 2 dimensions:
   - Mass of building blocks
 - Save and load: Allow users to save their simulation state and reload it. Will be able
   to store user-designed structures for future use as well as a variety of built-in scenarios
-  with various preset parameters and buildings.
+  with various preset parameterWindow and buildings.
 - Additional UX features: modifying background image (look and feel), interface color,
   design, style, small micro-interactions (button hovers, clicks), loading skeletons, etc.
 - Sound: Will include a soundscape for different scenarios in addition

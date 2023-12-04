@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.windows;
 
 import edu.vanier.animals_revenge.controllers.ProjectileSelectionController;
@@ -24,10 +20,8 @@ import javafx.stage.Stage;
  * controller, and creating the associated scene. Instances of this class are
  * expected to be used to show the projectile selection window in the
  * application's UI.
- * </p>
  *
- * @author macke
- * @version 1.0
+ * @author Mackenzie Rouchdy
  */
 public class Selection extends Stage {
 

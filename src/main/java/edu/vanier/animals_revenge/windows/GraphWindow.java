@@ -11,7 +11,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- * Class representing the Projectile Motion Graph window.
+ * Class representing the Projectile Motion Graph window, which contains tabs containing
+ * the position, velocity, and acceleration graphs.
+ *
+ * @author Mackenzie Rouchdy
  */
 public class GraphWindow extends Stage {
 
@@ -21,14 +24,17 @@ public class GraphWindow extends Stage {
     public GraphWindow(Entity e) {
         TabPane tabPane = new TabPane();
 
+        // Create graphs
         VelocityGraph velocityGraph = new VelocityGraph(e);
         AccelerationGraph accelerationGraph = new AccelerationGraph(e);
         PositionGraph positionGraph = new PositionGraph(e, velocityGraph, accelerationGraph);
 
+        // Create tabs
         Tab tab1 = new Tab("Displacement");
         Tab tab2 = new Tab("Velocity");
         Tab tab3 = new Tab("Acceleration");
 
+        // Set content to corresponding graph
         tab1.setContent(positionGraph);
         tab2.setContent(velocityGraph);
         tab3.setContent(accelerationGraph);

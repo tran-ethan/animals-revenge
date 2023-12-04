@@ -1,6 +1,5 @@
 package edu.vanier.animals_revenge;
 
-import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
@@ -51,8 +50,6 @@ public class MainApp extends GameApplication {
     private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     private static UI ui;
-    
-    private static Entity e;
 
     /**
      * Initializes application settings.
@@ -203,6 +200,8 @@ public class MainApp extends GameApplication {
 
         CustomProjectile proj = ProjectileSelectionController.finalProjectile;
 
+        Entity e;
+
         if (proj instanceof CustomProjectileSquare) {
 
             CustomProjectileSquare p = (CustomProjectileSquare) proj;
@@ -216,9 +215,6 @@ public class MainApp extends GameApplication {
                         .put("restitution", p.getRestitution())
                         .put("density", p.getDensity())
                         .put("height", p.getShapeHeight()));
-
-                
-
             } else {
                 e = spawn("customProjectileSquare", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -228,7 +224,6 @@ public class MainApp extends GameApplication {
                         .put("density", p.getDensity())
                         .put("width", p.getShapeWidth())
                         .put("height", p.getShapeHeight()));
-
             }
 
         } else if (proj instanceof CustomProjectileCircle) {
@@ -243,7 +238,6 @@ public class MainApp extends GameApplication {
                         .put("restitution", p.getRestitution())
                         .put("density", p.getDensity())
                         .put("radius", p.getRadius()));
-
             } else {
                 e = spawn("customProjectileCircle", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                         .put("vY", vY)
@@ -252,10 +246,7 @@ public class MainApp extends GameApplication {
                         .put("restitution", p.getRestitution())
                         .put("density", p.getDensity())
                         .put("colour", p.getColor()));
-
-
             }
-
         } else {
             e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
@@ -264,9 +255,13 @@ public class MainApp extends GameApplication {
         }
         
         graphSetup(e);
-        
     }
 
+    /**
+     * Setups up the graph window and passes the entity to the graph for motion data.
+     *
+     * @param e The entity representing the projectile
+     */
     public static void graphSetup(Entity e) {
         if (!ParametersController.isIsGraphOff()) {
             GraphWindow graphWindow = new GraphWindow(e);

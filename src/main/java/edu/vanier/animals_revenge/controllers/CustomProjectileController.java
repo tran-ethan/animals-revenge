@@ -369,8 +369,6 @@ public class CustomProjectileController implements UIController, Serializable {
      * Handles the action event for choosing an image. Opens a file chooser
      * dialog to select an image file, and sets the fill of
      * the visible shape (either square or circle).
-     *
-     * @param event The ActionEvent triggered by the image selection.
      */
     void setSize() {
 
@@ -390,7 +388,6 @@ public class CustomProjectileController implements UIController, Serializable {
     /**
      * Handles the action event for setting the restitution value. Validates the
      * input from the text field to ensure it is within the valid range [0, 1].
-     * 
      *
      * @param event The ActionEvent triggered by setting the restitution value.
      */

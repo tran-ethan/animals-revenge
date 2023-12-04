@@ -10,12 +10,11 @@ import edu.vanier.animals_revenge.models.Level;
 import edu.vanier.animals_revenge.models.Obstacle;
 import edu.vanier.animals_revenge.models.ObstacleComponent;
 import edu.vanier.animals_revenge.util.Type;
-import edu.vanier.animals_revenge.windows.Parameters;
+import edu.vanier.animals_revenge.windows.ParameterWindow;
 import edu.vanier.animals_revenge.windows.Selection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -27,21 +26,16 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.*;
+
 import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 public class SimulatorController implements UIController {
-
-    @FXML
-    private Button BTNCustom;
-
-    @FXML
-    private Button SelectProjectileBTN;
 
     @FXML
     private StackPane circle1;
@@ -91,9 +85,6 @@ public class SimulatorController implements UIController {
     @FXML
     private TextField frictionTextField;
 
-    @FXML
-    private Button btnParameters;
-
     private static StackPane selected;
 
     private static int size = 1;
@@ -114,7 +105,6 @@ public class SimulatorController implements UIController {
 
     @Override
     public void init() {
-
         // Get image patterns to fill obstacle shapes on right hand panel
         ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick.png"));
         ImagePattern long_brick = new ImagePattern(new Image("/assets/textures/long_brick.png"));
@@ -126,7 +116,28 @@ public class SimulatorController implements UIController {
         // Set selected obstacle to (top-left) square brick
         selected = square1;
 
-        // Set fill for obstacle shapes
+        // Set fill textures for obstacle shapes for each row of shapes
+        fillPattern(brick, long_brick, square1, circle1, rectangle1);
+        fillPattern(dirt, long_dirt, square2, circle2, rectangle2);
+        fillPattern(wood, long_wood, square3, circle3, rectangle3);
+
+        logger.info("Initializing SimulatorController...");
+
+        // Spawn in objects
+        reset();
+        spawn("launcher", 0, MainApp.HEIGHT - 80);
+    }
+
+    /**
+     * Fills specified shapes with provided image patterns.
+     *
+     * @param brick      The ImagePattern to fill square and circle shapes.
+     * @param long_brick The ImagePattern to fill rectangle shapes.
+     * @param square1    The StackPane containing square shapes to be filled.
+     * @param circle1    The StackPane containing circle shapes to be filled.
+     * @param rectangle1 The StackPane containing rectangle shapes to be filled.
+     */
+    private void fillPattern(ImagePattern brick, ImagePattern long_brick, StackPane square1, StackPane circle1, StackPane rectangle1) {
         square1.getChildren().
                 stream()
                 .map(node -> (Rectangle) node)
@@ -142,47 +153,6 @@ public class SimulatorController implements UIController {
                 .map(node -> (Rectangle) node)
                 .findFirst()
                 .ifPresent(rectangle -> rectangle.setFill(long_brick));
-        square2.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(dirt));
-        circle2.getChildren().
-                stream()
-                .map(node -> (Circle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(dirt));
-        rectangle2.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(long_dirt));
-        square3.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(wood));
-        circle3.getChildren().
-                stream()
-                .map(node -> (Circle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(wood));
-        rectangle3.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(long_wood));
-
-        logger.info("Initializing SimulatorController...");
-
-        btnParameters.setOnAction((event) -> {
-            Parameters parameters = new Parameters();
-            parameters.show();
-        });
-
-        // Spawn in objects
-        reset();
-        spawn("launcher", 0, MainApp.HEIGHT - 80);
     }
 
     /**
@@ -191,6 +161,16 @@ public class SimulatorController implements UIController {
     @FXML
     public void goHome() {
         MainApp.loadFXML("Home.fxml", new HomeController());
+    }
+
+    /**
+     * Opens a parameter window in response to the user clicking on Parameters button.
+     * This method creates an instance of the parameters window and displays it.
+     */
+    @FXML
+    public void openParameters() {
+        ParameterWindow parameterWindow = new ParameterWindow();
+        parameterWindow.show();
     }
 
     /**
@@ -206,6 +186,18 @@ public class SimulatorController implements UIController {
         } else {
             playPauseIcon.setGlyphName("PLAY");
         }
+        getGameWorld()
+                .getEntities()
+                .stream()
+                .filter(e -> e.isType(Type.PROJECTILE) || e.isType(Type.OBSTACLE))
+                .forEach(e -> {
+                    var physics = e.getComponent(PhysicsComponent.class);
+                    if (physics.isPaused()) {
+                        physics.resume();
+                    } else {
+                        physics.pause();
+                    }
+                });
     }
 
     /**
@@ -244,6 +236,14 @@ public class SimulatorController implements UIController {
         HelpButtonController help = new HelpButtonController();
     }
 
+    /**
+     * Saves the current game state into a custom level file.
+     * <p>
+     * This method creates a new Level object, populates it with obstacles from the game world,
+     * and saves it to a user-specified location using Java serialization.
+     *
+     * @param event The ActionEvent triggering the save operation.
+     */
     @FXML
     void save(ActionEvent event) {
         Level level = new Level();
@@ -298,7 +298,6 @@ public class SimulatorController implements UIController {
 
         Selection sel = new Selection();
         sel.show();
-
     }
 
     public static void throwWarning(String warningMessage, String title) {
