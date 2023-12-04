@@ -1,7 +1,6 @@
 package edu.vanier.animals_revenge.util;
 
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.dsl.components.DraggableComponent;
 import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -52,7 +51,6 @@ public class Factory implements EntityFactory {
                 .view(imgPath)
                 .bbox(new HitBox(BoundingShape.circle(16)))
                 .with(physics)
-                .with(new DraggableComponent())
                 .build();
     }
 
@@ -88,7 +86,6 @@ public class Factory implements EntityFactory {
                     .view(imgView)
                     .bbox(new HitBox(BoundingShape.box(imageWidth, imageHeight)))
                     .with(physics)
-                    .with(new DraggableComponent())
                     .build();
         } else {
 
@@ -102,7 +99,6 @@ public class Factory implements EntityFactory {
                     .view(rect)
                     .bbox(new HitBox(BoundingShape.box(rect.getWidth(), rect.getHeight())))
                     .with(physics)
-                    .with(new DraggableComponent())
                     .build();
         }
 
@@ -142,16 +138,15 @@ public class Factory implements EntityFactory {
                     .view(circle)
                     .bbox(new HitBox(BoundingShape.circle(radius)))
                     .with(physics)
-                    .with(new DraggableComponent())
                     .build();
         } else {
 
             Circle circle = new Circle(radius);
 
-            //converts the string color into a paint object
+            // Converts the string color into a paint object
             circle.setFill(Color.web(data.get("colour")));
 
-            //center radius in the middle
+            // Center radius in the middle
             circle.setTranslateX(radius);
             circle.setTranslateY(radius);
 
@@ -161,7 +156,6 @@ public class Factory implements EntityFactory {
                     .view(circle)
                     .bbox(new HitBox(BoundingShape.circle(radius)))
                     .with(physics)
-                    .with(new DraggableComponent())
                     .build();
 
         }
@@ -255,11 +249,14 @@ public class Factory implements EntityFactory {
 
     @Spawns("launcher")
     public Entity spawnLauncher(SpawnData data) {
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.STATIC);
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.LAUNCHER)
                 .zIndex(100)
                 .view("cannon.png")
+                .with(physics)
                 .build();
     }
     

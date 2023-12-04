@@ -31,6 +31,51 @@ public class ProjectileSelectionController {
 
     FileChooser fileChooser = new FileChooser();
 
+
+    /**
+     * Initializes the controller. Populates the customObjectRow HBox with
+     * existing custom projectiles during initialization.
+     */
+    @FXML
+    public void initialize() {
+
+        customObjectRow.getChildren().clear();
+
+        ProjectileConverterController conv = new ProjectileConverterController();
+
+        customProjectiles = CustomProjectileController.customProjectiles;
+
+        //adding the custom projectiles to the hbox
+        //normal rectangle works but custom projectile doesn't
+        for (int i = 0; i < customProjectiles.size(); i++) {
+
+            Shape projectile = conv.createShapeFromProjectile(customProjectiles.get(i));
+
+            final int finalIndex = i;
+
+            projectile.setOnMouseEntered(
+                    (event) -> projectile.setStroke(borderColor));
+
+            projectile.setOnMouseExited(
+                    (event) -> {
+
+                        projectile.setStroke(Color.TRANSPARENT);
+
+                    });
+
+            projectile.setOnMouseClicked((event) -> {
+
+                finalProjectile = customProjectiles.get(finalIndex);
+
+                ((Stage) projectile.getScene().getWindow()).close();
+
+            });
+
+            customObjectRow.getChildren().add(projectile);
+        }
+
+    }
+
     /**
      * Handles the user's request to import a new projectile and display it in
      * the UI.
@@ -71,54 +116,6 @@ public class ProjectileSelectionController {
 
         } else {
             SimulatorController.throwWarning("No File Chosen!", "File Error");
-        }
-
-    }
-
-    /**
-     * Initializes the controller. Populates the customObjectRow HBox with
-     * existing custom projectiles during initialization.
-     */
-    @FXML
-    public void initialize() {
-
-        customObjectRow.getChildren().clear();
-
-        ProjectileConverterController conv = new ProjectileConverterController();
-
-        customProjectiles = CustomProjectileController.customProjectiles;
-
-        //adding the custom projectiles to the hbox
-        //normal rectangle works but custom projectile doesn't
-        for (int i = 0; i < customProjectiles.size(); i++) {
-
-            Shape projectile = conv.createShapeFromProjectile(customProjectiles.get(i));
-
-            final int finalIndex = i;
-
-            projectile.setOnMouseEntered(
-                    (event) -> {
-
-                        projectile.setStroke(borderColor);
-
-                    });
-
-            projectile.setOnMouseExited(
-                    (event) -> {
-
-                        projectile.setStroke(Color.TRANSPARENT);
-
-                    });
-
-            projectile.setOnMouseClicked((event) -> {
-
-                finalProjectile = customProjectiles.get(finalIndex);
-
-                ((Stage) projectile.getScene().getWindow()).close();
-
-            });
-
-            customObjectRow.getChildren().add(projectile);
         }
 
     }
