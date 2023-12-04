@@ -296,34 +296,38 @@ public class SimulatorController implements UIController {
     void onTextChange(ActionEvent event) {
         Object source = event.getSource();
 
-        if (source == sizeTextField) {
-            double value = Double.parseDouble(sizeTextField.getText().trim());
-            if (value >= sizeSlider.getMin() && value <= sizeSlider.getMax()) {
-                sizeSlider.setValue(value);
-                size = (int) value;
-            } else {
-                throwWarning("Size has to be between 1 and 5.", "Invalid size");
-            }
-        } else if (source == rotateTextField) {
-            double value = Double.parseDouble(rotateTextField.getText().trim());
-            rotateSlider.setValue(value);
-            if (value >= rotateSlider.getMin() && value <= rotateSlider.getMax()) {
+        try {
+            if (source == sizeTextField) {
+                double value = Double.parseDouble(sizeTextField.getText().trim());
+                if (value >= sizeSlider.getMin() && value <= sizeSlider.getMax()) {
+                    sizeSlider.setValue(value);
+                    size = (int) value;
+                } else {
+                    throwWarning("Size has to be between 1 and 5.", "Invalid size");
+                }
+            } else if (source == rotateTextField) {
+                double value = Double.parseDouble(rotateTextField.getText().trim());
                 rotateSlider.setValue(value);
-                rotate = (int) value;
-            } else {
-                throwWarning("Angle of rotation has to be between 0 and 360.", "Invalid rotation angle");
-            }
-        } else if (source == frictionTextField) {
-            // Round value entered in the text field to the nearest 0.1 unit tick
-            double value = Math.round(Double.parseDouble(frictionTextField.getText().trim()) * 10.0) / 10.0;
+                if (value >= rotateSlider.getMin() && value <= rotateSlider.getMax()) {
+                    rotateSlider.setValue(value);
+                    rotate = (int) value;
+                } else {
+                    throwWarning("Angle of rotation has to be between 0 and 360.", "Invalid rotation angle");
+                }
+            } else if (source == frictionTextField) {
+                // Round value entered in the text field to the nearest 0.1 unit tick
+                double value = Math.round(Double.parseDouble(frictionTextField.getText().trim()) * 10.0) / 10.0;
 
-            if (value >= frictionSlider.getMin() && value <= frictionSlider.getMax()) {
-                frictionTextField.setText(String.format("%.1f", value));
-                frictionSlider.setValue(value);
-                friction = (float) value;
-            } else {
-                throwWarning("Friction coefficient must be between 0 and 1.", "Invalid friction coefficient");
+                if (value >= frictionSlider.getMin() && value <= frictionSlider.getMax()) {
+                    frictionTextField.setText(String.format("%.1f", value));
+                    frictionSlider.setValue(value);
+                    friction = (float) value;
+                } else {
+                    throwWarning("Friction coefficient must be between 0 and 1.", "Invalid friction coefficient");
+                }
             }
+        } catch (NumberFormatException e) {
+            throwWarning("Value must be a number.", "Invalid number");
         }
     }
 
