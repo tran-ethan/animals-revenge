@@ -90,7 +90,8 @@ public class SimulatorController implements UIController {
 
     private Level level;
 
-    public SimulatorController() {}
+    public SimulatorController() {
+    }
 
     public SimulatorController(Level level) {
         this.level = level;
@@ -151,6 +152,15 @@ public class SimulatorController implements UIController {
     public void goHome() {
         // Remove launcher from game world when user returns to home screen
         FXGL.getGameWorld().getSingleton(Type.LAUNCHER).removeFromWorld();
+        try {
+            FXGL.getGameWorld().getSingleton(Type.PROJECTILE).removeFromWorld();
+        } catch (Exception e) {
+        }
+        try {
+            FXGL.getGameWorld().getSingleton(Type.CUSTOM_PROJECTILE).removeFromWorld();
+        } catch (Exception e) {
+        }
+        MainApp.animateVector(0, FXGL.getAppHeight());
         MainApp.loadFXML("Home.fxml", new HomeController());
     }
 
@@ -188,8 +198,9 @@ public class SimulatorController implements UIController {
     /**
      * Saves the current game state into a custom level file.
      * <p>
-     * This method creates a new Level object, populates it with obstacles from the game world,
-     * and saves it to a user-specified location using Java serialization.
+     * This method creates a new Level object, populates it with obstacles from
+     * the game world, and saves it to a user-specified location using Java
+     * serialization.
      */
     @FXML
     void save() {
@@ -253,7 +264,7 @@ public class SimulatorController implements UIController {
      * Displays a warning message in an alert dialog box.
      *
      * @param warningMessage The message to be displayed as a warning.
-     * @param title          The title for the warning alert dialog box.
+     * @param title The title for the warning alert dialog box.
      */
     public static void throwWarning(String warningMessage, String title) {
         Alert alert = new Alert(Alert.AlertType.WARNING);

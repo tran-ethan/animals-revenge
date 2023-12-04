@@ -1,11 +1,9 @@
 package edu.vanier.animals_revenge.controllers;
 
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.util.SavedSetting;
-import edu.vanier.animals_revenge.util.Type;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -15,8 +13,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
-
-import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 /**
@@ -111,10 +107,12 @@ public class SettingsController implements UIController {
             }
             case "Music2" -> {
                 settings.setMusic("music2.mp3");
+
             }
             case "Music3" -> {
                 settings.setMusic("music3.mp3");
             }
+
         }
     }
 
@@ -139,7 +137,7 @@ public class SettingsController implements UIController {
         chbMusic.setConverter(new StringConverter<String>() {
             @Override
             public String toString(String s) {
-                return (s == null) ? transformWord(settings.getMusic()) : s;
+                return (s == null) ? transformWord(settings.getMusicType()) : s;
             }
 
             @Override

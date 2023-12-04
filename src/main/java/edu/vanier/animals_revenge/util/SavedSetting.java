@@ -7,6 +7,7 @@ import java.util.prefs.Preferences;
 import javafx.scene.paint.Color;
 
 /**
+ * Saves the Setting data with Preferences class.
  *
  * @author Anton Lisunov
  */
@@ -27,28 +28,38 @@ public class SavedSetting {
     private static Sound sound;
     private static Music music;
 
+    /**
+     * Initializes application settings. It saves and keeps settings
+     */
     public SavedSetting() {
-        // Load settings from preferences
-        loadSettings();
 
-        sound = FXGL.getAssetLoader().loadSound("brick_hit.wav");
-        music = FXGL.getAssetLoader().loadMusic(musicType);
-        music.getAudio$fxgl_core().setLooping(true);
+        loadSettings();
+        System.out.println(musicVolume);
 
     }
 
+    /**
+     * Load setting. If value is absent, uses default value(second value).
+     *
+     */
     private void loadSettings() {
         Preferences preferences = Preferences.userNodeForPackage(SavedSetting.class);
-
-        // Load volume setting
-        // Default is 0.1 if not found
-        this.soundVolume = preferences.getDouble(KEY_SOUND_VOLUME, 0.2);
-        this.musicVolume = preferences.getDouble(KEY_MUSIC_VOLUME, 0.2);
+        this.soundVolume = preferences.getDouble(KEY_SOUND_VOLUME, 0.0);
+        this.musicVolume = preferences.getDouble(KEY_MUSIC_VOLUME, 0.0);
         this.musicType = preferences.get(KEY_TYPE, "music1.mp3");
         this.color = stringToColor(preferences.get(KEY_COLOR, "0 0 0"));
-        this.background = preferences.get(KEY_BACKGROUND, "");
+        this.background = preferences.get(KEY_BACKGROUND, "sky.png");
+        sound = FXGL.getAssetLoader().loadSound("brick_hit.wav");
+        music = FXGL.getAssetLoader().loadMusic(musicType);
+        setMusicVolume(musicVolume);
+        setSoundVolume(soundVolume);
+        
     }
 
+    /**
+     * Uploaded updated savings to preferences.
+     *
+     */
     private void saveSettings() {
         Preferences preferences = Preferences.userNodeForPackage(SavedSetting.class);
 
@@ -99,9 +110,13 @@ public class SavedSetting {
         music.getAudio$fxgl_core().setVolume(musicVolume);
         saveSettings();
     }
-    
-    public String getMusic() {
+
+    public String getMusicType() {
         return musicType;
+    }
+
+    public Music getMusic() {
+        return music;
     }
 
     public void setMusic(String musicType) {
@@ -137,7 +152,8 @@ public class SavedSetting {
     }
 
     public void playMusic() {
-        music.getAudio$fxgl_core().play();
+        FXGL.getAudioPlayer().loopMusic(getMusic());
+        setMusicVolume(musicVolume);
     }
 
     public void stopMusic() {

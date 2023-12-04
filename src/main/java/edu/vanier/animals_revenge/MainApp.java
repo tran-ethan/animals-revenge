@@ -3,9 +3,6 @@ package edu.vanier.animals_revenge;
 import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.audio.AudioType;
-import com.almasb.fxgl.audio.Music;
-import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
@@ -134,9 +131,16 @@ public class MainApp extends GameApplication {
         // Load music
         //Music backgroundMusic = FXGL.getAssetLoader().loadMusic("music1.mp3");
         // Start playing the music in a loop
-        // FXGL.getAudioPlayer().loopMusic(backgroundMusic);
-        getSettings().setGlobalSoundVolume(0.0);
-        getSettings().setGlobalMusicVolume(0.0);
+        settings = new SavedSetting();
+        getSettings().setGlobalSoundVolume(settings.getSoundVolume());
+        getSettings().setGlobalMusicVolume(settings.getMusicVolume());
+        
+        FXGL.getAudioPlayer().loopMusic(settings.getMusic());
+       
+        
+        //FXGL.getAudioPlayer().loopMusic(settings.getMusic());
+        
+        
         
     }
 
@@ -174,7 +178,7 @@ public class MainApp extends GameApplication {
 
         initScreenBounds();
 
-        settings = new SavedSetting();
+        
         spawn("background", new SpawnData().put("background", settings.getBackground()).put("color", settings.getColor()));
         settings.playMusic();
     }
