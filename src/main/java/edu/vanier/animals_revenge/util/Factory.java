@@ -265,6 +265,17 @@ public class Factory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a launcher entity based on provided SpawnData. This method
+     * creates a background entity with specified dimensions (width and height)
+     * as provided by the SpawnData. Background is a static entity used as
+     * decoration in the game to cover the scene.Removes old background whenever
+     * new is created
+     *
+     * @param data The SpawnData containing information about the background to
+     * be spawned, including image and color.
+     * @return The Entity representing the spawned background.
+     */
     @Spawns("launcher")
     public Entity spawnLauncher(SpawnData data) {
         if (launcher != null) {

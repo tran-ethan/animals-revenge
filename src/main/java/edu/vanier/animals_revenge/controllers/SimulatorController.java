@@ -11,8 +11,8 @@ import edu.vanier.animals_revenge.models.Level;
 import edu.vanier.animals_revenge.models.Obstacle;
 import edu.vanier.animals_revenge.models.ObstacleComponent;
 import edu.vanier.animals_revenge.util.Type;
-import edu.vanier.animals_revenge.windows.Parameters;
-import edu.vanier.animals_revenge.windows.Selection;
+import edu.vanier.animals_revenge.windows.ParameterWindow;
+import edu.vanier.animals_revenge.windows.SelectionWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -92,7 +92,7 @@ public class SimulatorController implements UIController {
     private TextField frictionTextField;
 
     @FXML
-    private Button btnParameters;
+    private Button btnParameters = new Button();
 
     private static StackPane selected;
 
@@ -177,7 +177,7 @@ public class SimulatorController implements UIController {
         logger.info("Initializing SimulatorController...");
 
         btnParameters.setOnAction((event) -> {
-            Parameters parameters = new Parameters();
+            ParameterWindow parameters = new ParameterWindow();
             parameters.show();
         });
 
@@ -188,6 +188,9 @@ public class SimulatorController implements UIController {
         }
 
     }
+    
+    @FXML
+    public void openParameters() {}
 
     /**
      * Switches the scene to the home screen.
@@ -250,7 +253,7 @@ public class SimulatorController implements UIController {
 
     @FXML
     void openAboutPage(ActionEvent event) {
-        HelpButtonController help = new HelpButtonController();
+        //HelpButtonController help = new HelpButtonController();
     }
 
     @FXML
@@ -306,7 +309,7 @@ public class SimulatorController implements UIController {
     void selectProjectile(ActionEvent event) throws Exception {
         System.out.println(CustomProjectileController.customProjectiles);
 
-        Selection sel = new Selection();
+        SelectionWindow sel = new SelectionWindow();
         sel.show();
 
     }
