@@ -73,9 +73,6 @@ public class SimulatorController implements UIController {
     private StackPane rectangle3;
 
     @FXML
-    private FontAwesomeIconView playPauseIcon;
-
-    @FXML
     private Slider rotateSlider;
 
     @FXML
@@ -178,33 +175,6 @@ public class SimulatorController implements UIController {
     }
 
     /**
-     * Toggles the icon between play and pause states by changing the glyph name
-     * of the playPauseIcon based on its current state.
-     * If the current glyph name is "PLAY", it switches it to "PAUSE"; otherwise, it sets it to "PLAY".
-     * This method visually changes the icon representing play/pause functionality.
-     */
-    @FXML
-    public void playPause() {
-        if (playPauseIcon.getGlyphName().equals("PLAY")) {
-            playPauseIcon.setGlyphName("PAUSE");
-        } else {
-            playPauseIcon.setGlyphName("PLAY");
-        }
-        getGameWorld()
-                .getEntities()
-                .stream()
-                .filter(e -> e.isType(Type.PROJECTILE) || e.isType(Type.OBSTACLE))
-                .forEach(e -> {
-                    var physics = e.getComponent(PhysicsComponent.class);
-                    if (physics.isPaused()) {
-                        physics.resume();
-                    } else {
-                        physics.pause();
-                    }
-                });
-    }
-
-    /**
      * Resets the game world by removing all obstacles and projectiles from the game world,
      * and reloads the level by spawning obstacles.
      * If a level is loaded (not null), it will spawn obstacles according to the level's configuration.
@@ -235,21 +205,14 @@ public class SimulatorController implements UIController {
         MainApp.launch();
     }
 
-    @FXML
-    void openAboutPage(ActionEvent event) {
-        HelpButtonController help = new HelpButtonController();
-    }
-
     /**
      * Saves the current game state into a custom level file.
      * <p>
      * This method creates a new Level object, populates it with obstacles from the game world,
      * and saves it to a user-specified location using Java serialization.
-     *
-     * @param event The ActionEvent triggering the save operation.
      */
     @FXML
-    void save(ActionEvent event) {
+    void save() {
         Level level = new Level();
 
         // Loop through all obstacles in the game world and add them to level
@@ -305,6 +268,12 @@ public class SimulatorController implements UIController {
         sel.show();
     }
 
+    /**
+     * Displays a warning message in an alert dialog box.
+     *
+     * @param warningMessage The message to be displayed as a warning.
+     * @param title          The title for the warning alert dialog box.
+     */
     public static void throwWarning(String warningMessage, String title) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText(warningMessage);

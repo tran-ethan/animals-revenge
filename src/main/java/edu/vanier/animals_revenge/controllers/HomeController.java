@@ -7,8 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,8 +19,6 @@ import java.io.ObjectInputStream;
  *
  */
 public class HomeController implements UIController {
-
-    private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @FXML
     private Button btnNew;
@@ -40,9 +36,7 @@ public class HomeController implements UIController {
      * Initializes the MainAppController.
      */
     @Override
-    public void init() {
-        logger.info("Initializing MainAppController...");
-    }
+    public void init() {}
     
     /**
      * Switches scenes based on the button clicked.

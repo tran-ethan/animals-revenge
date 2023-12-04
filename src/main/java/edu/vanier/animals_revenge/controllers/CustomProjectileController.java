@@ -624,20 +624,6 @@ public class CustomProjectileController implements UIController, Serializable {
     }
 
     /**
-     * Handles the action event for opening the about page. Creates an instance
-     * of the HelpButtonController to display information about the application.
-     *
-     * @param event The ActionEvent triggered by clicking the open about page
-     * button.
-     */
-    @FXML
-    void OpenAboutPage(ActionEvent event) {
-
-        HelpButtonController help = new HelpButtonController();
-
-    }
-
-    /**
      * Initializes the controller. Adjusts initial positions and appearance
      * settings for square and circle shapes, sets up listeners for sliders, and
      * configures default values for restitution, density, and size. This method

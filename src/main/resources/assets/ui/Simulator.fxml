@@ -32,11 +32,6 @@
                         <FontAwesomeIconView glyphName="ROCKET" size="17" />
                      </graphic>
                   </Button>
-                  <Button layoutX="10.0" layoutY="30.0" mnemonicParsing="false" onAction="#playPause" stylesheets="@/assets/ui/css/styles.css">
-                     <graphic>
-                        <FontAwesomeIconView fx:id="playPauseIcon" glyphName="PAUSE" size="17" />
-                     </graphic>
-                  </Button>
                   <Button layoutX="52.0" layoutY="30.0" mnemonicParsing="false" onAction="#reset" stylesheets="@/assets/ui/css/styles.css">
                      <graphic>
                         <FontAwesomeIconView glyphName="ROTATE_LEFT" size="17" />
@@ -48,17 +43,7 @@
                      </graphic>
                   </Button>
                   <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#selectProjectile" stylesheets="@/assets/ui/css/styles.css" text="Select projectile">
-                     <graphic>
-                        <FontAwesomeIconView glyphName="PLUS" />
-                     </graphic>
-                  </Button>
-                  <Button layoutX="1225.0" layoutY="30.0" mnemonicParsing="false" onAction="#openAboutPage" stylesheets="@/assets/ui/css/styles.css" text="About">
-                     <graphic>
-                        <FontAwesomeIconView glyphName="QUESTION" size="17" />
-                     </graphic>
-                  </Button>
-                  <Pane prefHeight="64.0" prefWidth="154.0" />
+                  <Button mnemonicParsing="false" onAction="#selectProjectile" prefHeight="62.0" prefWidth="155.0" stylesheets="@/assets/ui/css/styles.css" text="Projectile" />
                   <Button mnemonicParsing="false" onAction="#openParameters" prefHeight="62.0" prefWidth="155.0" stylesheets="@/assets/ui/css/styles.css" text="Parameters" />
                </children>
                <HBox.margin>
