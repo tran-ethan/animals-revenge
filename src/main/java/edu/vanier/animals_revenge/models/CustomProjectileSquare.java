@@ -1,23 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.models;
 
 /**
  * This class represents a custom projectile
  * shaped as a square in the application. 
  *
- * @author macke
- * @version 1.0
+ * @author Mackenzie Rouchdy
  */
 public class CustomProjectileSquare extends CustomProjectile {
 
     private String fillProperty;
 
-    private double ShapeWidth;
+    private double shapeWidth;
 
-    private double ShapeHeight;
+    private double shapeHeight;
 
     private String colour;
 
@@ -38,8 +33,8 @@ public class CustomProjectileSquare extends CustomProjectile {
     public CustomProjectileSquare(double width, double height, String colour, String imgPath, float restitution, float density) {
         super(restitution, density);
 
-        this.ShapeWidth = width;
-        this.ShapeHeight = height;
+        this.shapeWidth = width;
+        this.shapeHeight = height;
         this.colour = colour;
         this.imgPath = imgPath;
         this.fillProperty = imgPath;
@@ -61,8 +56,8 @@ public class CustomProjectileSquare extends CustomProjectile {
 
         super(restitution, density);
 
-        this.ShapeWidth = width;
-        this.ShapeHeight = height;
+        this.shapeWidth = width;
+        this.shapeHeight = height;
         this.colour = colour;
         this.fillProperty = colour;
 
@@ -94,7 +89,7 @@ public class CustomProjectileSquare extends CustomProjectile {
      * @return The horizontal size of the square projectile.
      */
     public double getShapeWidth() {
-        return ShapeWidth;
+        return shapeWidth;
     }
 
     /**
@@ -103,7 +98,7 @@ public class CustomProjectileSquare extends CustomProjectile {
      * @param ShapeWidth The new horizontal size for the square projectile.
      */
     public void setShapeWidth(double ShapeWidth) {
-        this.ShapeWidth = ShapeWidth;
+        this.shapeWidth = ShapeWidth;
     }
 
     /**
@@ -112,7 +107,7 @@ public class CustomProjectileSquare extends CustomProjectile {
      * @return The vertical size of the square projectile.
      */
     public double getShapeHeight() {
-        return ShapeHeight;
+        return shapeHeight;
     }
 
     /**
@@ -121,7 +116,7 @@ public class CustomProjectileSquare extends CustomProjectile {
      * @param ShapeHeight The new vertical size for the square projectile.
      */
     public void setShapeHeight(double ShapeHeight) {
-        this.ShapeHeight = ShapeHeight;
+        this.shapeHeight = ShapeHeight;
     }
 
     /**
@@ -130,7 +125,7 @@ public class CustomProjectileSquare extends CustomProjectile {
      * @param width The new vertical size for the square projectile.
      */
     public void setWidth(double width) {
-        this.ShapeWidth = width;
+        this.shapeWidth = width;
     }
 
     /**
@@ -139,7 +134,7 @@ public class CustomProjectileSquare extends CustomProjectile {
      * @param height The new vertical size for the square projectile.
      */
     public void setHeight(double height) {
-        this.ShapeHeight = height;
+        this.shapeHeight = height;
     }
 
     /**
@@ -154,7 +149,7 @@ public class CustomProjectileSquare extends CustomProjectile {
     /**
      * Sets the colour property of the square projectile
      *
-     * @param colour
+     * @param colour the colour of the projectile
      */
 
     public void setColour(String colour) {
@@ -163,8 +158,6 @@ public class CustomProjectileSquare extends CustomProjectile {
 
     /**
      * Retrieves the image path property of the square projectile.
-     *
-     * 
      */
     public String getImgPath() {
         return imgPath;
@@ -173,8 +166,6 @@ public class CustomProjectileSquare extends CustomProjectile {
     
     /**
      * Sets the image path property of the square projectile.
-     *
-     * 
      */
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;

@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * controller handles UI events and interactions related to custom projectiles,
  * allowing users to create, modify, and save custom projectile configurations.
  *
- * @author Mackenzie
+ * @author Mackenzie Rouchdy
  */
 public class CustomProjectileController implements UIController, Serializable {
 
@@ -187,33 +187,32 @@ public class CustomProjectileController implements UIController, Serializable {
      */
     @FXML
     void SaveAsChanges(ActionEvent event) throws MalformedURLException {
-
         if (txtFieldRestitution.getText().trim().equals("")) {
             restitution = 0.5f;
         }
 
         if (txtFieldDensity.getText().trim().equals("")) {
-            // if the text field is empty
+            // If the text field is empty
             density = 0.3f;
         }
 
         Shape shape = null;
         Color color;
 
-        //if there is not shape visible than there is nothing to save and thus should not open the save dialogue
+        // If there is no shape visible than there is nothing to save and thus should not open the save dialogue
         if (squareCopy.isVisible() || circleCopy.isVisible()) {
-            //Opens file chooser 
+            // Opens file chooser
             FileChooser saveLocation = new FileChooser();
 
-            //sets initial file name
+            // Sets initial file name
             saveLocation.setInitialFileName("myCustomProjectile" + FILE_EXTENSION);
 
-            //Provides the extension(s) the file will have
+            // Provides the extension(s) the file will have
             saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Custom Projectile", "*proj"), new FileChooser.ExtensionFilter("All Files", "*"));
 
             SaveFile = saveLocation.showSaveDialog(null);
 
-            //if no file is selected
+            // If no file is selected
             if (SaveFile != null) {
 
                 if (squareCopy.isVisible()) {
@@ -224,7 +223,7 @@ public class CustomProjectileController implements UIController, Serializable {
 
                 color = ColourPicker.getValue();
 
-                //creates a projecitle based on the parameters the user has selected
+                // Creates a projectile based on the parameters the user has selected
                 if (shape == squareCopy) {
 
                     double width = squareCopy.getWidth();
@@ -306,7 +305,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
         } catch (IOException | ClassNotFoundException e) {
             SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Deserialization Error");
-
         }
         return null;
     }
@@ -372,7 +370,7 @@ public class CustomProjectileController implements UIController, Serializable {
      */
     void setSize() {
 
-        double newSize = Double.valueOf(txtFieldSize.getText());
+        double newSize = Double.parseDouble(txtFieldSize.getText());
 
         if (squareCopy.isVisible()) {
             squareCopy.setWidth(newSize);
@@ -395,15 +393,15 @@ public class CustomProjectileController implements UIController, Serializable {
     void setRestitution(ActionEvent event) {
 
         //only valid values are between 0 and 1
-        if (Float.valueOf(txtFieldRestitution.getText()) > 1.00 || Float.valueOf(txtFieldRestitution.getText()) < 0) {
+        if (Float.parseFloat(txtFieldRestitution.getText()) > 1.00 || Float.parseFloat(txtFieldRestitution.getText()) < 0) {
             txtFieldRestitution.setText("" + 1.00);
 
-            restitution = Float.valueOf(txtFieldRestitution.getText());
+            restitution = Float.parseFloat(txtFieldRestitution.getText());
 
             restitutionSlider.setValue(restitution);
 
         } else {
-            restitution = Float.valueOf(txtFieldRestitution.getText());
+            restitution = Float.parseFloat(txtFieldRestitution.getText());
             restitutionSlider.setValue(restitution);
         }
 
@@ -419,10 +417,10 @@ public class CustomProjectileController implements UIController, Serializable {
     void setDensity(ActionEvent event) {
 
         //only valid values are between 0 and 1
-        if (Float.valueOf(txtFieldDensity.getText()) > 1.00 || Float.valueOf(txtFieldDensity.getText()) < 0) {
+        if (Float.parseFloat(txtFieldDensity.getText()) > 1.00 || Float.parseFloat(txtFieldDensity.getText()) < 0) {
             txtFieldDensity.setText("" + 1.00);
 
-            density = Float.valueOf(txtFieldDensity.getText());
+            density = Float.parseFloat(txtFieldDensity.getText());
 
             densitySlider.setValue(density);
 
@@ -434,7 +432,7 @@ public class CustomProjectileController implements UIController, Serializable {
             densitySlider.setValue(density);
 
         } else {
-            density = Float.valueOf(txtFieldDensity.getText());
+            density = Float.parseFloat(txtFieldDensity.getText());
             densitySlider.setValue(density);
         }
 
@@ -659,7 +657,7 @@ public class CustomProjectileController implements UIController, Serializable {
     @Override
     public void init() {
 
-        //make scaling up the square look a bit nicer
+        // Make scaling up the square look a bit nicer
         squareCopy.setTranslateX(squareCopy.getX() + squareCopy.getWidth() / 2);
         squareCopy.setTranslateY(squareCopy.getY() + squareCopy.getHeight() / 2);
 

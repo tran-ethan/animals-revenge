@@ -11,7 +11,7 @@ import edu.vanier.animals_revenge.models.Obstacle;
 import edu.vanier.animals_revenge.models.ObstacleComponent;
 import edu.vanier.animals_revenge.util.Type;
 import edu.vanier.animals_revenge.windows.ParameterWindow;
-import edu.vanier.animals_revenge.windows.Selection;
+import edu.vanier.animals_revenge.windows.SelectionWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,8 +24,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -95,8 +93,6 @@ public class SimulatorController implements UIController {
 
     private Level level;
 
-    private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
-
     public SimulatorController() {}
 
     public SimulatorController(Level level) {
@@ -120,8 +116,6 @@ public class SimulatorController implements UIController {
         fillPattern(brick, long_brick, square1, circle1, rectangle1);
         fillPattern(dirt, long_dirt, square2, circle2, rectangle2);
         fillPattern(wood, long_wood, square3, circle3, rectangle3);
-
-        logger.info("Initializing SimulatorController...");
 
         // Spawn in objects
         reset();
@@ -292,11 +286,12 @@ public class SimulatorController implements UIController {
         }
     }
 
+    /**
+     * Opens the projectile selection window
+     */
     @FXML
-    void selectProjectile(ActionEvent event) throws Exception {
-        System.out.println(CustomProjectileController.customProjectiles);
-
-        Selection sel = new Selection();
+    void selectProjectile() {
+        SelectionWindow sel = new SelectionWindow();
         sel.show();
     }
 

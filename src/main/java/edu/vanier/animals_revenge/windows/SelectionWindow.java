@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Mackenzie Rouchdy
  */
-public class Selection extends Stage {
+public class SelectionWindow extends Stage {
 
     /**
      * Constructs a new {@code Selection} object. It initializes the stage by
@@ -31,7 +31,7 @@ public class Selection extends Stage {
      * setting the {@link ProjectileSelectionController} as the controller, and
      * creating the scene.
      */
-    public Selection() {
+    public SelectionWindow() {
 
         Pane root = null;
 
@@ -42,7 +42,7 @@ public class Selection extends Stage {
         try {
             root = loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(Selection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelectionWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         Scene scene = new Scene(root);

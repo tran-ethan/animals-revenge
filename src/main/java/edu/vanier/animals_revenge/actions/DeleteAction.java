@@ -10,7 +10,9 @@ import static com.almasb.fxgl.dsl.FXGL.getInput;
 
 /**
  * The DeleteAction class represents an action that allows deleting specific obstacles or projectiles
- * While action is active, it will delete any objects in range of the mouse
+ * While action is active, it will delete any objects in range of the mouse.
+ *
+ * @author Ethan Tran
  */
 public class DeleteAction extends UserAction {
 

@@ -24,8 +24,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -46,8 +44,6 @@ public class MainApp extends GameApplication {
     private static Rectangle vector;
 
     private static Polygon vectorHead;
-
-    private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     private static UI ui;
 

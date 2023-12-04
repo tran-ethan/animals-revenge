@@ -8,6 +8,8 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 /**
  * The LaunchAction class represents an action that animates an initial velocity vector
  * in the simulator screen.
+ *
+ * @author Ethan Tran
  */
 public class LaunchAction extends UserAction {
 

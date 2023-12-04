@@ -18,16 +18,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author 2246745
+ * @author Anton Lisunov
  */
 public class SettingsController implements UIController {
-
-    private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @FXML
     private ChoiceBox<String> chbScene;
@@ -58,10 +54,6 @@ public class SettingsController implements UIController {
     
     @Override
     public void init() {
-        logger.info("Initializing Settings...");
-        
-       
-        
         
         chbScene.getItems().addAll(dataBackground);
         chbScene.setOnAction(this::getBackground);

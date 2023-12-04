@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.models;
 
 import java.io.Serializable;
@@ -10,8 +6,7 @@ import javafx.scene.shape.Shape;
 /**
  * This class represents a custom projectile in the application.
  *
- * @author macke
- * @version 1.0
+ * @author Mackenzie Rouchdy
  */
 public class CustomProjectile extends Shape implements Serializable {
 
