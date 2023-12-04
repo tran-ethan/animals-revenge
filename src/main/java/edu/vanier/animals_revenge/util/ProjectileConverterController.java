@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.util;
 
 import edu.vanier.animals_revenge.models.CustomProjectile;
@@ -15,11 +11,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 /**
- *
- * @author macke
- * 
  * The purpose of this class is to convert a Custom Projectile object to one of its subclasses in order
  * to access the property-specific fields in those classes
+ *
+ * @author Mackenzie Rouchdy
  */
 public class ProjectileConverterController {
 

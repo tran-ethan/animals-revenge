@@ -48,18 +48,18 @@
                      </graphic>
                   </Button>
                   <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#selectProjectile" text="Select projectile" stylesheets="@/assets/ui/css/styles.css">
+                  <Button mnemonicParsing="false" onAction="#selectProjectile" stylesheets="@/assets/ui/css/styles.css" text="Select projectile">
                      <graphic>
                         <FontAwesomeIconView glyphName="PLUS" />
                      </graphic>
                   </Button>
-                  <Button layoutX="1225.0" layoutY="30.0" mnemonicParsing="false" onAction="#openAboutPage" text="About" stylesheets="@/assets/ui/css/styles.css">
+                  <Button layoutX="1225.0" layoutY="30.0" mnemonicParsing="false" onAction="#openAboutPage" stylesheets="@/assets/ui/css/styles.css" text="About">
                      <graphic>
                         <FontAwesomeIconView glyphName="QUESTION" size="17" />
                      </graphic>
                   </Button>
                   <Pane prefHeight="64.0" prefWidth="154.0" />
-                  <Button fx:id="btnParameters" mnemonicParsing="false" prefHeight="62.0" prefWidth="155.0" stylesheets="@/assets/ui/css/styles.css" text="Parameters" />
+                  <Button mnemonicParsing="false" onAction="#openParameters" prefHeight="62.0" prefWidth="155.0" stylesheets="@/assets/ui/css/styles.css" text="Parameters" />
                </children>
                <HBox.margin>
                   <Insets left="20.0" right="20.0" />

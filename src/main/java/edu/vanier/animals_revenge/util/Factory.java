@@ -23,6 +23,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+/**
+ * Entity factory used for spawning objects into the game world, such as projectiles, launchers,
+ * and obstacles.
+ *
+ * @author Ethan Tran
+ * @author Mackenzie Rouchdy
+ * @author Zachary Tremblay
+ */
 public class Factory implements EntityFactory {
 
     //currently only used for the default projectile
