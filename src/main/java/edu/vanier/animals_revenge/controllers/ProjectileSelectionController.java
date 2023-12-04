@@ -18,8 +18,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
+ * This class is responsible for handling the functionality related to the
+ * selection and import of custom projectiles in the application.
+ *
  *
  * @author macke
+ * @version 1.0
  */
 public class ProjectileSelectionController {
 
@@ -37,6 +41,12 @@ public class ProjectileSelectionController {
 
     FileChooser fileChooser = new FileChooser();
 
+    /**
+     * Handles the user's request to import a new projectile and display it in
+     * the UI.
+     *
+     * @param event The ActionEvent triggered by clicking the import button.
+     */
     @FXML
     void importProjectile(ActionEvent event) {
 
@@ -54,24 +64,17 @@ public class ProjectileSelectionController {
             Shape projectile = new ProjectileConverterController().createShapeFromProjectile(p);
 
             projectile.setOnMouseEntered(
-                    
                     (mouseEvent) -> projectile.setStroke(borderColor)
-            
             );
-            
-            
+
             projectile.setOnMouseExited(
-                    
                     (mouseEvent) -> projectile.setStroke(Color.TRANSPARENT)
-            
             );
             projectile.setOnMouseClicked((mouseEvent) -> {
-                
-                
+
                 ProjectileSelectionController.finalProjectile = p;
                 ((Stage) projectile.getScene().getWindow()).close();
-                
-                
+
             });
 
             customObjectRow.getChildren().add(projectile);
@@ -82,11 +85,15 @@ public class ProjectileSelectionController {
 
     }
 
+    /**
+     * Initializes the controller. Populates the customObjectRow HBox with
+     * existing custom projectiles during initialization.
+     */
     @FXML
     public void initialize() {
 
         customObjectRow.getChildren().clear();
-        
+
         ProjectileConverterController conv = new ProjectileConverterController();
 
         customProjectiles = CustomProjectileController.customProjectiles;
@@ -116,7 +123,7 @@ public class ProjectileSelectionController {
             projectile.setOnMouseClicked((event) -> {
 
                 finalProjectile = customProjectiles.get(finalIndex);
-                
+
                 ((Stage) projectile.getScene().getWindow()).close();
 
             });
@@ -126,10 +133,21 @@ public class ProjectileSelectionController {
 
     }
 
+    /**
+     * Retrieves the final selected custom projectile.
+     *
+     * @return The final selected custom projectile.
+     */
     public static CustomProjectile getFinalProjectile() {
         return finalProjectile;
     }
 
+    /**
+     * Sets the final selected custom projectile.
+     *
+     * @param finalProjectile The custom projectile to set as the final
+     * selection.
+     */
     public static void setFinalProjectile(CustomProjectile finalProjectile) {
         ProjectileSelectionController.finalProjectile = finalProjectile;
     }
