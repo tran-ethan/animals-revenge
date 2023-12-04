@@ -175,7 +175,7 @@ public class CustomProjectileController implements UIController, Serializable {
      * @throws MalformedURLException If there is an issue with the provided URL.
      */
     @FXML
-    void SaveAsChanges(ActionEvent event) throws MalformedURLException {
+    void saveAsChanges(ActionEvent event) throws MalformedURLException {
         if (txtFieldRestitution.getText().trim().equals("")) {
             restitution = 0.5f;
         }

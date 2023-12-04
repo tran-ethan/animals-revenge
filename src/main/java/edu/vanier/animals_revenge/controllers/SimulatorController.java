@@ -2,7 +2,6 @@ package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.ui.UIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -16,7 +15,6 @@ import edu.vanier.animals_revenge.windows.SelectionWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -26,22 +24,16 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.stream.Collectors;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 public class SimulatorController implements UIController {
-
-    @FXML
-    private Button BTNCustom;
-
-    @FXML
-    private Button SelectProjectileBTN;
 
     @FXML
     private StackPane circle1;
@@ -71,9 +63,6 @@ public class SimulatorController implements UIController {
     private StackPane rectangle3;
 
     @FXML
-    private FontAwesomeIconView playPauseIcon;
-
-    @FXML
     private Slider rotateSlider;
 
     @FXML
@@ -91,23 +80,17 @@ public class SimulatorController implements UIController {
     @FXML
     private TextField frictionTextField;
 
-    @FXML
-    private Button btnParameters = new Button();
-
     private static StackPane selected;
 
     private static int size = 1;
 
-    private static int rotate = 1;
+    private static int rotate = 0;
 
     private static float friction = 0.5f;
 
     private Level level;
 
-    private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
-
-    public SimulatorController() {
-    }
+    public SimulatorController() {}
 
     public SimulatorController(Level level) {
         this.level = level;
@@ -128,94 +111,47 @@ public class SimulatorController implements UIController {
         selected = square1;
 
         // Set fill for obstacle shapes
-        square1.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(brick));
-        circle1.getChildren().
-                stream()
-                .map(node -> (Circle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(brick));
-        rectangle1.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(long_brick));
-        square2.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(dirt));
-        circle2.getChildren().
-                stream()
-                .map(node -> (Circle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(dirt));
-        rectangle2.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(long_dirt));
-        square3.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(wood));
-        circle3.getChildren().
-                stream()
-                .map(node -> (Circle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(wood));
-        rectangle3.getChildren().
-                stream()
-                .map(node -> (Rectangle) node)
-                .findFirst()
-                .ifPresent(rectangle -> rectangle.setFill(long_wood));
+        fillPatterns(brick, long_brick, square1, circle1, rectangle1);
+        fillPatterns(dirt, long_dirt, square2, circle2, rectangle2);
+        fillPatterns(wood, long_wood, square3, circle3, rectangle3);
 
-        logger.info("Initializing SimulatorController...");
-
-        btnParameters.setOnAction((event) -> {
-            ParameterWindow parameters = new ParameterWindow();
-            parameters.show();
-        });
-
-        // Spawn in objects
+        // Reset world and spawn in objects
         spawn("launcher", 0, MainApp.HEIGHT - 80);
-        if (level != null) {
-            level.spawnObstacles();
-        }
-
+        reset();
     }
-    
+
+    private void fillPatterns(ImagePattern brick, ImagePattern long_brick, StackPane square, StackPane circle, StackPane rectangle) {
+        square.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(e -> e.setFill(brick));
+        circle.getChildren().
+                stream()
+                .map(node -> (Circle) node)
+                .findFirst()
+                .ifPresent(e -> e.setFill(brick));
+        rectangle.getChildren().
+                stream()
+                .map(node -> (Rectangle) node)
+                .findFirst()
+                .ifPresent(e -> e.setFill(long_brick));
+    }
+
     @FXML
-    public void openParameters() {}
+    public void openParameters() {
+        ParameterWindow parameters = new ParameterWindow();
+        parameters.show();
+    }
 
     /**
      * Switches the scene to the home screen.
      */
     @FXML
     public void goHome() {
-        spawn("launcher", 0, 0); //removes launcher
-        reset();                 //removes obstacles
+        // Remove launcher from game world when user returns to home screen
+        FXGL.getGameWorld().getSingleton(Type.LAUNCHER).removeFromWorld();
         MainApp.loadFXML("Home.fxml", new HomeController());
-    }
-
-    /**
-     * Toggles the icon between play and pause states by changing the glyph name
-     * of the playPauseIcon based on its current state. If the current glyph
-     * name is "PLAY", it switches it to "PAUSE"; otherwise, it sets it to
-     * "PLAY". This method visually changes the icon representing play/pause
-     * functionality.
-     */
-    @FXML
-    public void playPause() {
-        if (playPauseIcon.getGlyphName().equals("PLAY")) {
-            playPauseIcon.setGlyphName("PAUSE");
-        } else {
-            playPauseIcon.setGlyphName("PLAY");
-        }
     }
 
     /**
@@ -231,9 +167,7 @@ public class SimulatorController implements UIController {
                 .getEntities()
                 .stream()
                 .filter(entity
-                        -> entity.isType(Type.OBSTACLE)
-                || entity.isType(Type.CUSTOM_PROJECTILE)
-                || entity.isType(Type.PROJECTILE)
+                        -> entity.isType(Type.OBSTACLE) || entity.isType(Type.PROJECTILE)
                 ).toList()) {
             e.removeFromWorld();
         }
@@ -251,13 +185,14 @@ public class SimulatorController implements UIController {
         MainApp.launch();
     }
 
+    /**
+     * Saves the current game state into a custom level file.
+     * <p>
+     * This method creates a new Level object, populates it with obstacles from the game world,
+     * and saves it to a user-specified location using Java serialization.
+     */
     @FXML
-    void openAboutPage(ActionEvent event) {
-        //HelpButtonController help = new HelpButtonController();
-    }
-
-    @FXML
-    void save(ActionEvent event) {
+    void save() {
         Level level = new Level();
 
         // Loop through all obstacles in the game world and add them to level
@@ -306,7 +241,7 @@ public class SimulatorController implements UIController {
     }
 
     @FXML
-    void selectProjectile(ActionEvent event) throws Exception {
+    void selectProjectile() {
         System.out.println(CustomProjectileController.customProjectiles);
 
         SelectionWindow sel = new SelectionWindow();
@@ -314,6 +249,12 @@ public class SimulatorController implements UIController {
 
     }
 
+    /**
+     * Displays a warning message in an alert dialog box.
+     *
+     * @param warningMessage The message to be displayed as a warning.
+     * @param title          The title for the warning alert dialog box.
+     */
     public static void throwWarning(String warningMessage, String title) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setContentText(warningMessage);

@@ -57,16 +57,11 @@ public class ProjectileSelectionController {
                     (event) -> projectile.setStroke(borderColor));
 
             projectile.setOnMouseExited(
-                    (event) -> {
-
-                        projectile.setStroke(Color.TRANSPARENT);
-
-                    });
+                    (event) -> projectile.setStroke(Color.TRANSPARENT));
 
             projectile.setOnMouseClicked((event) -> {
 
                 finalProjectile = customProjectiles.get(finalIndex);
-
                 ((Stage) projectile.getScene().getWindow()).close();
 
             });
@@ -80,10 +75,9 @@ public class ProjectileSelectionController {
      * Handles the user's request to import a new projectile and display it in
      * the UI.
      *
-     * @param event The ActionEvent triggered by clicking the import button.
      */
     @FXML
-    void importProjectile(ActionEvent event) {
+    void importProjectile() {
 
         File selectedFile = fileChooser.showOpenDialog(null);
 

@@ -27,7 +27,6 @@ import javafx.scene.shape.Shape;
 public class Factory implements EntityFactory {
 
     private static Entity background;
-    private static Entity launcher;
 
     //currently only used for the default projectile
     @Spawns("projectile")
@@ -41,8 +40,6 @@ public class Factory implements EntityFactory {
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
 
         String imgPath = data.get("img");
-
-        Image image = new Image("file:" + imgPath);
 
         return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
@@ -64,9 +61,6 @@ public class Factory implements EntityFactory {
         physics.setBodyType(BodyType.DYNAMIC);
         physics.setFixtureDef(new FixtureDef().density(data.get("density")).restitution(data.get("restitution")));
         physics.setOnPhysicsInitialized(() -> physics.setLinearVelocity(vX * 3, vY * 3));
-
-        float density = data.get("density");
-        float restitution = data.get("restitution");
 
         if (data.get("img") != "null") {
 
@@ -274,23 +268,16 @@ public class Factory implements EntityFactory {
      *
      * @param data The SpawnData containing information about the background to
      * be spawned, including image and color.
-     * @return The Entity representing the spawned background.
+     * @return the Entity representing the spawned background.
      */
     @Spawns("launcher")
     public Entity spawnLauncher(SpawnData data) {
-        if (launcher != null) {
-            FXGL.getGameWorld().removeEntity(launcher);
-            launcher = null;
-            return new Entity();
-        }
-
-        launcher = FXGL.entityBuilder(data)
+        return FXGL.entityBuilder(data)
                 .at(data.getX(), data.getY())
                 .type(Type.LAUNCHER)
                 .zIndex(100)
                 .view("cannon.png")
                 .build();
-        return launcher;
     }
 
     /**

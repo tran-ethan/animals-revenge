@@ -102,7 +102,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="137.0" prefWidth="279.0">
                      <children>
-                        <Button fx:id="btnSave" layoutX="267.0" layoutY="42.0" mnemonicParsing="false" onAction="#SaveAsChanges" style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10;" text="Save" AnchorPane.rightAnchor="14.0" />
+                        <Button fx:id="btnSave" layoutX="267.0" layoutY="42.0" mnemonicParsing="false" onAction="#saveAsChanges" style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10;" text="Save" AnchorPane.rightAnchor="14.0" />
                         <Button fx:id="btnImg" layoutX="241.0" layoutY="1.0" mnemonicParsing="false" onAction="#chooseImg" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Add Image" AnchorPane.rightAnchor="6.5" />
                      </children>
                   </AnchorPane>

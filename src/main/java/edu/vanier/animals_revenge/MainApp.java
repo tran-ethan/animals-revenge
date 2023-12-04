@@ -12,6 +12,7 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.InputModifier;
 import com.almasb.fxgl.ui.UI;
 import com.almasb.fxgl.ui.UIController;
+import edu.vanier.animals_revenge.actions.DeleteAction;
 import edu.vanier.animals_revenge.actions.DragAction;
 import edu.vanier.animals_revenge.actions.LaunchAction;
 import edu.vanier.animals_revenge.controllers.HomeController;
@@ -23,6 +24,7 @@ import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.util.Factory;
 import edu.vanier.animals_revenge.windows.GraphWindow;
 import javafx.scene.Cursor;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -81,7 +83,7 @@ public class MainApp extends GameApplication {
     @Override
     protected void initPhysics() {
        
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, WALL) {
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, WALL) {
 
             // order of types is the same as passed into the constructor
             @Override
@@ -89,7 +91,8 @@ public class MainApp extends GameApplication {
                settings.playSound();
             }
         });
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PROJECTILE) {
+
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PROJECTILE) {
 
             @Override
             protected void onCollisionBegin(Entity obstacle, Entity projectile) {
@@ -97,7 +100,8 @@ public class MainApp extends GameApplication {
 
             }
         });
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, CUSTOM_PROJECTILE) {
+
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, CUSTOM_PROJECTILE) {
 
             @Override
             protected void onCollisionBegin(Entity obstacle, Entity custom_projectile) {
@@ -105,7 +109,8 @@ public class MainApp extends GameApplication {
 
             }
         });
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, OBSTACLE) {
+
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, OBSTACLE) {
 
             @Override
             protected void onCollisionBegin(Entity obstacle1, Entity obstacle2) {
@@ -113,7 +118,8 @@ public class MainApp extends GameApplication {
 
             }
         });
-        FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PLATFORM) {
+
+        getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PLATFORM) {
 
             @Override
             protected void onCollisionBegin(Entity obstacle1, Entity obstacle2) {
@@ -134,17 +140,6 @@ public class MainApp extends GameApplication {
         
     }
 
-    /**
-     * Initializes the UI layer which is built on top of the game world layer.
-     * Called once when the app is first launched to render the home screen.
-     */
-    /*@Override
-    protected void onPreInit() {
-        getSettings().setGlobalSoundVolume(0.1);
-        getSettings().setGlobalMusicVolume(0.1);
-
-        loopBGM("music1.mp3");
-    }*/
     /**
      * Initializes the UI layer which is built on top of the game world layer.
      * Called once when the app is first launched to render the home screen.
@@ -211,14 +206,16 @@ public class MainApp extends GameApplication {
      * Maps the corresponding user inputs to their respective actions.
      * <p>
      * Right-click and hold from launcher to create initial velocity vector.
-     * Left-click and hold to drag obstacles around. Hold CTRL + Left-click and
-     * hold to create new obstacle.
+     * Left-click and hold to drag obstacles around.
+     * Hold CTRL + Left-click and to create new obstacle (hold to drag).
+     * Hold BACK_SPACE and move cursor around to delete obstacles at cursor position
      */
     @Override
     protected void initInput() {
         getInput().addAction(new LaunchAction(), MouseButton.SECONDARY);
         getInput().addAction(new DragAction(false), MouseButton.PRIMARY);
         getInput().addAction(new DragAction(true), MouseButton.PRIMARY, InputModifier.CTRL);
+        getInput().addAction(new DeleteAction(), KeyCode.BACK_SPACE);
     }
 
     /**
@@ -332,7 +329,7 @@ public class MainApp extends GameApplication {
         } else {
             e = spawn("projectile", new SpawnData(0, MainApp.HEIGHT - 32).put("vX", vX)
                     .put("vY", vY)
-                    .put("img", "soccer.png"));
+                    .put("img", "red.png"));
 
         }
 
