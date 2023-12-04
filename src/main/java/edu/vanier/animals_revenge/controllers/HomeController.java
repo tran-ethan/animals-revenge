@@ -1,19 +1,12 @@
 package edu.vanier.animals_revenge.controllers;
 
-import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.MainApp;
-import edu.vanier.animals_revenge.models.CustomProjectileCircle;
-import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.models.Level;
-import edu.vanier.animals_revenge.models.Obstacle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,8 +20,6 @@ import java.io.ObjectInputStream;
  */
 public class HomeController implements UIController {
 
-    private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
-
     @FXML
     private Button btnNew;
     
@@ -41,11 +32,17 @@ public class HomeController implements UIController {
     @FXML
     private Button btnSettings;
 
+    /**
+     * Initializes the MainAppController.
+     */
     @Override
-    public void init() {
-        logger.info("Initializing MainAppController...");
-    }
+    public void init() {}
     
+    /**
+     * Switches scenes based on the button clicked.
+     *
+     * @param event The ActionEvent triggered when a button is clicked.
+     */
     @FXML 
     void switchScenes(ActionEvent event) {
         Object clickButton = event.getSource();
@@ -70,7 +67,7 @@ public class HomeController implements UIController {
                 }
             }
         } else if (clickButton == btnCustomProjectile) {
-            MainApp.loadFXML("1CustomProjectile.fxml", new CustomProjectileController());
+            MainApp.loadFXML("CustomProjectile.fxml", new CustomProjectileController());
         } else if (clickButton == btnSettings) {
             MainApp.loadFXML("Setting.fxml", new SettingsController());
         }

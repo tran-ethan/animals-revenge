@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.ui.UIController;
@@ -33,97 +29,179 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
+ * Controller class for managing custom projectiles in the application. This
+ * controller handles UI events and interactions related to custom projectiles,
+ * allowing users to create, modify, and save custom projectile configurations.
  *
- * @author macke
+ * @author Mackenzie Rouchdy
  */
 public class CustomProjectileController implements UIController, Serializable {
 
+    /**
+     * Provides a list of custom projectiles.
+     */
     public static ArrayList<CustomProjectile> customProjectiles = new ArrayList<>();
 
-    private final static Logger logger = LoggerFactory.getLogger(SimulatorController.class);
-
+    /**
+     * Provides the file extension that is used when serializing a custom
+     * projectile.
+     */
     private final static String FILE_EXTENSION = ".proj";
 
-    public static final Color borderColor = Color.RED;
-    
+    /**
+     * Provides a border colour.
+     */
+    public static final Color borderColour = Color.RED;
+
+    /**
+     * Provides access to the density property.
+     */
     private static float density;
+
+    /**
+     * Provides access to the restitution property.
+     */
     private static float restitution;
 
-    private boolean savedChangesHasAlreadyPressed = false;
-
+    /**
+     * Declaration of the user's selected image file.
+     */
     File SelectedImgFile;
 
+    /**
+     * Declaration of the user's saved file.
+     */
     File SaveFile;
 
+    /**
+     * Declaration of the custom square projectile.
+     */
     CustomProjectileSquare squareProjectile;
 
+    /**
+     * Declaration of the custom circle projectile.
+     */
     CustomProjectileCircle circleProjectile;
 
-    //The shape copies the shapes that appear in the middle of the screen
+    /**
+     * JavaFX density slider component used to change the density property of a
+     * custom projectile.
+     */
+    @FXML
+    private Slider densitySlider;
+
+    /**
+     * JavaFX restitution slider component used to change the restitution
+     * property of a custom projectile.
+     */
+    @FXML
+    private Slider restitutionSlider;
+
+    /**
+     * JavaFX Circle component that serves as a copy of a circle shape appearing
+     * in the middle of the screen.
+     */
     @FXML
     private Circle circleCopy;
 
+    /**
+     * JavaFX Rectangle component that serves as a copy of a square shape
+     * appearing in the middle of the screen.
+     */
     @FXML
     private Rectangle squareCopy;
 
+    /**
+     * JavaFX BorderPane component that serves as a container for other UI
+     * elements.
+     */
     @FXML
     private BorderPane borderPane;
 
+    /**
+     * JavaFX ColorPicker component used for selecting colors.
+     */
     @FXML
     private ColorPicker ColourPicker;
 
+    /**
+     * JavaFX Circle component that represents a circle shape in the middle of
+     * the screen.
+     */
     @FXML
     private Circle circle;
 
+    /**
+     * JavaFX Rectangle component that represents a square shape in the middle
+     * of the screen.
+     */
     @FXML
     private Rectangle square;
 
+    /**
+     * JavaFX TextField component used for displaying and editing the density
+     * property of a projectile.
+     */
     @FXML
     private TextField txtFieldDensity;
 
+    /**
+     * JavaFX TextField component used for displaying and editing the
+     * restitution property of a projectile.
+     */
     @FXML
     private TextField txtFieldRestitution;
 
+    /**
+     * JavaFX Slider component used for adjusting the size property of a
+     * projectile.
+     */
     @FXML
     private Slider sizeSlider;
 
+    /**
+     * JavaFX TextField component used for displaying and editing the size
+     * property of a projectile.
+     */
     @FXML
-    private TextField sliderTextValue;
+    private TextField txtFieldSize;
 
-    //Save as button event handler (located in the file menu button)
+    /**
+     * Handles the action event for saving changes.
+     *
+     * @param event The ActionEvent triggered by the save button.
+     * @throws MalformedURLException If there is an issue with the provided URL.
+     */
     @FXML
     void SaveAsChanges(ActionEvent event) throws MalformedURLException {
-
         if (txtFieldRestitution.getText().trim().equals("")) {
             restitution = 0.5f;
         }
 
         if (txtFieldDensity.getText().trim().equals("")) {
-            // if the text field is empty
+            // If the text field is empty
             density = 0.3f;
         }
 
         Shape shape = null;
         Color color;
 
-        //if there is not shape visible than there is nothing to save and thus should not open the save dialogue
+        // If there is no shape visible than there is nothing to save and thus should not open the save dialogue
         if (squareCopy.isVisible() || circleCopy.isVisible()) {
-            //Opens file chooser 
+            // Opens file chooser
             FileChooser saveLocation = new FileChooser();
 
-            //sets initial file name
+            // Sets initial file name
             saveLocation.setInitialFileName("myCustomProjectile" + FILE_EXTENSION);
 
-            //Provides the extension(s) the file will have
+            // Provides the extension(s) the file will have
             saveLocation.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Custom Projectile", "*proj"), new FileChooser.ExtensionFilter("All Files", "*"));
 
             SaveFile = saveLocation.showSaveDialog(null);
 
-            //if no file is selected
+            // If no file is selected
             if (SaveFile != null) {
 
                 if (squareCopy.isVisible()) {
@@ -134,7 +212,7 @@ public class CustomProjectileController implements UIController, Serializable {
 
                 color = ColourPicker.getValue();
 
-                //creates a projecitle based on the parameters the user has selected
+                // Creates a projectile based on the parameters the user has selected
                 if (shape == squareCopy) {
 
                     double width = squareCopy.getWidth();
@@ -152,8 +230,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     customProjectiles.add(squareProjectile);
 
-                    savedChangesHasAlreadyPressed = true;
-
                 } else if (shape == circleCopy) {
 
                     double radius = circleCopy.getRadius();
@@ -168,7 +244,6 @@ public class CustomProjectileController implements UIController, Serializable {
 
                     serialize(SaveFile.getAbsolutePath(), circleProjectile);
                     customProjectiles.add(circleProjectile);
-                    savedChangesHasAlreadyPressed = true;
 
                 }
             }
@@ -178,6 +253,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Method to serialize a custom projectile and save it to a file.
+     *
+     * @param filePath The path to the file where the custom projectile will be
+     * saved.
+     * @param p The custom projectile object to be serialized.
+     */
     public static void serialize(String filePath, CustomProjectile p) {
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
             o.writeObject(p);
@@ -187,6 +269,13 @@ public class CustomProjectileController implements UIController, Serializable {
 
     }
 
+    /**
+     * Method to deserialize a custom projectile from a file.
+     *
+     * @param filePath The path to the file from which the custom projectile
+     * will be deserialized.
+     * @return The deserialized custom projectile object.
+     */
     public static CustomProjectile deserialize(String filePath) {
 
         try (ObjectInputStream o = new ObjectInputStream(new FileInputStream(filePath))) {
@@ -205,11 +294,17 @@ public class CustomProjectileController implements UIController, Serializable {
 
         } catch (IOException | ClassNotFoundException e) {
             SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Deserialization Error");
-
         }
         return null;
     }
 
+    /**
+     * Handles the action event for choosing a colour. Sets the fill colour of
+     * the visible shape (either square or circle) to the selected color from
+     * the ColourPicker.
+     *
+     * @param event The ActionEvent triggered by the color selection.
+     */
     @FXML
     void chooseColor(ActionEvent event) {
 
@@ -222,6 +317,13 @@ public class CustomProjectileController implements UIController, Serializable {
         }
     }
 
+    /**
+     * Handles the event when the user chooses an image file. It opens a
+     * FileChooser dialog with filters for selecting image files. After selecting a file, it loads the chosen
+     * image and sets the ImagePattern for the visible shape (either square or circle).
+     *
+     * @param event The ActionEvent triggered
+     */
     @FXML
     void chooseImg(ActionEvent event) {
         // Create a FileChooser
@@ -250,12 +352,14 @@ public class CustomProjectileController implements UIController, Serializable {
         }
     }
 
-    @FXML
-    void setSize(MouseEvent event) {
+    /**
+     * Handles the action event for choosing an image. Opens a file chooser
+     * dialog to select an image file, and sets the fill of
+     * the visible shape (either square or circle).
+     */
+    void setSize() {
 
-        sliderTextValue.setText("" + sizeSlider.getValue());
-
-        double newSize = sizeSlider.getValue();
+        double newSize = Double.parseDouble(txtFieldSize.getText());
 
         if (squareCopy.isVisible()) {
             squareCopy.setWidth(newSize);
@@ -264,43 +368,147 @@ public class CustomProjectileController implements UIController, Serializable {
             circleCopy.setRadius(newSize);
         }
 
+        sizeSlider.setValue(newSize);
+
     }
 
+    /**
+     * Handles the action event for setting the restitution value. Validates the
+     * input from the text field to ensure it is within the valid range [0, 1].
+     *
+     * @param event The ActionEvent triggered by setting the restitution value.
+     */
     @FXML
     void setRestitution(ActionEvent event) {
 
         //only valid values are between 0 and 1
-        if (Float.valueOf(txtFieldRestitution.getText()) > 1.00 || Float.valueOf(txtFieldRestitution.getText()) < 0) {
+        if (Float.parseFloat(txtFieldRestitution.getText()) > 1.00 || Float.parseFloat(txtFieldRestitution.getText()) < 0) {
             txtFieldRestitution.setText("" + 1.00);
 
-            restitution = Float.valueOf(txtFieldRestitution.getText());
+            restitution = Float.parseFloat(txtFieldRestitution.getText());
+
+            restitutionSlider.setValue(restitution);
 
         } else {
-            restitution = Float.valueOf(txtFieldRestitution.getText());
+            restitution = Float.parseFloat(txtFieldRestitution.getText());
+            restitutionSlider.setValue(restitution);
         }
 
     }
 
+    /**
+     * Handles the action event for setting the density value. Validates the
+     * input from the text field to ensure it is within the valid range [0, 1].
+     *
+     * @param event The ActionEvent triggered by setting the density value.
+     */
     @FXML
     void setDensity(ActionEvent event) {
 
         //only valid values are between 0 and 1
-        if (Float.valueOf(txtFieldDensity.getText()) > 1.00 || Float.valueOf(txtFieldDensity.getText()) < 0) {
+        if (Float.parseFloat(txtFieldDensity.getText()) > 1.00 || Float.parseFloat(txtFieldDensity.getText()) < 0) {
             txtFieldDensity.setText("" + 1.00);
 
-            density = Float.valueOf(txtFieldDensity.getText());
+            density = Float.parseFloat(txtFieldDensity.getText());
+
+            densitySlider.setValue(density);
 
         } else if (txtFieldDensity.getText().trim().equals("")) {
             // if the text field is empty
 
+            //default value
             density = 0.3f;
+            densitySlider.setValue(density);
 
         } else {
-            density = Float.valueOf(txtFieldDensity.getText());
+            density = Float.parseFloat(txtFieldDensity.getText());
+            densitySlider.setValue(density);
         }
 
     }
 
+    /**
+     * Handles the change event for sliders. Updates the corresponding
+     * attributes and text fields based on the slider that triggered the event.
+     * Handles densitySlider, restitutionSlider, and sizeSlider separately.
+     *
+     * @param event The MouseEvent triggered by changing the sliders.
+     */
+    @FXML
+    void onSliderChange(MouseEvent event) {
+        Object source = event.getSource();
+
+        if (source == densitySlider) {
+
+            try {
+
+                density = (float) densitySlider.getValue();
+
+                txtFieldDensity.setText(String.format("%.0f", densitySlider.getValue()));
+
+            } catch (Exception e) {
+
+                System.out.println("error");
+
+            }
+
+        } else if (source == restitutionSlider) {
+
+            restitution = (float) restitutionSlider.getValue();
+
+            txtFieldRestitution.setText(String.format("%.0f", restitutionSlider.getValue()));
+
+        } else if (source == sizeSlider) {
+
+            txtFieldSize.setText(String.format("%.0f", sizeSlider.getValue()));
+
+            double newSize = sizeSlider.getValue();
+
+            if (squareCopy.isVisible()) {
+                squareCopy.setWidth(newSize);
+                squareCopy.setHeight(newSize);
+            } else if (circleCopy.isVisible()) {
+                circleCopy.setRadius(newSize);
+            }
+
+        }
+
+    }
+
+    /**
+     * Handles the change event for text fields. Calls corresponding methods to
+     * handle the change based on the text field that triggered the event.
+     * Handles txtFieldDensity, txtFieldRestitution, and txtFieldSize
+     * separately.
+     *
+     * @param event The ActionEvent triggered by changing the text fields.
+     */
+    @FXML
+    void onTextChange(ActionEvent event) {
+        Object source = event.getSource();
+
+        if (source == txtFieldDensity) {
+
+            setDensity(event);
+
+        } else if (source == txtFieldRestitution) {
+
+            setRestitution(event);
+
+        } else if (source == txtFieldSize) {
+
+            setSize();
+        }
+
+    }
+
+    /**
+     * Handles the mouse click event for the circle. Sets focus on the
+     * circle, updates UI elements, and sets the initial values for
+     * size, density, and restitution.
+     *
+     * @param event The MouseEvent triggered by clicking on the circle shape.
+     */
     @FXML
     void circleClick(MouseEvent event) {
 
@@ -311,6 +519,8 @@ public class CustomProjectileController implements UIController, Serializable {
 
         sizeSlider.setMax(90);
         sizeSlider.setMin(5);
+        txtFieldSize.setPromptText("");
+        txtFieldSize.setPromptText("5-90");
 
         sizeSlider.setValue(circle.getRadius());
         circleCopy.setRadius(circle.getRadius());
@@ -321,6 +531,13 @@ public class CustomProjectileController implements UIController, Serializable {
         circleCopy.setVisible(true);
     }
 
+    /**
+     * Handles the mouse click event for the rectangle. Sets focus on the
+     * square, updates UI elements, and sets the initial values for
+     * size, density, and restitution.
+     *
+     * @param event The MouseEvent triggered by clicking on the square shape.
+     */
     @FXML
     void rectClick(MouseEvent event) {
 
@@ -331,6 +548,8 @@ public class CustomProjectileController implements UIController, Serializable {
 
         sizeSlider.setMax(150);
         sizeSlider.setMin(5);
+        txtFieldSize.setPromptText("");
+        txtFieldSize.setPromptText("5-150");
 
         sizeSlider.setValue(square.getHeight());
         System.out.println(square.getHeight());
@@ -343,50 +562,83 @@ public class CustomProjectileController implements UIController, Serializable {
         circleCopy.setVisible(false);
     }
 
+    /**
+     * Handles the mouse hover enter event for the circle shape. Sets the
+     * circle's stroke color to the specified border color.
+     *
+     * @param event The MouseEvent triggered by entering the hover area of the
+     * circle.
+     */
     @FXML
     void circleHoverEnter(MouseEvent event) {
-        circle.setStroke(borderColor);
+        circle.setStroke(borderColour);
     }
 
+    /**
+     * Handles the mouse hover exit event for the circle shape. Resets the
+     * circle's stroke color to black.
+     *
+     * @param event The MouseEvent triggered by exiting the hover area of the
+     * circle.
+     */
     @FXML
     void circleHoverExit(MouseEvent event) {
         circle.setStroke(Color.BLACK);
     }
 
+    /**
+     * Handles the mouse hover enter event for the square shape. Sets the
+     * square's stroke color to the specified border color.
+     *
+     * @param event The MouseEvent triggered by entering the hover area of the
+     * square.
+     */
     @FXML
     void squareHoverEnter(MouseEvent event) {
-        square.setStroke(borderColor);
+        square.setStroke(borderColour);
     }
 
+    /**
+     * Handles the mouse hover Exit event for the square shape. Resets the
+     * square's stroke color to black.
+     *
+     * @param event The MouseEvent triggered by exiting the hover area of the
+     * square.
+     */
     @FXML
     void squareHoverExit(MouseEvent event) {
         square.setStroke(Color.BLACK);
     }
 
+    /**
+     * Handles the action event for returning to the home page. Loads the
+     * "Home.fxml" file and initializes the HomeController to display the home
+     * page.
+     *
+     * @param event The ActionEvent triggered by clicking the return home
+     * button.
+     */
     @FXML
     void returnHome(ActionEvent event) {
         MainApp.loadFXML("Home.fxml", new HomeController());
     }
 
-    @FXML
-    void OpenAboutPage(ActionEvent event) {
-
-        HelpButtonController help = new HelpButtonController();
-
-    }
-
+    /**
+     * Initializes the controller. Adjusts initial positions and appearance
+     * settings for square and circle shapes, sets up listeners for sliders, and
+     * configures default values for restitution, density, and size. This method
+     * is typically called once when the controller is first initialized.
+     */
     @Override
     public void init() {
 
-        //make scaling up the square look a bit nicer
+        // Make scaling up the square look a bit nicer
         squareCopy.setTranslateX(squareCopy.getX() + squareCopy.getWidth() / 2);
         squareCopy.setTranslateY(squareCopy.getY() + squareCopy.getHeight() / 2);
 
-        sliderTextValue.setDisable(true);
-
         sizeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-            sliderTextValue.setText(String.format("%.2f", newValue));
+            txtFieldSize.setText(String.format("%.2f", newValue));
 
             if (squareCopy.isVisible()) {
 
@@ -396,6 +648,22 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (circleCopy.isVisible()) {
                 circleCopy.setRadius(sizeSlider.getValue());
             }
+
+        });
+
+        restitutionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            txtFieldRestitution.setText(String.format("%.2f", newValue));
+
+            restitution = (float) restitutionSlider.getValue();
+
+        });
+
+        densitySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            txtFieldDensity.setText(String.format("%.2f", newValue));
+
+            density = (float) densitySlider.getValue();
 
         });
         double centerX = MainApp.WIDTH / 2;

@@ -7,6 +7,8 @@ import com.almasb.fxgl.entity.component.Component;
  * that act as obstacles in the game.
  * This component holds an Obstacle object associated with the entity, and is used as
  * a wrapper class for the Obstacle class for loading levels.
+ *
+ * @author Ethan Tran
  */
 public class ObstacleComponent extends Component {
 

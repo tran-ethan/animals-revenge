@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.chart.XYChart;
 
 /**
+ * The PositionGraph class represents a graph that visualizes the vertical position of an entity over time.
+ * It extends the KinematicsGraph class and provides methods to update and manage the position graph.
  *
  * @author Mackenzie Rouchdy
  * @author Ethan Tran
@@ -17,6 +19,13 @@ public class PositionGraph extends KinematicsGraph {
 
     AccelerationGraph accelerationGraph;
 
+    /**
+     * Constructs a PositionGraph object.
+     *
+     * @param entity             The entity whose position is being visualized.
+     * @param velocityGraph      The VelocityGraph associated with this PositionGraph, used for stopping timeline
+     * @param accelerationGraph  The AccelerationGraph associated with this PositionGraph, used for stopping timeline
+     */
     public PositionGraph(Entity entity, VelocityGraph velocityGraph, AccelerationGraph accelerationGraph) {
         super(entity, "Height", "cm");
         this.velocityGraph = velocityGraph;
@@ -24,10 +33,13 @@ public class PositionGraph extends KinematicsGraph {
     }
 
     /**
-     * Updates the graph with a new data point.
+     * Updates the position graph based on the entity's vertical position over time.
+     *
+     * @param event The ActionEvent triggering the update.
      */
     @Override
     public void updateGraph(ActionEvent event) {
+        // If entity does not have a physics component, that means the entity has been deleted
         if (entity.hasComponent(PhysicsComponent.class)) {
             // Get Y position from the bottom of the screen and convert to cm
             double posY = (MainApp.HEIGHT - entity.getPosition().getY() - entity.getHeight()) * PX_TO_CM_CONVERSION;
@@ -61,6 +73,12 @@ public class PositionGraph extends KinematicsGraph {
 
     }
 
+    /**
+     * Retrieves the Y value from the series data at the specified index.
+     *
+     * @param index The index of the data point in the series.
+     * @return The Y value at the specified index.
+     */
     public double getYValue(int index) {
         return series.getData().get(index).getYValue().doubleValue();
     }

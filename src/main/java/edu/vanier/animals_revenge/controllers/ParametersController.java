@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.dsl.FXGL;
@@ -16,11 +12,11 @@ import javafx.stage.Stage;
  * The ParametersController class is a controller for the UI form loaded from the
  * "Parameters.fxml" file. It handles the interaction and logic of the UI components,
  * such as the gravity setting TextField, graph CheckBox, and Apply Button.
- *
+ * <p>
  * The class is associated with the UI elements through JavaFX's FXML annotation,
  * and it initializes the UI components in the initialize() method. The controller
  * provides functionality to set the gravity in the FXGL game engine based on user input.
- *
+ * <p>
  * Additionally, the controller manages the state of a static boolean variable, isGraphOff,
  * which represents whether the graph is turned off.
  *
@@ -64,13 +60,15 @@ public class ParametersController {
             }
 
             if (isDouble) {
-                FXGL.getPhysicsWorld().setGravity(0, Double.parseDouble(gravityTextField.getText()));
+                double gravity = FXGL.getPhysicsWorld().toPixels(Double.parseDouble(gravityTextField.getText()));
+                FXGL.getPhysicsWorld().setGravity(0, gravity);
                 setIsGraphOff(graphCheckBox.isSelected());
                 Stage stage = (Stage) btnApply.getScene().getWindow();
                 stage.close();
 
             } else if (isEmpty) {
-                FXGL.getPhysicsWorld().setGravity(0, 500);
+                double gravity = FXGL.getPhysicsWorld().toPixels(9.807);
+                FXGL.getPhysicsWorld().setGravity(0, gravity);
                 setIsGraphOff(graphCheckBox.isSelected());
                 Stage stage = (Stage) btnApply.getScene().getWindow();
                 stage.close();
@@ -83,9 +81,7 @@ public class ParametersController {
                 alert.show();
                 gravityTextField.clear();
             }
-
         });
-
     }
 
     public static boolean isIsGraphOff() {
