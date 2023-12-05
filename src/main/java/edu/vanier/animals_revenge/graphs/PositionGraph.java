@@ -11,7 +11,6 @@ import javafx.scene.chart.XYChart;
  * It extends the KinematicsGraph class and provides methods to update and manage the position graph.
  *
  * @author Mackenzie Rouchdy
- * @author Ethan Tran
  */
 public class PositionGraph extends KinematicsGraph {
 

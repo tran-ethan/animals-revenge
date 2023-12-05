@@ -1,12 +1,12 @@
 package edu.vanier.animals_revenge;
 
-import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.InputModifier;
+import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
 import com.almasb.fxgl.ui.UIController;
 import edu.vanier.animals_revenge.actions.DeleteAction;
@@ -19,6 +19,7 @@ import edu.vanier.animals_revenge.models.CustomProjectile;
 import edu.vanier.animals_revenge.models.CustomProjectileCircle;
 import edu.vanier.animals_revenge.models.CustomProjectileSquare;
 import edu.vanier.animals_revenge.util.Factory;
+import edu.vanier.animals_revenge.util.SavedSetting;
 import edu.vanier.animals_revenge.windows.GraphWindow;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
@@ -26,17 +27,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import com.almasb.fxgl.physics.CollisionHandler;
-import edu.vanier.animals_revenge.util.SavedSetting;
-import static edu.vanier.animals_revenge.util.Type.CUSTOM_PROJECTILE;
-import static edu.vanier.animals_revenge.util.Type.OBSTACLE;
-import static edu.vanier.animals_revenge.util.Type.PLATFORM;
-import static edu.vanier.animals_revenge.util.Type.PROJECTILE;
-import static edu.vanier.animals_revenge.util.Type.WALL;
+import static edu.vanier.animals_revenge.util.Type.*;
 
 /**
  * Main entry point of the FXGL application.
@@ -56,12 +49,8 @@ public class MainApp extends GameApplication {
 
     private static Polygon vectorHead;
 
-    private final static Logger logger = LoggerFactory.getLogger(MainApp.class);
-
     private static UI ui;
 
-    private static Entity e;
-    
     private SavedSetting settings;
 
     
@@ -79,7 +68,6 @@ public class MainApp extends GameApplication {
 
     @Override
     protected void initPhysics() {
-       
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, WALL) {
 
             // order of types is the same as passed into the constructor
@@ -90,7 +78,6 @@ public class MainApp extends GameApplication {
         });
 
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PROJECTILE) {
-
             @Override
             protected void onCollisionBegin(Entity obstacle, Entity projectile) {
                settings.playSound();
@@ -98,26 +85,7 @@ public class MainApp extends GameApplication {
             }
         });
 
-        getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, CUSTOM_PROJECTILE) {
-
-            @Override
-            protected void onCollisionBegin(Entity obstacle, Entity custom_projectile) {
-               settings.playSound();
-
-            }
-        });
-
         getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, OBSTACLE) {
-
-            @Override
-            protected void onCollisionBegin(Entity obstacle1, Entity obstacle2) {
-               settings.playSound();
-
-            }
-        });
-
-        getPhysicsWorld().addCollisionHandler(new CollisionHandler(OBSTACLE, PLATFORM) {
-
             @Override
             protected void onCollisionBegin(Entity obstacle1, Entity obstacle2) {
                settings.playSound();
@@ -129,19 +97,11 @@ public class MainApp extends GameApplication {
     @Override
     protected void onPreInit() {
         // Load music
-        //Music backgroundMusic = FXGL.getAssetLoader().loadMusic("music1.mp3");
-        // Start playing the music in a loop
         settings = new SavedSetting();
         getSettings().setGlobalSoundVolume(settings.getSoundVolume());
         getSettings().setGlobalMusicVolume(settings.getMusicVolume());
         
         FXGL.getAudioPlayer().loopMusic(settings.getMusic());
-       
-        
-        //FXGL.getAudioPlayer().loopMusic(settings.getMusic());
-        
-        
-        
     }
 
     /**
@@ -267,10 +227,8 @@ public class MainApp extends GameApplication {
     /**
      * Launches the projectile by calculating initial x and y velocity using
      * velocity vector
-     *
      */
     public static void launch() {
-
         double hyp = vector.getScaleY();
         double angle = 90 - vector.getRotate();
         // From trigonometry: cos(angle) = adj / hyp
@@ -280,6 +238,7 @@ public class MainApp extends GameApplication {
 
         CustomProjectile proj = ProjectileSelectionController.finalProjectile;
 
+        Entity e;
         if (proj instanceof CustomProjectileSquare) {
 
             CustomProjectileSquare p = (CustomProjectileSquare) proj;
@@ -342,6 +301,11 @@ public class MainApp extends GameApplication {
 
     }
 
+    /**
+     * Creates the graph windows using the appropriate entity.
+     *
+     * @param e the entity representing the projectile
+     */
     public static void graphSetup(Entity e) {
         if (!ParametersController.isIsGraphOff()) {
             GraphWindow graphWindow = new GraphWindow(e);
@@ -355,8 +319,7 @@ public class MainApp extends GameApplication {
      * calling GameApplication.launch()
      *
      * @see GameApplication#launch(String[])
-     * @param args the command-line arguments passed to the application at
-     * startup
+     * @param args the command-line arguments passed to the application at startup
      */
     public static void main(String[] args) {
         launch(args);

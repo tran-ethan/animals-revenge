@@ -7,5 +7,5 @@ package edu.vanier.animals_revenge.util;
  * @author Ethan Tran
  */
 public enum Type {
-    PROJECTILE,CUSTOM_PROJECTILE, OBSTACLE, PLATFORM, WALL, LAUNCHER
+    PROJECTILE, CUSTOM_PROJECTILE, OBSTACLE, WALL, LAUNCHER
 }

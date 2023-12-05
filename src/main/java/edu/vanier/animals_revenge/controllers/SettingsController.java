@@ -31,10 +31,10 @@ public class SettingsController implements UIController {
     private ChoiceBox<String> chbMusic;
 
     @FXML
-    private Slider sldMusic = new Slider(0, 100, 20);
+    private final Slider sldMusic = new Slider(0, 100, 20);
 
     @FXML
-    private Slider sldSound = new Slider(0, 100, 20);
+    private final Slider sldSound = new Slider(0, 100, 20);
 
     @FXML
     private StackPane paneMenu;
@@ -102,24 +102,16 @@ public class SettingsController implements UIController {
     private void getMusic(ActionEvent event) {
 
         switch (chbMusic.getValue()) {
-            case "Music1" -> {
-                settings.setMusic("music1.mp3");
-            }
-            case "Music2" -> {
-                settings.setMusic("music2.mp3");
-
-            }
-            case "Music3" -> {
-                settings.setMusic("music3.mp3");
-            }
-
+            case "Music1" -> settings.setMusic("music1.mp3");
+            case "Music2" -> settings.setMusic("music2.mp3");
+            case "Music3" -> settings.setMusic("music3.mp3");
         }
     }
 
     public void setupChoiceBox() {
         chbScene.getItems().addAll(dataBackground);
         chbScene.setOnAction(this::getBackground);
-        chbScene.setConverter(new StringConverter<String>() {
+        chbScene.setConverter(new StringConverter<>() {
             @Override
             public String toString(String s) {
                 return (s == null) ? transformWord(settings.getBackground()) : s;
@@ -134,7 +126,7 @@ public class SettingsController implements UIController {
 
         chbMusic.getItems().addAll(dataMusic);
         chbMusic.setOnAction(this::getMusic);
-        chbMusic.setConverter(new StringConverter<String>() {
+        chbMusic.setConverter(new StringConverter<>() {
             @Override
             public String toString(String s) {
                 return (s == null) ? transformWord(settings.getMusicType()) : s;
@@ -178,15 +170,15 @@ public class SettingsController implements UIController {
     }
 
     /**
+     * Changes the color from the color picker.
      *
-     * @param event
+     * @param event the ActionEvent that triggered the changing of the color
      */
     @FXML
     public void chooseColor(ActionEvent event) {
         settings.setColor(clrPickScene.getValue());
         menuBackground.setFill(Color.LIGHTBLUE);
         spawn("background", new SpawnData().put("background", "").put("color", settings.getColor()));
-
     }
 
 }

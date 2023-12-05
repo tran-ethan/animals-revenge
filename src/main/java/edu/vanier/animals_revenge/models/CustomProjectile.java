@@ -11,6 +11,7 @@ import javafx.scene.shape.Shape;
 public class CustomProjectile extends Shape implements Serializable {
 
     float restitution;
+
     float density;
 
     /**
@@ -46,7 +47,7 @@ public class CustomProjectile extends Shape implements Serializable {
     /**
      * Retrieves the density property of the projectile.
      *
-     * @return The denstiy property of the projectile.
+     * @return The density property of the projectile.
      */
     public float getDensity() {
         return density;

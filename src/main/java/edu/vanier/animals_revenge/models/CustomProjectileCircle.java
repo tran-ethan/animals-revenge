@@ -9,8 +9,11 @@ package edu.vanier.animals_revenge.models;
 public class CustomProjectileCircle extends CustomProjectile {
 
     private String fillProperty;
+
     private double radius;
+
     private String color;
+
     private String imgPath;
 
     /**

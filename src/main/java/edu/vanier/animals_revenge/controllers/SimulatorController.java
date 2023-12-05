@@ -4,7 +4,6 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.ui.UIController;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.models.Level;
 import edu.vanier.animals_revenge.models.Obstacle;
@@ -97,9 +96,13 @@ public class SimulatorController implements UIController {
         this.level = level;
     }
 
+    /**
+     * Initializes the simulator controller and renders the textures for the obstacles in the
+     * right-hand panel.
+     * This method is the equivalent of JavaFX initialize() method for controllers
+     */
     @Override
     public void init() {
-
         // Get image patterns to fill obstacle shapes on right hand panel
         ImagePattern brick = new ImagePattern(new Image("/assets/textures/brick.png"));
         ImagePattern long_brick = new ImagePattern(new Image("/assets/textures/long_brick.png"));
@@ -139,6 +142,9 @@ public class SimulatorController implements UIController {
                 .ifPresent(e -> e.setFill(long_brick));
     }
 
+    /**
+     * Open the parameters window, which allows for customizing gravity and toggling on/off graphs.
+     */
     @FXML
     public void openParameters() {
         ParameterWindow parameters = new ParameterWindow();
@@ -253,11 +259,8 @@ public class SimulatorController implements UIController {
 
     @FXML
     void selectProjectile() {
-        System.out.println(CustomProjectileController.customProjectiles);
-
         SelectionWindow sel = new SelectionWindow();
         sel.show();
-
     }
 
     /**

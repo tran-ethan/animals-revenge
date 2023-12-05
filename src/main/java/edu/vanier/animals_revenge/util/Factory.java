@@ -24,6 +24,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+/**
+ * The Factory class represent the entity factory that contains methods for spawning in objects
+ * into the game world, including launcher, projectiles, obstacles, etc.
+ */
 public class Factory implements EntityFactory {
 
     private static Entity background;

@@ -264,7 +264,7 @@ public class CustomProjectileController implements UIController, Serializable {
         try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(filePath))) {
             o.writeObject(p);
         } catch (IOException e) {
-            System.out.println("Error during serilization process");
+            System.err.println("Error during serialization process");
         }
 
     }
@@ -307,13 +307,10 @@ public class CustomProjectileController implements UIController, Serializable {
      */
     @FXML
     void chooseColor(ActionEvent event) {
-
         if (squareCopy.isVisible()) {
             squareCopy.setFill(ColourPicker.getValue());
         } else {
-
             circleCopy.setFill(ColourPicker.getValue());
-
         }
     }
 
@@ -648,8 +645,8 @@ public class CustomProjectileController implements UIController, Serializable {
     }
 
     /**
-     * Initializes the controller. Adjusts initial positions and appearance
-     * settings for square and circle shapes, sets up listeners for sliders, and
+     * Initializes the controller. This is the equivalent to a JavaFX controller's initialize() method.
+     * Adjusts initial positions and appearance settings for square and circle shapes, sets up listeners for sliders, and
      * configures default values for restitution, density, and size. This method
      * is typically called once when the controller is first initialized.
      */
@@ -686,7 +683,6 @@ public class CustomProjectileController implements UIController, Serializable {
         densitySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
             txtFieldDensity.setText(String.format("%.2f", newValue));
-
             density = (float) densitySlider.getValue();
 
         });

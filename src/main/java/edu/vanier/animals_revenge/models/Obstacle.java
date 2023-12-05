@@ -154,7 +154,7 @@ public class Obstacle implements Serializable {
     public float getDensity() {
         // Density order: brick > wood > dirt
         return switch (type) {
-            case "brick" -> 0.8f;
+            case "brick" -> 0.9f;
             case "wood" -> 0.3f;
             case "dirt" -> 0.05f;
             default -> throw new IllegalStateException("Illegal type: " + type);

@@ -15,6 +15,7 @@ import edu.vanier.animals_revenge.models.Obstacle;
  * This class holds the action for dragging around an obstacle or creating one.
  *
  * @author Ethan Tran
+ * @author Zachary Tremblay
  */
 public class DragAction extends UserAction {
 

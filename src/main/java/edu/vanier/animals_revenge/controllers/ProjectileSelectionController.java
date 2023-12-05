@@ -1,16 +1,16 @@
 package edu.vanier.animals_revenge.controllers;
 
-import edu.vanier.animals_revenge.util.ProjectileConverterController;
 import edu.vanier.animals_revenge.models.CustomProjectile;
-import java.io.File;
-import java.util.ArrayList;
-import javafx.event.ActionEvent;
+import edu.vanier.animals_revenge.util.ProjectileConverterController;
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * This class is responsible for handling the functionality related to the

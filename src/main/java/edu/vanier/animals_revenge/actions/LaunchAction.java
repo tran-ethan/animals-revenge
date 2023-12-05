@@ -36,6 +36,7 @@ public class LaunchAction extends UserAction {
         double x = getInput().getMouseXWorld();
         double y = getInput().getMouseYWorld();
 
+        // Position of mouse corresponds to location of launcher
         if (x >= 0 && x <= 80 && y >= MainApp.HEIGHT - 80 && y <= MainApp.HEIGHT) {
             isLaunching = true;
         }

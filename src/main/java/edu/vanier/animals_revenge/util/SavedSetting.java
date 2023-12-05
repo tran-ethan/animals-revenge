@@ -53,7 +53,6 @@ public class SavedSetting {
         music = FXGL.getAssetLoader().loadMusic(musicType);
         setMusicVolume(musicVolume);
         setSoundVolume(soundVolume);
-        
     }
 
     /**

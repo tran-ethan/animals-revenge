@@ -17,6 +17,11 @@ import java.io.ObjectInputStream;
 /**
  * Controller class of the MainApp's UI.
  *
+ * @author Mackenzie Rouchdy
+ * @author Zachary Tremblay
+ * @author Ethan Tran
+ * @author Anton Lisunov
+ *
  */
 public class HomeController implements UIController {
 
@@ -40,6 +45,10 @@ public class HomeController implements UIController {
     
     /**
      * Switches scenes based on the button clicked.
+     * 'New' button is for loading a brand-new level with no obstacles
+     * 'Load' opens a file chooser to load an existing level
+     * 'Custom Projectile' opens the custom projectile creator page
+     * 'Settings' opens
      *
      * @param event The ActionEvent triggered when a button is clicked.
      */
