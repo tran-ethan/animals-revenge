@@ -2,7 +2,6 @@ package edu.vanier.animals_revenge.controllers;
 
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.ui.UIController;
-import edu.vanier.animals_revenge.MainApp;
 import edu.vanier.animals_revenge.util.SavedSetting;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
+
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 /**

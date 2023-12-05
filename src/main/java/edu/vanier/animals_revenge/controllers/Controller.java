@@ -12,6 +12,8 @@ import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 /**
  * This controller contains logic common to all controllers in the application.
  * It is the superclass of all controllers.
+ *
+ * @author Ethan Tran
  */
 public abstract class Controller {
 
@@ -20,13 +22,16 @@ public abstract class Controller {
      */
     @FXML
     public void goHome() {
-        // Remove launcher from game world when user returns to home screen
+        // Remove all objects from the game world so that it does not overlay
+        // on other scenes
         try {
             for (Entity e : getGameWorld()
                     .getEntities()
                     .stream()
                     .filter(entity
-                            -> entity.isType(Type.OBSTACLE) || entity.isType(Type.PROJECTILE) || entity.isType(Type.LAUNCHER)
+                            -> entity.isType(Type.OBSTACLE) ||
+                            entity.isType(Type.PROJECTILE) ||
+                            entity.isType(Type.LAUNCHER)
                     ).toList()) {
                 e.removeFromWorld();
             }
