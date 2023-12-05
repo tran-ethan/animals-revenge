@@ -19,7 +19,7 @@ import static com.almasb.fxgl.dsl.FXGL.spawn;
  *
  * @author Anton Lisunov
  */
-public class SettingsController implements UIController {
+public class SettingsController extends Controller implements UIController {
 
     @FXML
     private ChoiceBox<String> chbScene;
@@ -161,11 +161,6 @@ public class SettingsController implements UIController {
     @FXML
     public void setMusicVolume() {
         settings.setMusicVolume(sldMusic.getValue() / 100);
-    }
-
-    @FXML
-    public void goHome() {
-        MainApp.loadFXML("Home.fxml", new HomeController());
     }
 
     /**

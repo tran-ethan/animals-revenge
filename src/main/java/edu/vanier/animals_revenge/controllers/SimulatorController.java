@@ -13,7 +13,6 @@ import edu.vanier.animals_revenge.windows.ParameterWindow;
 import edu.vanier.animals_revenge.windows.SelectionWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -32,7 +31,7 @@ import java.io.ObjectOutputStream;
 import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
-public class SimulatorController implements UIController {
+public class SimulatorController extends Controller implements UIController {
 
     @FXML
     private StackPane circle1;
@@ -152,25 +151,6 @@ public class SimulatorController implements UIController {
     }
 
     /**
-     * Switches the scene to the home screen.
-     */
-    @FXML
-    public void goHome() {
-        // Remove launcher from game world when user returns to home screen
-        FXGL.getGameWorld().getSingleton(Type.LAUNCHER).removeFromWorld();
-        try {
-            FXGL.getGameWorld().getSingleton(Type.PROJECTILE).removeFromWorld();
-        } catch (Exception e) {
-        }
-        try {
-            FXGL.getGameWorld().getSingleton(Type.CUSTOM_PROJECTILE).removeFromWorld();
-        } catch (Exception e) {
-        }
-        MainApp.animateVector(0, FXGL.getAppHeight());
-        MainApp.loadFXML("Home.fxml", new HomeController());
-    }
-
-    /**
      * Resets the game world by removing all obstacles and projectiles from the
      * game world, and reloads the level by spawning obstacles. If a level is
      * loaded (not null), it will spawn obstacles according to the level's
@@ -261,19 +241,6 @@ public class SimulatorController implements UIController {
     void selectProjectile() {
         SelectionWindow sel = new SelectionWindow();
         sel.show();
-    }
-
-    /**
-     * Displays a warning message in an alert dialog box.
-     *
-     * @param warningMessage The message to be displayed as a warning.
-     * @param title The title for the warning alert dialog box.
-     */
-    public static void throwWarning(String warningMessage, String title) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setContentText(warningMessage);
-        alert.setTitle(title);
-        alert.showAndWait();
     }
 
     /**

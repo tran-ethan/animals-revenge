@@ -37,7 +37,7 @@ import javafx.stage.Stage;
  *
  * @author Mackenzie Rouchdy
  */
-public class CustomProjectileController implements UIController, Serializable {
+public class CustomProjectileController extends Controller implements UIController, Serializable {
 
     /**
      * Provides a list of custom projectiles.
@@ -248,7 +248,7 @@ public class CustomProjectileController implements UIController, Serializable {
                 }
             }
         } else {
-            SimulatorController.throwWarning("Please Provide Properties To Save!", "Saving Error");
+            throwWarning("Please Provide Properties To Save!", "Saving Error");
         }
 
     }
@@ -289,11 +289,11 @@ public class CustomProjectileController implements UIController, Serializable {
             } else if (obj instanceof CustomProjectileCircle) {
                 return (CustomProjectileCircle) obj;
             } else {
-                SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Serialization Error");
+                throwWarning("File Not A Valid Custom Projectile", "Serialization Error");
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            SimulatorController.throwWarning("File Not A Valid Custom Projectile", "Deserialization Error");
+            throwWarning("File Not A Valid Custom Projectile", "Deserialization Error");
         }
         return null;
     }
@@ -372,7 +372,7 @@ public class CustomProjectileController implements UIController, Serializable {
 
         } catch (NumberFormatException e) {
 
-            SimulatorController.throwWarning("Please Enter A Valid Value!", "Format Error");
+            throwWarning("Please Enter A Valid Value!", "Format Error");
 
         }
 
@@ -403,7 +403,7 @@ public class CustomProjectileController implements UIController, Serializable {
             }
 
         } catch (NumberFormatException e) {
-            SimulatorController.throwWarning("Please Enter A Valid Value!", "Format Error");
+            throwWarning("Please Enter A Valid Value!", "Format Error");
 
         }
 
@@ -442,7 +442,7 @@ public class CustomProjectileController implements UIController, Serializable {
 
         } catch (NumberFormatException e) {
             
-            SimulatorController.throwWarning("Please Enter A Valid Value!", "Format Error");
+            throwWarning("Please Enter A Valid Value!", "Format Error");
             
         }
 
@@ -631,18 +631,6 @@ public class CustomProjectileController implements UIController, Serializable {
         square.setStroke(Color.BLACK);
     }
 
-    /**
-     * Handles the action event for returning to the home page. Loads the
-     * "Home.fxml" file and initializes the HomeController to display the home
-     * page.
-     *
-     * @param event The ActionEvent triggered by clicking the return home
-     * button.
-     */
-    @FXML
-    void returnHome(ActionEvent event) {
-        MainApp.loadFXML("Home.fxml", new HomeController());
-    }
 
     /**
      * Initializes the controller. This is the equivalent to a JavaFX controller's initialize() method.

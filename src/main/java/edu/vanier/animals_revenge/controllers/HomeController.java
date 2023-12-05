@@ -23,7 +23,7 @@ import java.io.ObjectInputStream;
  * @author Anton Lisunov
  *
  */
-public class HomeController implements UIController {
+public class HomeController extends Controller implements UIController {
 
     @FXML
     private Button btnNew;
@@ -72,7 +72,7 @@ public class HomeController implements UIController {
                     MainApp.loadFXML("Simulator.fxml", new SimulatorController(loadedLevel));
 
                 } catch (IOException | ClassNotFoundException e) {
-                    SimulatorController.throwWarning("File Not A Valid Level", "Deserialization Error");
+                    throwWarning("File Not A Valid Level", "Deserialization Error");
                 }
             }
         } else if (clickButton == btnCustomProjectile) {

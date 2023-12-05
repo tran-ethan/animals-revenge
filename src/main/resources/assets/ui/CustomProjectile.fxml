@@ -129,7 +129,7 @@
    <top>
       <HBox prefHeight="80.0" prefWidth="1480.0" style="-fx-background-color: beige;" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#returnHome" stylesheets="@/assets/ui/css/styles.css">
+            <Button mnemonicParsing="false" onAction="#goHome" stylesheets="@/assets/ui/css/styles.css">
                <graphic>
                   <FontAwesomeIconView glyphName="HOME" size="20" />
                </graphic>

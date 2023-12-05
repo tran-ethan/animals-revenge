@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author Zachary Tremblay
  */
-public class ParametersController {
+public class ParametersController extends Controller {
     
     /** TextField for entering the gravity setting. */
     @FXML
@@ -73,12 +73,7 @@ public class ParametersController {
                 Stage stage = (Stage) btnApply.getScene().getWindow();
                 stage.close();
             } else {
-                System.out.println("Showing Alert ...");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Please enter a valid number for the gravity setting or leave blank for default value");
-                alert.setHeaderText("Entered number is not valid");
-                alert.show();
+                throwWarning("Please enter a valid number for the gravity setting or leave blank for default value.", "Invalid number");
                 gravityTextField.clear();
             }
         });

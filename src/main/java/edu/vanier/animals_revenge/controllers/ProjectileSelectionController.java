@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author Mackenzie Rouchdy
  */
-public class ProjectileSelectionController {
+public class ProjectileSelectionController extends Controller {
 
     @FXML
     public HBox customObjectRow;
@@ -109,7 +109,7 @@ public class ProjectileSelectionController {
             customObjectRow.getChildren().add(projectile);
 
         } else {
-            SimulatorController.throwWarning("No File Chosen!", "File Error");
+            throwWarning("No File Chosen!", "File Error");
         }
 
     }
