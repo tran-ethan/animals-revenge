@@ -31,6 +31,14 @@ import java.io.ObjectOutputStream;
 import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
+/**
+ * Controller for the buttons in the simulator screen.
+ *
+ * @author Ethan Tran
+ * @author Mackenzie Rouchdy
+ * @author Zachary Tremblay
+ * @author Anton Lisunov
+ */
 public class SimulatorController extends Controller implements UIController {
 
     @FXML
@@ -121,6 +129,14 @@ public class SimulatorController extends Controller implements UIController {
         // Reset world and spawn in objects
         spawn("launcher", 0, MainApp.HEIGHT - 80);
         reset();
+
+        // Adjust slider to correct value if the returns to home screen and back
+        sizeSlider.setValue(size);
+        rotateSlider.setValue(rotate);
+        frictionSlider.setValue(friction);
+        sizeTextField.setText(String.valueOf(size));
+        rotateTextField.setText(String.valueOf(rotate));
+        frictionTextField.setText(String.valueOf(friction));
     }
 
     private void fillPatterns(ImagePattern brick, ImagePattern long_brick, StackPane square, StackPane circle, StackPane rectangle) {

@@ -16,6 +16,7 @@ import javafx.util.StringConverter;
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 /**
+ * Controller for the settings page. Handles logic for changing color, background, and music.
  *
  * @author Anton Lisunov
  */
