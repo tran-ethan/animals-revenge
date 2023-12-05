@@ -31,10 +31,10 @@ public class SettingsController implements UIController {
     private ChoiceBox<String> chbMusic;
 
     @FXML
-    private final Slider sldMusic = new Slider(0, 100, 20);
+    private Slider sldMusic = new Slider(0, 100, 20);
 
     @FXML
-    private final Slider sldSound = new Slider(0, 100, 20);
+    private Slider sldSound = new Slider(0, 100, 20);
 
     @FXML
     private StackPane paneMenu;
@@ -100,7 +100,6 @@ public class SettingsController implements UIController {
     }
 
     private void getMusic(ActionEvent event) {
-
         switch (chbMusic.getValue()) {
             case "Music1" -> settings.setMusic("music1.mp3");
             case "Music2" -> settings.setMusic("music2.mp3");
@@ -170,12 +169,10 @@ public class SettingsController implements UIController {
     }
 
     /**
-     * Changes the color from the color picker.
-     *
-     * @param event the ActionEvent that triggered the changing of the color
+     * Changes the color to the color picker's value
      */
     @FXML
-    public void chooseColor(ActionEvent event) {
+    public void chooseColor() {
         settings.setColor(clrPickScene.getValue());
         menuBackground.setFill(Color.LIGHTBLUE);
         spawn("background", new SpawnData().put("background", "").put("color", settings.getColor()));
