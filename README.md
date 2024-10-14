@@ -73,7 +73,7 @@ Make sure Oracle OpenJDK 18.0.2 is properly configured in the `JAVA_HOME` enviro
 ```
 
 ### Using IDE
-You can run the program by directly executing the `main` method in the `MainApp` class directly from within your IDE. Ensure your IDE is configured to use the JDK 21 and has the necessary dependencies in `build.gradle` installed.
+You can run the program by directly executing the `main` method in the `MainApp` class directly from within your IDE. Ensure your IDE is configured to use the JDK 18 and has the necessary dependencies in `build.gradle` installed.
 
 ## License
 This project is licensed under the [MIT License](LICENSE)
