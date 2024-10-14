@@ -44,9 +44,36 @@ close the application
 modification are automatically saved, and after exiting and restarting program, users
 preferences will be saved.
 
-
 ## Documentation
 - [Final project report](documentation/MAZE-Animals-Revenge-Project-Report.pdf)
 - [Project proposal](documentation/MAZE-Project-proposal.pdf)
 - [Project plan](documentation/MAZE-Project-plan.pdf)
 - [Team attribution table](documentation/MAZE-Attribution-Table.pdf)
+
+### Installation
+Make sure Git is installed on your system before continuing with the installation
+1. Clone the repository
+```shell
+git clone https://github.com/tran-ethan/animals-revenge.git
+```
+2. Navigate to the project directory
+```shell
+cd animals-revenge
+```
+3. Build the project
+```shell
+./gradlew build
+```
+
+## Usage
+### Using Gradle Wrapper
+Make sure Oracle OpenJDK 18.0.2 is properly configured in the `JAVA_HOME` environment variable before trying this method. To run the application using the Gradle Wrapper, execute the following command:
+```shell
+./gradlew run
+```
+
+### Using IDE
+You can run the program by directly executing the `main` method in the `MainApp` class directly from within your IDE. Ensure your IDE is configured to use the JDK 21 and has the necessary dependencies in `build.gradle` installed.
+
+## License
+This project is licensed under the [MIT License](LICENSE)
