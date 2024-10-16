@@ -49,6 +49,11 @@ preferences will be saved.
 - [Project proposal](documentation/MAZE-Project-proposal.pdf)
 - [Project plan](documentation/MAZE-Project-plan.pdf)
 - [Team attribution table](documentation/MAZE-Attribution-Table.pdf)
+- 
+## Getting started
+### Prerequisites
+Before you can build and run this project, ensure you have the following software installed on your system:
+- [Oracle OpenJDK 18](https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html)
 
 ### Installation
 Make sure Git is installed on your system before continuing with the installation
