@@ -1,17 +1,5 @@
 # Animal's Revenge
-Animal’s revenge is an immersive interactive graphical physics simulator centered around
-projectile motion and rigid body dynamics (RBD) inspired by _Angry Birds_. Upon startup, users are greeted by a
-home screen with a variety of buttons and menus, determining where they want to go and
-what they want to do. User launch a projectile at a structure that was built with a drag
-and drop system allowing users to have invoke their creativity and design unique structures.
-Users have full control over the type of projectiles, their size, density, shape, etc. and are
-able to save the layout as a level and load it for later use. The projectile collisions with the
-obstacles will cause a ripple (domino) effect with the obstacles that it collides, one causing
-the movement of the next. The movement of these interconnected bodies under the action of
-external forces (RBD) acting upon one another was implemented with the help of a physics
-engine. The mathematical algorithms necessary to implement projectile motion, kinematics,
-and rigid body dynamics include the Pythagorean theorem, trigonometric functions, and the
-derivation of acceleration from velocity.
+"Animal’s Revenge" is an interactive physics simulator focused on projectile motion and rigid body dynamics (RBD), inspired by _Angry Birds_. Players can launch projectiles at user-designed structures created through a drag-and-drop system, fostering creativity. Users have control over projectile characteristics such as type, size, density, and shape, and can save and load custom levels. The simulation features a domino effect where projectile collisions trigger movement in interconnected obstacles. This dynamic interaction is powered by a physics engine, utilizing mathematical algorithms for projectile motion, kinematics, and RBD, including the Pythagorean theorem, trigonometric functions, and the relationship between acceleration and velocity.
 
 https://github.com/user-attachments/assets/726f6cc0-e101-4df8-a127-65adc74e0767
 ## Features
